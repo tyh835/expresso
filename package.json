@@ -6,7 +6,7 @@
   "scripts": {
     "webpack": "webpack",
     "test": "mocha",
-    "start": "NODE_ENV=development node server.js",
+    "start": "NODE_ENV=production node server.js",
     "reset": "node migration.js && node seed.js"
   },
   "author": "",
