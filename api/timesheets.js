@@ -96,7 +96,7 @@ timesheetsRouter.put('/:timesheetId', (req, res, next) => {
   }
 });
 
-// Handles DELETE requests for a single issue by id
+// Handles DELETE requests for a single timesheet by id
 timesheetsRouter.delete('/:timesheetId', (req, res, next) => {
   if (req.timesheetId) {
     db.run(`DELETE FROM Timesheet WHERE id = ${req.timesheetId}`, err => {
