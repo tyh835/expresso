@@ -1,37 +1,28 @@
-// Express and Middleware Modules
 const express = require('express');
+const sqlite3 = require('sqlite3');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const errorhandler = require('errorhandler');
 const cors = require('cors');
 
-// Server Components
 const app = express();
-const apiRouter = require('./api/api.js');
 
-const PORT = process.env.PORT || 4000;
-const environment = app.get('env');
-
-// Database Components
-const sqlite3 = require('sqlite3');
-const db = new sqlite3.Database(process.env.TEST_DATABASE || './database.sqlite');
-
-// Middlewares
 app.use(bodyParser.json());
 app.use(cors());
 
-// Primary Router
-app.use('/api', apiRouter);
-
-// Error Handler
-if (environment === 'development') {
-  app.use(errorhandler());
+if (process.env.NODE_ENV === 'dev') {
   app.use(morgan('dev'));
-} else {
-  app.use(morgan('common'))
+  app.use(errorhandler());
+} else if (process.env.NODE_ENV === 'prod') {
+  app.use(morgan('common'));
+  app.use(express.static('client/build'));
 }
 
-// Starts Server
+const apiRouter = require('./api/api.js');
+app.use('/api', apiRouter);
+
+const PORT = process.env.PORT || 4000;
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port: ${PORT}`);
 });

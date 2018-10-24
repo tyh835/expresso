@@ -1,14 +1,17 @@
 {
   "name": "expresso",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple CRUD Express Application with React Frontend",
   "main": "server.js",
   "scripts": {
     "test": "mocha",
-    "start": "NODE_ENV=production node server.js",
+    "start": "NODE_ENV=dev node server.js",
+    "start:dev": "NODE_ENV=dev nodemon server.js",
+    "start:prod": "NODE_ENV=prod node server.js",
+    "start:client": "cd client && yarn start",
     "seed": "node migration.js && node seed.js"
   },
-  "author": "",
+  "author": "Tony Han",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -20,7 +23,8 @@
     "supertest": "^3.0.0"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "mocha": "^5.2.0",
-    "chai": "^4.1.2"
+    "nodemon": "^1.18.4"
   }
 }
