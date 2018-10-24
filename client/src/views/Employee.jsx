@@ -278,21 +278,21 @@ class Employee extends Component {
     let saveButton, cancelButton, deleteButton;
 
     if (this.employeeHasChanges() && this.employeeHasAllRequiredFields()) {
-      saveButton =<a className={'button'} onClick={this.saveEmployee}>Save</a>;
+      saveButton =<button className={'button'} onClick={this.saveEmployee}>Save</button>;
     } else {
-      saveButton = <a className='button inactive'>Save</a>;
+      saveButton = <button className='button inactive'>Save</button>;
     }
 
     if (this.employeeHasChanges()) {
-      cancelButton =<a className={'button'} onClick={this.cancelEmployeeEdit}>Cancel</a>
+      cancelButton =<button className={'button'} onClick={this.cancelEmployeeEdit}>Cancel</button>
     } else {
-      cancelButton = <a className='button inactive'>Cancel</a>;
+      cancelButton = <button className='button inactive'>Cancel</button>;
     }
 
     if (employee.isCurrentEmployee && employee.id) {
-      deleteButton = <a className='button delete' onClick={this.deleteEmployee}>Delete</a>;
+      deleteButton = <button className='button delete' onClick={this.deleteEmployee}>Delete</button>;
     } else if (employee.id) {
-      deleteButton = <a className='button' onClick={this.restoreEmployee}>Restore</a>
+      deleteButton = <button className='button' onClick={this.restoreEmployee}>Restore</button>
     } else {
       deleteButton = '';
     }
@@ -310,18 +310,18 @@ class Employee extends Component {
     let saveButton, cancelButton, deleteButton;
 
     if (this.timesheetHasChanges(timesheet, timesheetIndex) && this.timesheetHasAllRequiredFields(timesheet)) {
-      saveButton =<a className={'button'} onClick={this.saveTimesheet.bind(this, timesheetIndex)}>Save</a>;
+      saveButton =<button className="button" onClick={this.saveTimesheet.bind(this, timesheetIndex)}>Save</button>;
     } else {
-      saveButton = <a className='button inactive'>Save</a>;
+      saveButton = <button className="button inactive">Save</button>;
     }
 
     if (this.timesheetHasChanges(timesheet, timesheetIndex)) {
-      cancelButton =<a className={'button'} onClick={this.cancelTimesheetEdit.bind(this, timesheetIndex)}>Cancel</a>
+      cancelButton =<button className="button" onClick={this.cancelTimesheetEdit.bind(this, timesheetIndex)}>Cancel</button>
     } else {
-      cancelButton = <a className='button inactive'>Cancel</a>;
+      cancelButton = <button className='button inactive'>Cancel</button>;
     }
 
-    deleteButton = <a className='button delete' onClick={this.deleteTimesheet.bind(this, timesheet, timesheetIndex)}>Delete</a>;
+    deleteButton = <button className='button delete' onClick={this.deleteTimesheet.bind(this, timesheet, timesheetIndex)}>Delete</button>;
 
     return (
       <div className="buttons">
@@ -354,7 +354,7 @@ class Employee extends Component {
         <div className="timesheet-container">
           {timesheets}
         </div>
-        <a className="button add" onClick={this.addTimesheet}>Add Timesheet</a>
+        <button className="button add" onClick={this.addTimesheet}>Add Timesheet</button>
       </div>
     );
   }

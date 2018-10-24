@@ -254,23 +254,22 @@ class Menu extends Component {
   }
 
   renderMenuButtons() {
-    const menu = this.state.menu;
     let saveButton, cancelButton, deleteButton;
 
     if (this.menuHasChanges() && this.menuHasAllRequiredFields()) {
-      saveButton =<a className={'button'} onClick={this.saveMenu}>Save</a>;
+      saveButton =<button className="button" onClick={this.saveMenu}>Save</button>;
     } else {
-      saveButton = <a className='button inactive'>Save</a>;
+      saveButton = <button className="button inactive">Save</button>;
     }
 
     if (this.menuHasChanges()) {
-      cancelButton =<a className={'button'} onClick={this.cancelMenuEdit}>Cancel</a>
+      cancelButton =<button className="button" onClick={this.cancelMenuEdit}>Cancel</button>
     } else {
-      cancelButton = <a className='button inactive'>Cancel</a>;
+      cancelButton = <button className="button inactive">Cancel</button>;
     }
 
     if (!this.state.menuItems.length) {
-      deleteButton = <a className='button delete' onClick={this.deleteMenu}>Delete</a>;
+      deleteButton = <button className="button delete" onClick={this.deleteMenu}>Delete</button>;
     } else {
       deleteButton = '';
     }
@@ -288,18 +287,18 @@ class Menu extends Component {
     let saveButton, cancelButton, deleteButton;
 
     if (this.menuItemHasChanges(menuItem, menuItemIndex) && this.menuItemHasAllRequiredFields(menuItem)) {
-      saveButton =<a className={'button'} onClick={this.saveMenuItem.bind(this, menuItemIndex)}>Save</a>;
+      saveButton =<button className="button" onClick={this.saveMenuItem.bind(this, menuItemIndex)}>Save</button>;
     } else {
-      saveButton = <a className='button inactive'>Save</a>;
+      saveButton = <button className="button inactive">Save</button>;
     }
 
     if (this.menuItemHasChanges(menuItem, menuItemIndex)) {
-      cancelButton =<a className={'button'} onClick={this.cancelMenuItemEdit.bind(this, menuItemIndex)}>Cancel</a>
+      cancelButton =<button className="button" onClick={this.cancelMenuItemEdit.bind(this, menuItemIndex)}>Cancel</button>
     } else {
-      cancelButton = <a className='button inactive'>Cancel</a>;
+      cancelButton = <button className="button inactive">Cancel</button>;
     }
 
-    deleteButton = <a className='button delete' onClick={this.deleteMenuItem.bind(this, menuItem, menuItemIndex)}>Delete</a>;
+    deleteButton = <button className="button delete" onClick={this.deleteMenuItem.bind(this, menuItem, menuItemIndex)}>Delete</button>;
 
     return (
       <div className="buttons">
@@ -352,7 +351,7 @@ class Menu extends Component {
           {this.renderMenuButtons()}
         </div>
         {this.renderMenuItems()}
-        <a className="button add" onClick={this.addMenuItem}>Add Menu Item</a>
+        <button className="button add" onClick={this.addMenuItem}>Add Menu Item</button>
       </div>
     );
   }
