@@ -1,0 +1,66 @@
+.Employee {
+  min-height: 100vh;
+  padding: 1rem;
+  background-color: #e5dcd4;
+  text-align: center;
+  line-height: 1.33;
+  letter-spacing: 0.3px;
+  font-weight: 300;
+  font-size: 1.125rem;
+}
+
+.Employee h2 {
+  margin: 2rem 0;
+  color: #7e5a61;;
+}
+
+.Employee .strong,
+.Employee .strong input {
+  font-weight: 600;
+}
+
+.Employee .box {
+  background-color : #a78881;
+}
+
+.Employee p {
+  margin-bottom: .5rem;
+}
+
+.Employee input {
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 300;
+}
+
+.Employee .button {
+  margin-top: 1rem;
+  background-color: #f5f1ee;
+  color: #a78881;
+  font-size: .875rem;
+}
+
+.Employee .employee {
+  padding: 1rem;
+  text-align: left;
+}
+
+.Employee .timesheet-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 999px;
+  margin: auto;
+}
+
+.Employee .timesheet {
+  width: 250px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.Employee .timesheet input {
+  width: 60px;
+  text-align: center;
+}

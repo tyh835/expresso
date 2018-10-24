@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import './Landing.scss';
 
-import Expresso from '../utils/Expresso';
+import Expresso from '../../utils/Expresso';
 
 class Landing extends Component {
   constructor(props) {

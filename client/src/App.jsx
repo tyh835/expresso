@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { Link, HashRouter as Router, Route } from 'react-router-dom';
 import { ReactComponent as Logo } from './img/logo.svg';
+import style from './App.module.scss';
 
-import Menu from './views/Menu.jsx';
-import Landing from './views/Landing.jsx';
-import Employee from './views/Employee.jsx';
+import Menu from './views/Menu/Menu.jsx';
+import Landing from './views/Landing/Landing.jsx';
+import Employee from './views/Employee/Employee.jsx';
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
-          <header>
-            <Link to="/" className="logo">
+        <div>
+          <header className={style.header}>
+            <Link to="/">
               <Logo alt="logo" />
             </Link>
           </header>

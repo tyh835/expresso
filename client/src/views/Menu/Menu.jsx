@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
+import './Menu.scss';
 
-import Expresso from '../utils/Expresso';
+import Expresso from '../../utils/Expresso';
 
 class Menu extends Component {
   constructor(props) {
@@ -107,7 +108,7 @@ class Menu extends Component {
   }
 
   menuItemHasAllRequiredFields(menuItem) {
-    return !!menuItem.name && !!menuItem.inventory && !!menuItem.price;
+    return !!menuItem.name && !!menuItem.inventory && !!menuItem.price && !!menuItem.description;
   }
 
   updateMenuTitle(event) {

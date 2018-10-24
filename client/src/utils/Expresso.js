@@ -1,5 +1,4 @@
 import camelcaseKeys from 'camelcase-keys';
-import 'whatwg-fetch';
 
 const Expresso = {};
 const baseUrl = 'http://localhost:4000/api';

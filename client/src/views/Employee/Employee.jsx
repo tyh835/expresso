@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
+import './Employee.scss';
 
-import Expresso from '../utils/Expresso';
+import Expresso from '../../utils/Expresso';
 
 class Employee extends Component {
   constructor(props) {
