@@ -38,9 +38,9 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='Menu'", (err
   if (table) {
     db.serialize(function() {
       let menuId;
-      db.run("INSERT INTO Menu (title) VALUES ('Breakfast')");
-      db.run("INSERT INTO Menu (title) VALUES ('Lunch')");
-      db.run("INSERT INTO Menu (title) VALUES ('Dinner')", function(error) {
+      db.run("INSERT INTO Menu (title) VALUES ('Hot Coffee')");
+      db.run("INSERT INTO Menu (title) VALUES ('Iced Coffee')");
+      db.run("INSERT INTO Menu (title) VALUES ('Food Items')", function(error) {
         if (error) {
           throw new Error(error);
         }
@@ -53,7 +53,7 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='Menu'", (err
 
         if (table) {
           db.run(`INSERT INTO MenuItem (name, description, inventory, price, menu_id) VALUES ('Pot Pie', 'Ooey Gooey and pairs well with espresso', 10, 6.5, ${menuId})`);
-          db.run(`INSERT INTO MenuItem (name, description, inventory, price, menu_id) VALUES ('Cake Pop', 'The classic, not really a dinner entree', 15, 3.5, ${menuId})`);
+          db.run(`INSERT INTO MenuItem (name, description, inventory, price, menu_id) VALUES ('Cake Pop', 'The is a classic', 15, 3.5, ${menuId})`);
         }
       });
     });

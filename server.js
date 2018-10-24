@@ -18,7 +18,6 @@ const db = new sqlite3.Database(process.env.TEST_DATABASE || './database.sqlite'
 
 // Middlewares
 app.use(bodyParser.json());
-app.use(morgan('dev'));
 app.use(cors());
 
 // Primary Router
@@ -27,6 +26,9 @@ app.use('/api', apiRouter);
 // Error Handler
 if (environment === 'development') {
   app.use(errorhandler());
+  app.use(morgan('dev'));
+} else {
+  app.use(morgan('common'))
 }
 
 // Starts Server
