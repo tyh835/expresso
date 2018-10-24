@@ -145,7 +145,8 @@ class Employee extends Component {
     this.setState({timesheets: timesheets});
   }
 
-  saveEmployee() {
+  saveEmployee(e) {
+    e.preventDefault();
     if (this.state.employee.id) {
       Expresso.updateEmployee(this.state.employee).then(employee => {
         this.setState({

@@ -1,4 +1,4 @@
-import camelcaseKeys from './camelcase-keys/index';
+import camelcaseKeys from 'camelcase-keys';
 import 'whatwg-fetch';
 
 const Expresso = {};
