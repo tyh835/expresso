@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link, HashRouter as Router, Route } from 'react-router-dom';
 import { ReactComponent as Logo } from '../img/logo.svg';
 
-import Menu from './Menu';
-import Landing from './Landing';
-import Employee from './Employee';
+import Menu from './Menu.jsx';
+import Landing from './Landing.jsx';
+import Employee from './Employee.jsx';
 
 class App extends Component {
   render() {
