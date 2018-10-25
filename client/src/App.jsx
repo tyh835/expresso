@@ -17,16 +17,32 @@ import {
 } from './components/Clouds/Clouds.jsx';
 
 class App extends Component {
+  state = {
+    showClouds: false
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({showClouds: true});
+    }, 2500)
+  }
+
   render() {
     return (
       <Router>
-        <div>
-          <Cloud1a />
-          <Cloud1b />
-          <Cloud2 />
-          <Cloud3 />
-          <Cloud4 />
-          <Cloud5 />
+        <div className={style.container}>
+          {
+            this.state.showClouds && (
+              <>
+                <Cloud1a />
+                <Cloud1b />
+                <Cloud2 />
+                <Cloud3 />
+                <Cloud4 />
+                <Cloud5 />
+              </>
+            )
+          }
           <header className={style.header}>
             <Link to="/">
               <Logo alt="logo" />
