@@ -22,8 +22,8 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='Employee'", 
         }
 
         if (table) {
-          db.run(`INSERT INTO Timesheet (hours, rate, date, employee_id) VALUES (10, 15.5, 1506100907820, ${employeeId})`);
-          db.run(`INSERT INTO Timesheet (hours, rate, date, employee_id) VALUES (8, 15.5, 1406100907820, ${employeeId})`);
+          db.run(`INSERT INTO Timesheet (hours, rate, date, employee_id) VALUES (10, 15.5, 1506100907820, $id)`, {$id: employeeId});
+          db.run(`INSERT INTO Timesheet (hours, rate, date, employee_id) VALUES (8, 15.5, 1406100907820, $id)`, {$id: employeeId});
         }
       });
     });
@@ -52,8 +52,8 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='Menu'", (err
         }
 
         if (table) {
-          db.run(`INSERT INTO MenuItem (name, description, inventory, price, menu_id) VALUES ('Pot Pie', 'Ooey Gooey and pairs well with espresso', 10, 6.5, ${menuId})`);
-          db.run(`INSERT INTO MenuItem (name, description, inventory, price, menu_id) VALUES ('Cake Pop', 'The is a classic', 15, 3.5, ${menuId})`);
+          db.run(`INSERT INTO MenuItem (name, description, inventory, price, menu_id) VALUES ('Pot Pie', 'Ooey Gooey and pairs well with espresso', 10, 6.5, $id)`, {$id: menuId});
+          db.run(`INSERT INTO MenuItem (name, description, inventory, price, menu_id) VALUES ('Cake Pop', 'The is a classic', 15, 3.5, $id)`, {$id: menuId});
         }
       });
     });
