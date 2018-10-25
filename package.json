@@ -7,6 +7,7 @@
     "build:client": "cd client && yarn build",
     "install": "yarn install && cd client && yarn install",
     "seed": "node migration.js && node seed.js",
+    "serve": "NODE_ENV=prod node server.js",
     "start": "NODE_ENV=dev node server.js",
     "start:client": "cd client && yarn start",
     "start:dev": "NODE_ENV=dev nodemon server.js",
