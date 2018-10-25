@@ -48,7 +48,9 @@ menusRouter.post('/', (req, res, next) => {
   const newMenu = req.body.menu;
   // Check if the required information is present
   if (newMenu && newMenu.title) {
-    db.run('INSERT INTO Menu (title) VALUES ($title)', {$title: newMenu.title}, function (err) {
+    db.run('INSERT INTO Menu (title) VALUES ($title)', {
+      $title: newMenu.title
+    }, function (err) {
       if (err) {
         next(err);
       }
@@ -56,7 +58,9 @@ menusRouter.post('/', (req, res, next) => {
         if (err) {
           next(err);
         }
-        res.status(201).json({menu: newMenu});
+        res.status(201).json({
+          menu: newMenu
+        });
       });
     });
   } else {
@@ -72,7 +76,9 @@ menusRouter.put('/:menuId', (req, res, next) => {
   if (updatedMenu && updatedMenu.title) {
     // DELETE existing menu then INSERT updated menu into database
     db.serialize(() => {
-      db.run(`DELETE FROM Menu WHERE id = ${prevId}`, err => {
+      db.run('DELETE FROM Menu WHERE id = $id', {
+        $id: prevId
+      }, err => {
         if (err) {
           next(err);
         }
@@ -102,7 +108,7 @@ menusRouter.delete('/:menuId', (req, res, next) => {
   if (req.menu && req.menuId) {
     db.all(`SELECT * FROM MenuItem WHERE menu_id = ${req.menuId}`, (err, menuItems) => {
       if (menuItems.length === 0) {
-        db.run(`DELETE FROM Menu WHERE id = ${req.menuId}`, err => {
+        db.run('DELETE FROM Menu WHERE id = $id', {$id: req.menuId}, err => {
           if (err) {
             next(err);
           }

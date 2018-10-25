@@ -68,7 +68,9 @@ timesheetsRouter.put('/:timesheetId', (req, res, next) => {
   if (updatedTimesheet && updatedTimesheet.hours && updatedTimesheet.rate && updatedTimesheet.date && req.employeeId) {
     // DELETE existing timesheet then INSERT updated timesheet into database
     db.serialize(() => {
-      db.run(`DELETE FROM Timesheet WHERE id = ${prevId}`, err => {
+      db.run('DELETE FROM Timesheet WHERE id = $id', {
+        $id: prevId
+      }, err => {
         if (err) {
           next(err);
         }
@@ -99,7 +101,9 @@ timesheetsRouter.put('/:timesheetId', (req, res, next) => {
 // Handles DELETE requests for a single timesheet by id
 timesheetsRouter.delete('/:timesheetId', (req, res, next) => {
   if (req.timesheetId) {
-    db.run(`DELETE FROM Timesheet WHERE id = ${req.timesheetId}`, err => {
+    db.run('DELETE FROM Timesheet WHERE id = $id', {
+      $id: req.timesheetId
+    }, err => {
       if (err) {
         next(err);
       }

@@ -69,7 +69,9 @@ menuItemsRouter.put('/:menuItemId', (req, res, next) => {
   if (updatedMenuItem && updatedMenuItem.name && updatedMenuItem.description && updatedMenuItem.inventory && updatedMenuItem.price && req.menuId) {
     // DELETE existing menuItem then INSERT updated menuItem into database
     db.serialize(() => {
-      db.run(`DELETE FROM MenuItem WHERE id = ${prevId}`, err => {
+      db.run('DELETE FROM MenuItem WHERE id = $id', {
+        $id: prevId
+      }, err => {
         if (err) {
           next(err);
         }
@@ -101,7 +103,9 @@ menuItemsRouter.put('/:menuItemId', (req, res, next) => {
 // Handles DELETE requests for a single menuItem by id
 menuItemsRouter.delete('/:menuItemId', (req, res, next) => {
   if (req.menuItemId) {
-    db.run(`DELETE FROM MenuItem WHERE id = ${req.menuItemId}`, err => {
+    db.run('DELETE FROM MenuItem WHERE id = $id', {
+      $id: req.menuItemId
+    }, err => {
       if (err) {
         next(err);
       }

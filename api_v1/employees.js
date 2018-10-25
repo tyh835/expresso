@@ -73,7 +73,9 @@ employeesRouter.put('/:employeeId', (req, res, next) => {
   if (updatedEmployee && updatedEmployee.name && updatedEmployee.position && updatedEmployee.wage) {
     // DELETE existing employee then INSERT updated employee into database
     db.serialize(() => {
-      db.run(`DELETE FROM Employee WHERE id = ${prevId}`, err => {
+      db.run('DELETE FROM Employee WHERE id = $id', {
+        $id: prevId
+      }, err => {
         if (err) {
           next(err);
         }
@@ -104,7 +106,9 @@ employeesRouter.put('/:employeeId', (req, res, next) => {
 // Handles DELETE requests for a single employee by id
 employeesRouter.delete('/:employeeId', (req, res, next) => {
   if (req.employee && req.employeeId) {
-    db.run(`UPDATE Employee SET is_current_employee = 0 WHERE id = ${req.employeeId}`, err => {
+    db.run('UPDATE Employee SET is_current_employee = 0 WHERE id = $id', {
+      $id: req.employeeId
+    }, err => {
       if (err) {
         next(err);
       }
@@ -113,7 +117,9 @@ employeesRouter.delete('/:employeeId', (req, res, next) => {
           next(err);
         }
         // Send status 200 because employee still exists in database, just "not employed"
-        res.status(200).json({employee: deletedEmployee});
+        res.status(200).json({
+          employee: deletedEmployee
+        });
       });
     });
   }
