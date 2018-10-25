@@ -44,7 +44,7 @@ export const Cloud1a = styled(Cloud)`
   top: 30px;
   left: 100px;
   transform: scale(0.3);
-  opacity: 0.6;
+  opacity: 0.55;
   animation: ${moveclouds} 15s linear infinite;
 `;
 
@@ -52,7 +52,7 @@ export const Cloud1b = styled(Cloud)`
   top: 0px;
   left: 250px;
   transform: scale(0.3);
-  opacity: 0.7;
+  opacity: 0.65;
   animation: ${moveclouds} 15s linear infinite;
 `;
 
@@ -76,7 +76,7 @@ export const Cloud4 = styled(Cloud)`
   left: 470px;
   bottom: 50px;
   transform: scale(0.75);
-  opacity: 0.45;
+  opacity: 0.4;
   animation: ${moveclouds} 18s linear infinite;
 `;
 
