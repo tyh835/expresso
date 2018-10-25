@@ -30,11 +30,10 @@
   &__table {
     box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
     margin: 1rem 0em;
-    padding: 0.25rem;
     border-radius: 0.28571429rem;
-    border: 1px solid rgba(34, 36, 38, 0.15);
+    border: 2px solid rgba(126, 90, 97, 0.5);
 
-    @media (max-width: 800px) {
+    @media (max-width: 654px) {
       display: none;
     }
   }
@@ -80,7 +79,7 @@
       justify-content: center;
       align-items: center;
       padding: 1rem 0;
-      border-right: solid 2px #7e5a61;
+      border-right: 2px solid rgba(126, 90, 97, 0.5);
 
       textarea {
         background-color: transparent;
@@ -89,6 +88,7 @@
       }
 
       input {
+        width: 120px;
         font-size: .875rem;
       }
 
@@ -96,8 +96,6 @@
         border-right: 0;
       }
     }
-
-
 
     button {
       margin: 3px;
@@ -111,7 +109,7 @@
   &__responsive--warning {
     color: #2f2f2f;
     margin-top: 6rem;
-    @media (min-width: 800px) {
+    @media (min-width: 654px) {
       display: none;
     }
   }
