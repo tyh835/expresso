@@ -1,6 +1,8 @@
 process.env.PORT = 8081;
 process.env.TEST_DATABASE = './test/test.sqlite';
 
+const API_URL = '/api/v1'
+
 const expect = require('chai').expect;
 const request = require('supertest');
 const sqlite3 = require('sqlite3');
@@ -299,14 +301,14 @@ describe('MenuItem Table', function() {
   });
 });
 
-describe('GET /api/employees', function() {
+describe(`GET ${API_URL}/employees`, function() {
   before(function(done) {
     seed.seedEmployeeDatabase(done);
   });
 
   it('should return all currently-employed employees', function() {
     return request(app)
-        .get('/api/employees')
+        .get(`${API_URL}/employees`)
         .then(function(response) {
           const employees = response.body.employees;
           expect(employees.length).to.equal(2);
@@ -318,19 +320,19 @@ describe('GET /api/employees', function() {
 
   it('should return a status code of 200', function() {
     return request(app)
-        .get('/api/employees')
+        .get(`${API_URL}/employees`)
         .expect(200);
   });
 });
 
-describe('GET /api/employees/:id', function() {
+describe(`GET ${API_URL}/employees/:id`, function() {
   before(function(done) {
     seed.seedEmployeeDatabase(done);
   });
 
   it('should return the employee with the given ID', function() {
     return request(app)
-        .get('/api/employees/2')
+        .get(`${API_URL}/employees/2`)
         .then(function(response) {
           const employee = response.body.employee;
           expect(employee.id).to.equal(2);
@@ -343,18 +345,18 @@ describe('GET /api/employees/:id', function() {
 
   it('should return a 200 status code for valid IDs', function() {
     return request(app)
-        .get('/api/employees/2')
+        .get(`${API_URL}/employees/2`)
         .expect(200);
   });
 
   it('should return a 404 status code for invalid IDs', function() {
     return request(app)
-        .get('/api/employees/999')
+        .get(`${API_URL}/employees/999`)
         .expect(404);
   });
 });
 
-describe('POST /api/employees', function() {
+describe(`POST ${API_URL}/employees`, function() {
   let newEmployee;
 
   beforeEach(function(done) {
@@ -369,7 +371,7 @@ describe('POST /api/employees', function() {
 
   it('should create a valid employee', function() {
     return request(app)
-        .post('/api/employees/')
+        .post(`${API_URL}/employees/`)
         .send({employee: newEmployee})
         .then(function() {
           testDb.all('SELECT * FROM employee', function(error, result) {
@@ -384,14 +386,14 @@ describe('POST /api/employees', function() {
 
   it('should return a 201 status code after employee creation', function() {
     return request(app)
-        .post('/api/employees/')
+        .post(`${API_URL}/employees/`)
         .send({employee: newEmployee})
         .expect(201);
   });
 
   it('should return the newly-created employee after employee creation', function() {
     return request(app)
-        .post('/api/employees/')
+        .post(`${API_URL}/employees/`)
         .send({employee: newEmployee})
         .then(function(response) {
           const employee = response.body.employee;
@@ -404,7 +406,7 @@ describe('POST /api/employees', function() {
 
   it('should set new employees as currently-employed by default', function() {
     return request(app)
-        .post('/api/employees/')
+        .post(`${API_URL}/employees/`)
         .send({employee: newEmployee})
         .then(function(response) {
           const employee = response.body.employee;
@@ -419,14 +421,14 @@ describe('POST /api/employees', function() {
     };
 
     return request(app)
-        .post('/api/employees/')
+        .post(`${API_URL}/employees/`)
         .send({employee: newEmployee})
         .expect(400);
   });
 });
 
 
-describe('PUT /api/employees/:id', function() {
+describe(`PUT ${API_URL}/employees/:id`, function() {
   let updatedEmployee;
 
   beforeEach(function(done) {
@@ -441,7 +443,7 @@ describe('PUT /api/employees/:id', function() {
 
   it('should update the employee with the given ID', function(done) {
     request(app)
-        .put('/api/employees/1')
+        .put(`${API_URL}/employees/1`)
         .send({employee: updatedEmployee})
         .then(function() {
           testDb.get('SELECT * FROM employee WHERE employee.id = 1', function(error, employee) {
@@ -460,14 +462,14 @@ describe('PUT /api/employees/:id', function() {
 
   it('should return a 200 status code after employee update', function() {
     return request(app)
-        .put('/api/employees/1')
+        .put(`${API_URL}/employees/1`)
         .send({employee: updatedEmployee})
         .expect(200);
   });
 
   it('should return the updated employee after employee update', function() {
     return request(app)
-        .put('/api/employees/1')
+        .put(`${API_URL}/employees/1`)
         .send({employee: updatedEmployee})
         .then(function(response) {
           const employee = response.body.employee;
@@ -486,20 +488,20 @@ describe('PUT /api/employees/:id', function() {
     };
 
     return request(app)
-        .put('/api/employees/1')
+        .put(`${API_URL}/employees/1`)
         .send({employee: updatedEmployee})
         .expect(400);
   });
 });
 
-describe('DELETE /api/employees/:id', function() {
+describe(`DELETE ${API_URL}/employees/:id`, function() {
   beforeEach(function(done) {
     seed.seedEmployeeDatabase(done);
   });
 
   it('should set the employee with the given ID as not currently-employed', function(done) {
     request(app)
-        .del('/api/employees/1')
+        .del(`${API_URL}/employees/1`)
         .then(function() {
           testDb.get('SELECT * FROM employee WHERE employee.id = 1', function(error, employee) {
             if (error) {
@@ -514,13 +516,13 @@ describe('DELETE /api/employees/:id', function() {
 
   it('should return a 200 status code after employee delete', function() {
     return request(app)
-        .del('/api/employees/1')
+        .del(`${API_URL}/employees/1`)
         .expect(200);
   });
 
   it('should return the deleted employee after employee delete', function() {
     return request(app)
-        .del('/api/employees/1')
+        .del(`${API_URL}/employees/1`)
         .then(function(response) {
           const employee = response.body.employee;
           expect(employee.id).to.equal(1);
@@ -529,14 +531,14 @@ describe('DELETE /api/employees/:id', function() {
   });
 });
 
-describe('GET /api/employees/:employeeId/timesheets', function() {
+describe(`GET ${API_URL}/employees/:employeeId/timesheets`, function() {
   before(function(done) {
     seed.seedTimesheetDatabase(done);
   });
 
   it('should return all timesheets of an existing employee', function() {
     return request(app)
-        .get('/api/employees/1/timesheets')
+        .get(`${API_URL}/employees/1/timesheets`)
         .then(function(response) {
           const timesheets = response.body.timesheets;
           expect(timesheets.length).to.equal(2);
@@ -547,7 +549,7 @@ describe('GET /api/employees/:employeeId/timesheets', function() {
 
   it('should return an empty array for existing employees with no timesheets', function() {
     return request(app)
-        .get('/api/employees/3/timesheets')
+        .get(`${API_URL}/employees/3/timesheets`)
         .then(function(response) {
           const timesheets = response.body.timesheets;
           expect(timesheets.length).to.equal(0);
@@ -556,18 +558,18 @@ describe('GET /api/employees/:employeeId/timesheets', function() {
 
   it('should return a status code of 200 for valid employees', function() {
     return request(app)
-        .get('/api/employees/2/timesheets')
+        .get(`${API_URL}/employees/2/timesheets`)
         .expect(200);
   });
 
   it('should return a status code of 404 for invalid employees', function() {
     return request(app)
-        .get('/api/employees/999/timesheets')
+        .get(`${API_URL}/employees/999/timesheets`)
         .expect(404);
       });
 });
 
-describe('POST /api/employees/:employeeId/timesheets', function() {
+describe(`POST ${API_URL}/employees/:employeeId/timesheets`, function() {
   let newTimesheet;
 
   beforeEach(function(done) {
@@ -582,7 +584,7 @@ describe('POST /api/employees/:employeeId/timesheets', function() {
 
   it('should create a valid timesheet', function() {
     return request(app)
-        .post('/api/employees/2/timesheets')
+        .post(`${API_URL}/employees/2/timesheets`)
         .send({timesheet: newTimesheet})
         .then(function() {
           testDb.all('SELECT * FROM timesheet', function(error, result) {
@@ -599,14 +601,14 @@ describe('POST /api/employees/:employeeId/timesheets', function() {
 
   it('should return a 201 status code after timesheet creation', function() {
     return request(app)
-        .post('/api/employees/2/timesheets')
+        .post(`${API_URL}/employees/2/timesheets`)
         .send({timesheet: newTimesheet})
         .expect(201);
   });
 
   it('should return the newly-created timesheet after timesheet creation', function() {
     return request(app)
-        .post('/api/employees/2/timesheets')
+        .post(`${API_URL}/employees/2/timesheets`)
         .send({timesheet: newTimesheet})
         .then(function(response) {
           const timesheet = response.body.timesheet;
@@ -626,20 +628,20 @@ describe('POST /api/employees/:employeeId/timesheets', function() {
     };
 
     return request(app)
-        .post('/api/employees/2/timesheets')
+        .post(`${API_URL}/employees/2/timesheets`)
         .send({timesheet: newTimesheet})
         .expect(400);
   });
 
   it('should return a 404 status code if an employee with the timesheet\'s employee ID doesn\'t exist', function() {
     return request(app)
-        .post('/api/employees/100/timesheets')
+        .post(`${API_URL}/employees/100/timesheets`)
         .send({timesheet: newTimesheet})
         .expect(404);
   });
 });
 
-describe('PUT /api/employees/:employeeId/timesheets/:timesheetId', function() {
+describe(`PUT ${API_URL}/employees/:employeeId/timesheets/:timesheetId`, function() {
   let updatedTimesheet;
 
   beforeEach(function(done) {
@@ -654,7 +656,7 @@ describe('PUT /api/employees/:employeeId/timesheets/:timesheetId', function() {
 
   it('should update the timesheet with the given ID', function(done) {
     request(app)
-        .put('/api/employees/1/timesheets/2')
+        .put(`${API_URL}/employees/1/timesheets/2`)
         .send({timesheet: updatedTimesheet})
         .then(function() {
           testDb.get('SELECT * FROM timesheet WHERE timesheet.id = 2', function(error, timesheet) {
@@ -674,14 +676,14 @@ describe('PUT /api/employees/:employeeId/timesheets/:timesheetId', function() {
 
   it('should return a 200 status code after timesheet update', function() {
     return request(app)
-        .put('/api/employees/1/timesheets/2')
+        .put(`${API_URL}/employees/1/timesheets/2`)
         .send({timesheet: updatedTimesheet})
         .expect(200);
   });
 
   it('should return the updated timesheet after timesheet update', function() {
     return request(app)
-        .put('/api/employees/1/timesheets/2')
+        .put(`${API_URL}/employees/1/timesheets/2`)
         .send({timesheet: updatedTimesheet})
         .then(function(response) {
           const timesheet = response.body.timesheet;
@@ -701,7 +703,7 @@ describe('PUT /api/employees/:employeeId/timesheets/:timesheetId', function() {
     };
 
     return request(app)
-        .put('/api/employees/1/timesheets/999')
+        .put(`${API_URL}/employees/1/timesheets/999`)
         .send({timesheet: updatedTimesheet})
         .expect(404);
   });
@@ -713,7 +715,7 @@ describe('PUT /api/employees/:employeeId/timesheets/:timesheetId', function() {
     };
 
     return request(app)
-        .put('/api/employees/1/timesheets/2')
+        .put(`${API_URL}/employees/1/timesheets/2`)
         .send({timesheet: updatedTimesheet})
         .expect(400);
   });
@@ -726,20 +728,20 @@ describe('PUT /api/employees/:employeeId/timesheets/:timesheetId', function() {
     };
 
     return request(app)
-        .put('/api/employees/999/timesheets/1')
+        .put(`${API_URL}/employees/999/timesheets/1`)
         .send({timesheet: updatedTimesheet})
         .expect(404);
   });
 });
 
-describe('DELETE /api/employees/:employeeId/timesheets/:timesheetId', function() {
+describe(`DELETE ${API_URL}/employees/:employeeId/timesheets/:timesheetId`, function() {
   beforeEach(function(done) {
     seed.seedTimesheetDatabase(done);
   });
 
   it('should remove the timesheet with the specified ID from the database', function(done) {
     request(app)
-        .del('/api/employees/2/timesheets/1')
+        .del(`${API_URL}/employees/2/timesheets/1`)
         .then(function() {
           testDb.get('SELECT * FROM timesheet WHERE timesheet.id = 1', function(error, timesheet) {
             if (error) {
@@ -753,25 +755,25 @@ describe('DELETE /api/employees/:employeeId/timesheets/:timesheetId', function()
 
   it('should return a 204 status code after timesheet delete', function() {
     return request(app)
-        .del('/api/employees/2/timesheets/1')
+        .del(`${API_URL}/employees/2/timesheets/1`)
         .expect(204);
   });
 
   it('should return a 404 status code for invalid timesheet IDs', function() {
     return request(app)
-        .del('/api/employees/2/timesheets/999')
+        .del(`${API_URL}/employees/2/timesheets/999`)
         .expect(404);
   });
 });
 
-describe('GET /api/menus', function() {
+describe(`GET ${API_URL}/menus`, function() {
   before(function(done) {
     seed.seedMenuDatabase(done);
   });
 
   it('should return all menus', function() {
     return request(app)
-        .get('/api/menus')
+        .get(`${API_URL}/menus`)
         .then(function(response) {
           const menus = response.body.menus;
           expect(menus.length).to.equal(3);
@@ -783,19 +785,19 @@ describe('GET /api/menus', function() {
 
   it('should return a status code of 200', function() {
     return request(app)
-        .get('/api/menus')
+        .get(`${API_URL}/menus`)
         .expect(200);
   });
 });
 
-describe('GET /api/menus/:id', function() {
+describe(`GET ${API_URL}/menus/:id`, function() {
   before(function(done) {
     seed.seedMenuDatabase(done);
   });
 
   it('should return the menus with the given ID', function() {
     return request(app)
-        .get('/api/menus/2')
+        .get(`${API_URL}/menus/2`)
         .then(function(response) {
           const menu = response.body.menu;
           expect(menu.id).to.equal(2);
@@ -805,18 +807,18 @@ describe('GET /api/menus/:id', function() {
 
   it('should return a 200 status code for valid IDs', function() {
     return request(app)
-        .get('/api/menus/2')
+        .get(`${API_URL}/menus/2`)
         .expect(200);
   });
 
   it('should return a 404 status code for invalid IDs', function() {
     return request(app)
-        .get('/api/menus/999')
+        .get(`${API_URL}/menus/999`)
         .expect(404);
   });
 });
 
-describe('POST /api/menus', function() {
+describe(`POST ${API_URL}/menus`, function() {
   let newMenu;
 
   beforeEach(function(done) {
@@ -829,7 +831,7 @@ describe('POST /api/menus', function() {
 
   it('should create a valid menu', function() {
     return request(app)
-        .post('/api/menus/')
+        .post(`${API_URL}/menus/`)
         .send({menu: newMenu})
         .then(function() {
           testDb.all('SELECT * FROM Menu', function(error, result) {
@@ -843,14 +845,14 @@ describe('POST /api/menus', function() {
 
   it('should return a 201 status code after menu creation', function() {
     return request(app)
-        .post('/api/menus/')
+        .post(`${API_URL}/menus/`)
         .send({menu: newMenu})
         .expect(201);
   });
 
   it('should return the newly-created menu after menu creation', function() {
     return request(app)
-        .post('/api/menus/')
+        .post(`${API_URL}/menus/`)
         .send({menu: newMenu})
         .then(function(response) {
           const menu = response.body.menu;
@@ -862,13 +864,13 @@ describe('POST /api/menus', function() {
 
   it('should return a 400 status code for invalid menus', function() {
     return request(app)
-        .post('/api/menus/')
+        .post(`${API_URL}/menus/`)
         .send({menu: {}})
         .expect(400);
   });
 });
 
-describe('PUT /api/menus/:id', function() {
+describe(`PUT ${API_URL}/menus/:id`, function() {
   let updatedMenu;
 
   beforeEach(function(done) {
@@ -881,7 +883,7 @@ describe('PUT /api/menus/:id', function() {
 
   it('should update the menu with the given ID', function(done) {
     request(app)
-        .put('/api/menus/2')
+        .put(`${API_URL}/menus/2`)
         .send({menu: updatedMenu})
         .then(function() {
           testDb.get('SELECT * FROM Menu WHERE Menu.id = 2', function(error, menu) {
@@ -898,14 +900,14 @@ describe('PUT /api/menus/:id', function() {
 
   it('should return a 200 status code after menu update', function() {
     return request(app)
-        .put('/api/menus/2')
+        .put(`${API_URL}/menus/2`)
         .send({menu: updatedMenu})
         .expect(200);
   });
 
   it('should return the updated menu after menu update', function() {
     return request(app)
-        .put('/api/menus/2')
+        .put(`${API_URL}/menus/2`)
         .send({menu: updatedMenu})
         .then(function(response) {
           const menu = response.body.menu;
@@ -917,20 +919,20 @@ describe('PUT /api/menus/:id', function() {
 
   it('should return a 400 status code for invalid menu updates', function() {
     return request(app)
-        .put('/api/menus/1')
+        .put(`${API_URL}/menus/1`)
         .send({menu: {}})
         .expect(400);
   });
 });
 
-describe('DELETE /api/menus/:id', function() {
+describe(`DELETE ${API_URL}/menus/:id`, function() {
   beforeEach(function(done) {
     seed.seedMenuDatabase(() => seed.seedMenuItemDatabase(done));
   });
 
   it('should remove the menu with the specified ID from the database if that menu has no related menu items', function(done) {
     request(app)
-        .del('/api/menus/3')
+        .del(`${API_URL}/menus/3`)
         .then(function() {
           testDb.get('SELECT * FROM Menu WHERE Menu.id = 3', function(error, menu) {
             if (error) {
@@ -944,13 +946,13 @@ describe('DELETE /api/menus/:id', function() {
 
   it('should return a 204 status code after menu delete', function() {
     return request(app)
-        .del('/api/menus/3')
+        .del(`${API_URL}/menus/3`)
         .expect(204);
   });
 
   it('should not delete menus with existing related menu items', function(done) {
     request(app)
-        .del('/api/menus/2')
+        .del(`${API_URL}/menus/2`)
         .then(function() {
           testDb.get('SELECT * FROM Menu WHERE Menu.id = 2', function(error, menu) {
             if (error) {
@@ -964,19 +966,19 @@ describe('DELETE /api/menus/:id', function() {
 
   it('should return a 400 status code if deleted menu has existing related menu items', function() {
     return request(app)
-        .del('/api/menus/2')
+        .del(`${API_URL}/menus/2`)
         .expect(400);
   });
 });
 
-describe('GET /api/menus/:menuId/menu-items', function() {
+describe(`GET ${API_URL}/menus/:menuId/menu-items`, function() {
   before(function(done) {
     seed.seedMenuItemDatabase(done);
   });
 
   it('should return all menu items of an existing menu', function() {
     return request(app)
-        .get('/api/menus/1/menu-items')
+        .get(`${API_URL}/menus/1/menu-items`)
         .then(function(response) {
           const menuItems = response.body.menuItems;
           expect(menuItems.length).to.equal(2);
@@ -987,7 +989,7 @@ describe('GET /api/menus/:menuId/menu-items', function() {
 
   it('should return an empty array for existing menus with no menu items', function() {
     return request(app)
-        .get('/api/menus/3/menu-items')
+        .get(`${API_URL}/menus/3/menu-items`)
         .then(function(response) {
           const menuItems = response.body.menuItems;
           expect(menuItems.length).to.equal(0);
@@ -996,18 +998,18 @@ describe('GET /api/menus/:menuId/menu-items', function() {
 
   it('should return a status code of 200 for valid menus', function() {
     return request(app)
-        .get('/api/menus/2/menu-items')
+        .get(`${API_URL}/menus/2/menu-items`)
         .expect(200);
   });
 
   it('should return a status code of 404 for invalid menus', function() {
     return request(app)
-        .get('/api/menus/999/menu-items')
+        .get(`${API_URL}/menus/999/menu-items`)
         .expect(404);
       });
 });
 
-describe('POST /api/menus/:menuId/menu-items', function() {
+describe(`POST ${API_URL}/menus/:menuId/menu-items`, function() {
   let newMenuItem;
 
   beforeEach(function(done) {
@@ -1023,7 +1025,7 @@ describe('POST /api/menus/:menuId/menu-items', function() {
 
   it('should create a valid menuItem', function() {
     return request(app)
-        .post('/api/menus/2/menu-items')
+        .post(`${API_URL}/menus/2/menu-items`)
         .send({menuItem: newMenuItem})
         .then(function() {
           testDb.all('SELECT * FROM menuItem', function(error, result) {
@@ -1041,14 +1043,14 @@ describe('POST /api/menus/:menuId/menu-items', function() {
 
   it('should return a 201 status code after menu item creation', function() {
     return request(app)
-        .post('/api/menus/2/menu-items')
+        .post(`${API_URL}/menus/2/menu-items`)
         .send({menuItem: newMenuItem})
         .expect(201);
   });
 
   it('should return the newly-created menu item after menu item creation', function() {
     return request(app)
-        .post('/api/menus/2/menu-items')
+        .post(`${API_URL}/menus/2/menu-items`)
         .send({menuItem: newMenuItem})
         .then(function(response) {
           const menuItem = response.body.menuItem;
@@ -1070,13 +1072,13 @@ describe('POST /api/menus/:menuId/menu-items', function() {
     };
 
     return request(app)
-        .post('/api/menus/2/menu-items')
+        .post(`${API_URL}/menus/2/menu-items`)
         .send({menuItem: newMenuItem})
         .expect(400);
   });
 });
 
-describe('PUT /api/menus/:menuId/menu-items/:menuItemId', function() {
+describe(`PUT ${API_URL}/menus/:menuId/menu-items/:menuItemId`, function() {
   let updatedMenuItem;
 
   beforeEach(function(done) {
@@ -1092,7 +1094,7 @@ describe('PUT /api/menus/:menuId/menu-items/:menuItemId', function() {
 
   it('should update the menu item with the given ID', function(done) {
     request(app)
-        .put('/api/menus/1/menu-items/2')
+        .put(`${API_URL}/menus/1/menu-items/2`)
         .send({menuItem: updatedMenuItem})
         .then(function() {
           testDb.get('SELECT * FROM MenuItem WHERE MenuItem.id = 2', function(error, menuItem) {
@@ -1112,14 +1114,14 @@ describe('PUT /api/menus/:menuId/menu-items/:menuItemId', function() {
 
   it('should return a 200 status code after menuItem update', function() {
     return request(app)
-        .put('/api/menus/1/menu-items/2')
+        .put(`${API_URL}/menus/1/menu-items/2`)
         .send({menuItem: updatedMenuItem})
         .expect(200);
   });
 
   it('should return the updated menu item after menu item update', function() {
     return request(app)
-        .put('/api/menus/1/menu-items/2')
+        .put(`${API_URL}/menus/1/menu-items/2`)
         .send({menuItem: updatedMenuItem})
         .then(function(response) {
           const menuItem = response.body.menuItem;
@@ -1140,7 +1142,7 @@ describe('PUT /api/menus/:menuId/menu-items/:menuItemId', function() {
     };
 
     return request(app)
-        .put('/api/menus/1/menu-items/999')
+        .put(`${API_URL}/menus/1/menu-items/999`)
         .send({menuItem: updatedMenuItem})
         .expect(404);
   });
@@ -1153,20 +1155,20 @@ describe('PUT /api/menus/:menuId/menu-items/:menuItemId', function() {
     };
 
     return request(app)
-        .put('/api/menus/1/menu-items/2')
+        .put(`${API_URL}/menus/1/menu-items/2`)
         .send({menuItem: updatedMenuItem})
         .expect(400);
   });
 });
 
-describe('DELETE /api/menus/:menuId/menu-items/:menuItemId', function() {
+describe(`DELETE ${API_URL}/menus/:menuId/menu-items/:menuItemId`, function() {
   beforeEach(function(done) {
     seed.seedMenuItemDatabase(done);
   });
 
   it('should remove the menu item with the specified ID from the database', function(done) {
     request(app)
-        .del('/api/menus/1/menu-items/2')
+        .del(`${API_URL}/menus/1/menu-items/2`)
         .then(function() {
           testDb.get('SELECT * FROM MenuItem WHERE MenuItem.id = 2', function(error, menuItem) {
             if (error) {
@@ -1180,13 +1182,13 @@ describe('DELETE /api/menus/:menuId/menu-items/:menuItemId', function() {
 
   it('should return a 204 status code after menu item delete', function() {
     return request(app)
-        .del('/api/menus/1/menu-items/2')
+        .del(`${API_URL}/menus/1/menu-items/2`)
         .expect(204);
   });
 
   it('should return a 404 status code for invalid menu item IDs', function() {
     return request(app)
-        .del('/api/menus/1/menu-items/999')
+        .del(`${API_URL}/menus/1/menu-items/999`)
         .expect(404);
   });
 });
