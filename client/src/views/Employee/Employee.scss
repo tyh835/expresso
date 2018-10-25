@@ -69,9 +69,13 @@
     background-color: #f5f1ee;
     color: #a78881;
     font-size: .875rem;
-  }
 
-  .button--add {
-    margin: 2rem;
+    &--inactive {
+      margin-top: 1rem;
+    }
+
+    &--add {
+      margin: 2rem;
+    }
   }
 }
