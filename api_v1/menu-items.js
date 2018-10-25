@@ -7,7 +7,9 @@ const db = new sqlite3.Database(process.env.TEST_DATABASE || './database.sqlite'
 // Processes the parameter menuItemId
 menuItemsRouter.param('menuItemId', (req, res, next, id) => {
   const menuItemId = Number(id);
-  db.get(`SELECT * FROM MenuItem WHERE id = ${menuItemId}`, (err, menuItem) => {
+  db.get('SELECT * FROM MenuItem WHERE id = $id', {
+    $id: menuItemId
+  }, (err, menuItem) => {
     if (err) {
       next(err);
     } else if (menuItem) {
@@ -22,14 +24,20 @@ menuItemsRouter.param('menuItemId', (req, res, next, id) => {
 // Handles GET requests for all menuItems for a menu
 menuItemsRouter.get('/', (req, res, next) => {
   if (req.menuId) {
-    db.all(`SELECT * FROM MenuItem WHERE menu_id = ${req.menuId}`, (err, menuItems) => {
+    db.all('SELECT * FROM MenuItem WHERE menu_id = $id', {
+      $id: req.menuId
+    }, (err, menuItems) => {
       if (err) {
         next(err);
       }
       if (menuItems && menuItems.length !== 0) {
-        res.status(200).json({menuItems: menuItems});
+        res.status(200).json({
+          menuItems: menuItems
+        });
       } else {
-        res.status(200).json({menuItems: []});
+        res.status(200).json({
+          menuItems: []
+        });
       }
     });
   }
@@ -49,11 +57,15 @@ menuItemsRouter.post('/', (req, res, next) => {
       if (err) {
         next(err);
       }
-      db.get(`SELECT * FROM MenuItem WHERE id = ${this.lastID}`, (err, newMenuItem) => {
+      db.get('SELECT * FROM MenuItem WHERE id = $id', {
+        $id: this.lastID
+      }, (err, newMenuItem) => {
         if (err) {
           next(err);
         }
-        res.status(201).json({menuItem: newMenuItem});
+        res.status(201).json({
+          menuItem: newMenuItem
+        });
       });
     });
   } else {
@@ -87,11 +99,15 @@ menuItemsRouter.put('/:menuItemId', (req, res, next) => {
         if (err) {
           next(err);
         }
-        db.get(`SELECT * FROM MenuItem WHERE id = ${this.lastID}`, (err, updatedMenuItem) => {
+        db.get('SELECT * FROM MenuItem WHERE id = $id', {
+          $id: this.lastID
+        }, (err, updatedMenuItem) => {
           if (err) {
             next(err);
           }
-          res.status(200).json({menuItem: updatedMenuItem});
+          res.status(200).json({
+            menuItem: updatedMenuItem
+          });
         });
       });
     });

@@ -7,7 +7,9 @@ const db = new sqlite3.Database(process.env.TEST_DATABASE || './database.sqlite'
 // Processes the parameter timesheetId
 timesheetsRouter.param('timesheetId', (req, res, next, id) => {
   const timesheetId = Number(id);
-  db.get(`SELECT * FROM Timesheet WHERE id = ${timesheetId}`, (err, timesheet) => {
+  db.get('SELECT * FROM Timesheet WHERE id = $id', {
+    $id: timesheetId
+  }, (err, timesheet) => {
     if (err) {
       next(err);
     } else if (timesheet) {
@@ -22,14 +24,20 @@ timesheetsRouter.param('timesheetId', (req, res, next, id) => {
 // Handles GET requests for all timesheets for an employee
 timesheetsRouter.get('/', (req, res, next) => {
   if (req.employeeId) {
-    db.all(`SELECT * FROM Timesheet WHERE employee_id = ${req.employeeId}`, (err, timesheets) => {
+    db.all('SELECT * FROM Timesheet WHERE employee_id = $id', {
+      $id: req.employeeId
+    }, (err, timesheets) => {
       if (err) {
         next(err);
       }
       if (timesheets && timesheets.length !== 0) {
-        res.status(200).json({timesheets: timesheets});
+        res.status(200).json({
+          timesheets: timesheets
+        });
       } else {
-        res.status(200).json({timesheets: []});
+        res.status(200).json({
+          timesheets: []
+        });
       }
     });
   }
@@ -48,11 +56,15 @@ timesheetsRouter.post('/', (req, res, next) => {
       if (err) {
         next(err);
       }
-      db.get(`SELECT * FROM Timesheet WHERE id = ${this.lastID}`, (err, newTimesheet) => {
+      db.get('SELECT * FROM Timesheet WHERE id = $id', {
+        $id: this.lastID
+      }, (err, newTimesheet) => {
         if (err) {
           next(err);
         }
-        res.status(201).json({timesheet: newTimesheet});
+        res.status(201).json({
+          timesheet: newTimesheet
+        });
       });
     });
   } else {
@@ -85,11 +97,15 @@ timesheetsRouter.put('/:timesheetId', (req, res, next) => {
         if (err) {
           next(err);
         }
-        db.get(`SELECT * FROM Timesheet WHERE id = ${this.lastID}`, (err, updatedTimesheet) => {
+        db.get('SELECT * FROM Timesheet WHERE id = $id', {
+          $id: this.lastID
+        }, (err, updatedTimesheet) => {
           if (err) {
             next(err);
           }
-          res.status(200).json({timesheet: updatedTimesheet});
+          res.status(200).json({
+            timesheet: updatedTimesheet
+          });
         });
       });
     });

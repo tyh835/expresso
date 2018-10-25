@@ -11,7 +11,9 @@ menusRouter.use('/:menuId/menu-items', menuItemsRouter);
 // Processes the parameter menuId
 menusRouter.param('menuId', (req, res, next, id) => {
   const menuId = Number(id);
-  db.get(`SELECT * FROM Menu WHERE id = ${menuId}`, (err, menu) => {
+  db.get('SELECT * FROM Menu WHERE id = $id', {
+    $id: menuId
+  }, (err, menu) => {
     if (err) {
       next(err);
     } else if (menu) {
@@ -54,7 +56,9 @@ menusRouter.post('/', (req, res, next) => {
       if (err) {
         next(err);
       }
-      db.get(`SELECT * FROM Menu WHERE id = ${this.lastID}`, (err, newMenu) => {
+      db.get('SELECT * FROM Menu WHERE id = $id', {
+        $id: this.lastID
+      }, (err, newMenu) => {
         if (err) {
           next(err);
         }
@@ -90,11 +94,15 @@ menusRouter.put('/:menuId', (req, res, next) => {
         if (err) {
           next(err);
         }
-        db.get(`SELECT * FROM Menu WHERE id = ${this.lastID}`, (err, updatedMenu) => {
+        db.get('SELECT * FROM Menu WHERE id = $id', {
+          $id: this.lastID
+        }, (err, updatedMenu) => {
           if (err) {
             next(err);
           }
-          res.status(200).json({menu: updatedMenu});
+          res.status(200).json({
+            menu: updatedMenu
+          });
         });
       });
     });
@@ -106,9 +114,16 @@ menusRouter.put('/:menuId', (req, res, next) => {
 // Handles DELETE requests for a single menu by id
 menusRouter.delete('/:menuId', (req, res, next) => {
   if (req.menu && req.menuId) {
-    db.all(`SELECT * FROM MenuItem WHERE menu_id = ${req.menuId}`, (err, menuItems) => {
+    db.all('SELECT * FROM MenuItem WHERE menu_id = $id', {
+      $id: req.menuId
+    }, (err, menuItems) => {
+      if (err) {
+        next(err);
+      }
       if (menuItems.length === 0) {
-        db.run('DELETE FROM Menu WHERE id = $id', {$id: req.menuId}, err => {
+        db.run('DELETE FROM Menu WHERE id = $id', {
+          $id: req.menuId
+        }, err => {
           if (err) {
             next(err);
           }

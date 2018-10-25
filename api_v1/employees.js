@@ -11,7 +11,9 @@ employeesRouter.use('/:employeeId/timesheets', timesheetsRouter);
 // Processes the parameter employeeId
 employeesRouter.param('employeeId', (req, res, next, id) => {
   const employeeId = Number(id);
-  db.get(`SELECT * FROM Employee WHERE id = ${employeeId}`, (err, employee) => {
+  db.get('SELECT * FROM Employee WHERE id = $id', {
+    $id: employeeId
+  }, (err, employee) => {
     if (err) {
       next(err);
     } else if (employee) {
@@ -52,12 +54,19 @@ employeesRouter.post('/', (req, res, next) => {
       $name: newEmployee.name,
       $position: newEmployee.position,
       $wage: newEmployee.wage
-    }, function(err) {
-      db.get(`SELECT * FROM Employee WHERE id = ${this.lastID}`, (err, newEmployee) => {
+    }, function (err) {
+      if (err) {
+        next(err);
+      }
+      db.get(`SELECT * FROM Employee WHERE id = $id`, {
+        $id: this.lastID
+      }, (err, newEmployee) => {
         if (err) {
           next(err);
         }
-        res.status(201).json({employee: newEmployee});
+        res.status(201).json({
+          employee: newEmployee
+        });
       });
     });
   } else {
@@ -90,11 +99,15 @@ employeesRouter.put('/:employeeId', (req, res, next) => {
         if (err) {
           next(err);
         }
-        db.get(`SELECT * FROM Employee WHERE id = ${this.lastID}`, (err, updatedEmployee) => {
+        db.get('SELECT * FROM Employee WHERE id = $id', {
+          $id: this.lastID
+        }, (err, updatedEmployee) => {
           if (err) {
             next(err);
           }
-          res.status(200).json({employee: updatedEmployee});
+          res.status(200).json({
+            employee: updatedEmployee
+          });
         });
       });
     });
@@ -112,7 +125,9 @@ employeesRouter.delete('/:employeeId', (req, res, next) => {
       if (err) {
         next(err);
       }
-      db.get(`SELECT * FROM Employee WHERE id = ${req.employeeId}`, (err, deletedEmployee) => {
+      db.get('SELECT * FROM Employee WHERE id = $id', {
+        $id: req.employeeId
+      }, (err, deletedEmployee) => {
         if (err) {
           next(err);
         }
