@@ -14,7 +14,7 @@ import {
   Cloud3,
   Cloud4,
   Cloud5
-} from './components/Clouds.jsx';
+} from './components/Clouds/Clouds.jsx';
 
 class App extends Component {
   render() {
