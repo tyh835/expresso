@@ -242,16 +242,25 @@ class Menu extends Component {
   }
 
   deleteMenuItem(menuItem, menuItemIndex) {
-    Expresso.deleteMenuItem(menuItem.id, this.state.menu.id).then(() => {
-      const menuItems = JSON.parse(JSON.stringify(this.state.menuItems));
+    const menuItems = JSON.parse(JSON.stringify(this.state.menuItems));
+    const savedMenuItems = JSON.parse(JSON.stringify(this.state.savedMenuItems));
+    if (!menuItem.id) {
       menuItems.splice(menuItemIndex, 1);
-      const savedMenuItems = JSON.parse(JSON.stringify(this.state.savedMenuItems));
       savedMenuItems.splice(menuItemIndex, 1);
       this.setState({
         menuItems: menuItems,
         savedMenuItems: savedMenuItems
       });
-    });
+    } else {
+      Expresso.deleteMenuItem(menuItem.id, this.state.menu.id).then(() => {
+        menuItems.splice(menuItemIndex, 1);
+        savedMenuItems.splice(menuItemIndex, 1);
+        this.setState({
+          menuItems: menuItems,
+          savedMenuItems: savedMenuItems
+        });
+      });
+    }
   }
 
   renderMenuButtons() {
@@ -260,17 +269,17 @@ class Menu extends Component {
     if (this.menuHasChanges() && this.menuHasAllRequiredFields()) {
       saveButton =<button className="button" onClick={this.saveMenu}>Save</button>;
     } else {
-      saveButton = <button className="button inactive">Save</button>;
+      saveButton = <button className="button button--inactive">Save</button>;
     }
 
     if (this.menuHasChanges()) {
       cancelButton =<button className="button" onClick={this.cancelMenuEdit}>Cancel</button>
     } else {
-      cancelButton = <button className="button inactive">Cancel</button>;
+      cancelButton = <button className="button button--inactive">Cancel</button>;
     }
 
     if (!this.state.menuItems.length) {
-      deleteButton = <button className="button delete" onClick={this.deleteMenu}>Delete</button>;
+      deleteButton = <button className="button button--delete" onClick={this.deleteMenu}>Delete</button>;
     } else {
       deleteButton = '';
     }
@@ -290,19 +299,19 @@ class Menu extends Component {
     if (this.menuItemHasChanges(menuItem, menuItemIndex) && this.menuItemHasAllRequiredFields(menuItem)) {
       saveButton =<button className="button" onClick={this.saveMenuItem.bind(this, menuItemIndex)}>Save</button>;
     } else {
-      saveButton = <button className="button inactive">Save</button>;
+      saveButton = <button className="button button--inactive">Save</button>;
     }
 
     if (this.menuItemHasChanges(menuItem, menuItemIndex)) {
       cancelButton =<button className="button" onClick={this.cancelMenuItemEdit.bind(this, menuItemIndex)}>Cancel</button>
     } else {
-      cancelButton = <button className="button inactive">Cancel</button>;
+      cancelButton = <button className="button button--inactive">Cancel</button>;
     }
 
-    deleteButton = <button className="button delete" onClick={this.deleteMenuItem.bind(this, menuItem, menuItemIndex)}>Delete</button>;
+    deleteButton = <button className="button button--delete" onClick={this.deleteMenuItem.bind(this, menuItem, menuItemIndex)}>Delete</button>;
 
     return (
-      <div className="buttons">
+      <div>
         {saveButton}
         {cancelButton}
         {deleteButton}
@@ -352,7 +361,7 @@ class Menu extends Component {
           {this.renderMenuButtons()}
         </div>
         {this.renderMenuItems()}
-        <button className="button add" onClick={this.addMenuItem}>Add Menu Item</button>
+        <button className="button button--add" onClick={this.addMenuItem}>Add Menu Item</button>
       </div>
     );
   }

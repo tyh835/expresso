@@ -14,19 +14,6 @@
     color: #ffffff;
   }
 
-  .delete {
-    background-color: #f35858 !important;
-    color: #f5f1ee !important;
-
-    &:hover {
-      background-color: #ca0505 !important;
-    }
-  }
-
-  .add {
-    margin-top: 2rem;
-  }
-
   .title {
     display: flex;
     flex-direction: column;

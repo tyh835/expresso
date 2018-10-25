@@ -9,6 +9,7 @@
     "start:dev": "NODE_ENV=dev nodemon server.js",
     "start:prod": "NODE_ENV=prod node server.js",
     "start:client": "cd client && yarn start",
+    "build:client": "cd client && yarn build",
     "seed": "node migration.js && node seed.js"
   },
   "author": "Tony Han",
