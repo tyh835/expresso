@@ -10,7 +10,7 @@
     "start": "NODE_ENV=dev node server.js",
     "start:client": "cd client && yarn start",
     "start:dev": "NODE_ENV=dev nodemon server.js",
-    "start:prod": "npm run build:client && NODE_ENV=prod forever start server.js",
+    "start:prod": "NODE_ENV=prod forever start server.js",
     "test": "mocha"
   },
   "author": "Tony Han",
