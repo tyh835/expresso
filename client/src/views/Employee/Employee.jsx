@@ -13,11 +13,8 @@ class Employee extends Component {
       timesheets: []
     };
 
-    this.updateEmployeeName = this.updateEmployeeName.bind(this);
-    this.updateEmployeePosition = this.updateEmployeePosition.bind(this);
-    this.updateEmployeeWage = this.updateEmployeeWage.bind(this);
-    this.updateTimesheetHours = this.updateTimesheetHours.bind(this);
-    this.updateTimesheetRate = this.updateTimesheetRate.bind(this);
+    this.updateEmployee = this.updateEmployee.bind(this);
+    this.updateTimesheet = this.updateTimesheet.bind(this);
     this.saveEmployee = this.saveEmployee.bind(this);
     this.cancelEmployeeEdit = this.cancelEmployeeEdit.bind(this);
     this.deleteEmployee = this.deleteEmployee.bind(this);
@@ -39,7 +36,9 @@ class Employee extends Component {
 
       this.setState({
         employee: newEmployee,
-        savedEmployee: JSON.parse(JSON.stringify(newEmployee))
+        savedEmployee: {
+          ...newEmployee
+        }
       });
       return;
     }
@@ -48,7 +47,9 @@ class Employee extends Component {
       if (employee) {
         this.setState({
           employee: employee,
-          savedEmployee: JSON.parse(JSON.stringify(employee))
+          savedEmployee: {
+            ...employee
+          }
         });
       }
     });
@@ -57,7 +58,9 @@ class Employee extends Component {
       const sortedTimesheets = this.sortTimesheets(timesheets);
       this.setState({
         timesheets: sortedTimesheets,
-        savedTimesheets: JSON.parse(JSON.stringify(sortedTimesheets))
+        savedTimesheets: [
+          ...sortedTimesheets
+        ]
       });
     });
   }
@@ -89,13 +92,13 @@ class Employee extends Component {
   }
 
   employeeHasAllRequiredFields() {
-    return !!this.state.employee.name && !!this.state.employee.position &&
-        !!this.state.employee.wage;
+    return !!this.state.employee.name
+        && !!this.state.employee.position
+        && !!this.state.employee.wage;
   }
 
   timesheetHasChanges(timesheet, timesheetIndex) {
     const savedTimesheet = this.state.savedTimesheets[timesheetIndex];
-
     if (!timesheet.id) {
       return true;
     }
@@ -104,8 +107,7 @@ class Employee extends Component {
       return false;
     }
 
-    if (timesheet.hours === savedTimesheet.hours &&
-        timesheet.rate === savedTimesheet.rate) {
+    if (timesheet.hours === savedTimesheet.hours && timesheet.rate === savedTimesheet.rate) {
       return false;
     }
 
@@ -116,34 +118,33 @@ class Employee extends Component {
     return !!timesheet.hours && !!timesheet.rate;
   }
 
-  updateEmployeeName(event) {
-    const employee = JSON.parse(JSON.stringify(this.state.employee));
-    employee.name = event.target.value;
-    this.setState({employee: employee});
+  updateEmployee(e) {
+    const type = e.target.id;
+    const newValue = e.target.value;
+    this.setState(state => {
+      return {
+        ...state,
+        employee: {
+          ...state.employee,
+          [type]: newValue
+        }
+      }
+    });
   }
 
-  updateEmployeePosition(event) {
-    const employee = JSON.parse(JSON.stringify(this.state.employee));
-    employee.position = event.target.value;
-    this.setState({employee: employee});
-  }
-
-  updateEmployeeWage(event) {
-    const employee = JSON.parse(JSON.stringify(this.state.employee));
-    employee.wage = event.target.value;
-    this.setState({employee: employee});
-  }
-
-  updateTimesheetHours(event, timesheetIndex) {
-    const timesheets = JSON.parse(JSON.stringify(this.state.timesheets));
-    timesheets[timesheetIndex].hours = event.target.value;
-    this.setState({timesheets: timesheets});
-  }
-
-  updateTimesheetRate(event, timesheetIndex) {
-    const timesheets = JSON.parse(JSON.stringify(this.state.timesheets));
-    timesheets[timesheetIndex].rate = event.target.value;
-    this.setState({timesheets: timesheets});
+  updateTimesheet(e, timesheetIndex) {
+    const type = e.target.id;
+    const newValue = e.target.value;
+    this.setState(state => {
+      state.timesheets[timesheetIndex] = {
+        ...state.timesheets[timesheetIndex],
+        [type]: newValue
+      }
+      return {
+        ...state,
+        timesheets: state.timesheets
+      }
+    });
   }
 
   saveEmployee(e) {
@@ -152,7 +153,9 @@ class Employee extends Component {
       Expresso.updateEmployee(this.state.employee).then(employee => {
         this.setState({
           employee: employee,
-          savedEmployee: JSON.parse(JSON.stringify(employee))
+          savedEmployee: {
+            ...employee
+          }
         });
       });
     } else {
@@ -160,13 +163,17 @@ class Employee extends Component {
         this.props.history.push(`/employees/${employee.id}`);
         this.setState({
           employee: employee,
-          savedEmployee: JSON.parse(JSON.stringify(employee))
+          savedEmployee: {
+            ...employee
+          }
         });
         Expresso.getTimesheets(this.props.match.params.id).then(timesheets => {
           const sortedTimesheets = this.sortTimesheets(timesheets);
           this.setState({
             timesheets: sortedTimesheets,
-            savedTimesheets: JSON.parse(JSON.stringify(sortedTimesheets))
+            savedTimesheets: {
+              ...sortedTimesheets
+            }
           });
         });
       });
@@ -174,8 +181,13 @@ class Employee extends Component {
   }
 
   cancelEmployeeEdit() {
-    this.setState({
-      employee: JSON.parse(JSON.stringify(this.state.savedEmployee))
+    this.setState(state => {
+      return {
+        ...state,
+        employee: {
+          ...state.savedEmployee
+        }
+      }
     });
   }
 
@@ -187,11 +199,14 @@ class Employee extends Component {
 
   restoreEmployee() {
     Expresso.restoreEmployee(this.state.savedEmployee).then(employee => {
-      const stateEmployee = JSON.parse(JSON.stringify(this.state.employee));
-      stateEmployee.isCurrentEmployee = employee.isCurrentEmployee;
-      this.setState({
-        employee: stateEmployee,
-        savedEmployee: employee
+      this.setState(state => {
+        return {
+          employee: {
+            ...state.employee,
+            isCurrentEmployee: employee.isCurrentEmployee
+          },
+          savedEmployee: employee
+        }
       });
     });
   }
@@ -204,73 +219,80 @@ class Employee extends Component {
       employeeId: this.state.employee.id
     };
 
-    const timesheets = JSON.parse(JSON.stringify(this.state.timesheets));
-    timesheets.unshift(newtimesheet);
-    this.setState({timesheets: timesheets});
+    this.setState(state => {
+      return {
+        ...state,
+        timesheets: [
+          newtimesheet,
+          ...state.timesheets
+        ],
+        savedTimesheets: [
+          newtimesheet,
+          ...state.savedTimesheets
+        ]
+      }}
+    );
   }
 
   saveTimesheet(timesheetIndex) {
     if (this.state.timesheets[timesheetIndex].id) {
       Expresso.updateTimesheet(this.state.timesheets[timesheetIndex], this.state.employee.id)
-        .then(timesheet => {
-          let timesheets = JSON.parse(JSON.stringify(this.state.timesheets));
-          timesheets.splice(timesheetIndex, 1, timesheet);
-          let savedTimesheets = JSON.parse(JSON.stringify(this.state.savedTimesheets));
-          savedTimesheets.splice(timesheetIndex, 1, timesheet);
+        .then(newTimesheet => {
+          let timesheets = this.state.timesheets.map((timesheet, i) => i === timesheetIndex ? newTimesheet : timesheet);
           timesheets = this.sortTimesheets(timesheets);
-          savedTimesheets = this.sortTimesheets(savedTimesheets);
           this.setState({
-            timesheets: timesheets,
-            savedTimesheets: JSON.parse(JSON.stringify(timesheets))
+            timesheets,
+            savedTimesheets: [
+              ...timesheets
+            ]
           });
         });
     } else {
       Expresso.createTimesheet(this.state.timesheets[timesheetIndex], this.state.employee.id)
-        .then(timesheet => {
-          let timesheets = JSON.parse(JSON.stringify(this.state.timesheets));
-          timesheets.splice(timesheetIndex, 1, timesheet);
-          let savedTimesheets = JSON.parse(JSON.stringify(this.state.savedTimesheets));
-          savedTimesheets.splice(timesheetIndex, 1, timesheet);
+        .then(newTimesheet => {
+          let timesheets = this.state.timesheets.map((timesheet, i) => i === timesheetIndex ? newTimesheet : timesheet);
+          let savedTimesheets = this.state.savedTimesheets.map((timesheet, i) => i === timesheetIndex ? newTimesheet : timesheet);
           timesheets = this.sortTimesheets(timesheets);
           savedTimesheets = this.sortTimesheets(savedTimesheets);
           this.setState({
-            timesheets: timesheets,
-            savedTimesheets: savedTimesheets
+            timesheets,
+            savedTimesheets
           });
       });
     }
   }
 
   cancelTimesheetEdit(timesheetIndex) {
-    const timesheets = JSON.parse(JSON.stringify(this.state.timesheets));
-    const timesheet = timesheets[timesheetIndex];
+    const timesheet = this.state.timesheets[timesheetIndex];
     if (!timesheet.id) {
-      this.deleteTimesheet(timesheet, timesheetIndex);
+      this.deleteTimesheet(timesheetIndex);
     } else {
-      timesheets[timesheetIndex] = JSON.parse(JSON.stringify(this.state.savedTimesheets[timesheetIndex]));
-      this.setState({
-        timesheets: timesheets
+      this.setState(state => {
+        return {
+          timesheets: state.timesheets.map((timesheet, i) => {
+            return i === timesheetIndex ? state.savedTimesheets[i] : timesheet;
+          })
+        }
       });
     }
   }
 
-  deleteTimesheet(timesheet, timesheetIndex) {
-    const timesheets = JSON.parse(JSON.stringify(this.state.timesheets));
-    const savedTimesheets = JSON.parse(JSON.stringify(this.state.savedTimesheets));
+  deleteTimesheet(timesheetIndex) {
+    const timesheet = this.state.timesheets[timesheetIndex];
     if (!timesheet.id) {
-      timesheets.splice(timesheetIndex, 1);
-      savedTimesheets.splice(timesheetIndex, 1);
-      this.setState({
-        timesheets: timesheets,
-        savedTimesheets: savedTimesheets
+      this.setState(state => {
+        return {
+          timesheets: state.timesheets.filter((_, i) => i !== timesheetIndex),
+          savedTimesheets: state.savedTimesheets.filter((_, i) => i !== timesheetIndex)
+        }
       });
     } else {
       Expresso.deleteTimesheet(timesheet.id, this.state.employee.id).then(() => {
-        timesheets.splice(timesheetIndex, 1);
-        savedTimesheets.splice(timesheetIndex, 1);
-        this.setState({
-          timesheets: timesheets,
-          savedTimesheets: savedTimesheets
+        this.setState(state => {
+          return {
+            timesheets: state.timesheets.filter((_, i) => i !== timesheetIndex),
+            savedTimesheets: state.savedTimesheets.filter((_, i) => i !== timesheetIndex)
+          }
         });
       });
     }
@@ -331,7 +353,7 @@ class Employee extends Component {
       cancelButton = <button className='button--inactive'>Cancel</button>;
     }
 
-    deleteButton = <button className='button--delete' onClick={this.deleteTimesheet.bind(this, timesheet, timesheetIndex)}>Delete</button>;
+    deleteButton = <button className='button--delete' onClick={this.deleteTimesheet.bind(this, timesheetIndex)}>Delete</button>;
 
     return (
       <div className="timesheet__buttons">
@@ -350,8 +372,8 @@ class Employee extends Component {
       return (
         <div className="timesheet__card" key={timesheet.id}>
           <p className="strong">Date: {new Date(timesheet.date).toDateString()}</p>
-          <p>Hours: <input onChange={(e) => this.updateTimesheetHours(e, timesheetIndex)} value={timesheet.hours} type="number" /></p>
-          <p>Rate: $<input onChange={(e) => this.updateTimesheetRate(e, timesheetIndex)} value={timesheet.rate} type="number" /> / hour</p>
+          <p>Hours: <input onChange={e => this.updateTimesheet(e, timesheetIndex)} id="hours" value={timesheet.hours} type="number" /></p>
+          <p>Rate: $<input onChange={e => this.updateTimesheet(e, timesheetIndex)} id="rate" value={timesheet.rate} type="number" /> / hour</p>
           <p>Total: ${timesheet.hours * timesheet.rate}</p>
           {this.renderTimesheetButtons(timesheet, timesheetIndex)}
         </div>
@@ -378,9 +400,9 @@ class Employee extends Component {
         <h2 className="Employee__heading">Employee</h2>
         <div className="employee">
           {this.renderEmployment()}
-          <p className="strong">Name: <input onChange={this.updateEmployeeName} value={employee.name} /></p>
-          <p>Position: <input onChange={this.updateEmployeePosition} value={employee.position} /></p>
-          <p>Wage: $ <input onChange={this.updateEmployeeWage} value={employee.wage} type="number" /> / hour</p>
+          <p className="strong">Name: <input onChange={this.updateEmployee} id="name" value={employee.name} /></p>
+          <p>Position: <input onChange={this.updateEmployee} id="position" value={employee.position} /></p>
+          <p>Wage: $ <input onChange={this.updateEmployee} id="wage" value={employee.wage} type="number" /> / hour</p>
           {this.renderEmployeeButtons()}
         </div>
         {this.renderTimesheets()}
