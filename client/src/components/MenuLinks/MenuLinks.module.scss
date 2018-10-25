@@ -1,0 +1,11 @@
+@import '../../styles/item.scss';
+
+.menuItem {
+  @extend %item;
+  background-color: #a78881;
+
+  h3 {
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+}

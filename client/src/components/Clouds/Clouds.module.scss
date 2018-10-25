@@ -44,7 +44,7 @@
   }
 }
 
-#Cloud1a {
+.Cloud1a {
   @extend %Cloud;
   top: 30px;
   left: 100px;
@@ -53,7 +53,7 @@
   animation: moveclouds 15s linear infinite;
 }
 
-#Cloud1b {
+.Cloud1b {
   @extend %Cloud;
   top: 0px;
   left: 250px;
@@ -62,7 +62,7 @@
   animation: moveclouds 15s linear infinite;
 }
 
-#Cloud2 {
+.Cloud2 {
   @extend %Cloud;
   left: 250px;
   top: 100px;
@@ -71,7 +71,7 @@
   animation: moveclouds 25s linear infinite;
 }
 
-#Cloud3 {
+.Cloud3 {
   @extend %Cloud;
   left: 250px;
   bottom: -70px;
@@ -80,7 +80,7 @@
   animation: moveclouds 25s linear infinite;
 }
 
-#Cloud4 {
+.Cloud4 {
   @extend %Cloud;
   left: 470px;
   bottom: 50px;
@@ -89,7 +89,7 @@
   animation: moveclouds 18s linear infinite;
 }
 
-#Cloud5 {
+.Cloud5 {
   @extend %Cloud;
   left: 200px;
   top: 300px;
