@@ -4,13 +4,14 @@
   "description": "Simple CRUD Express Application with React Frontend",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
-    "start": "NODE_ENV=dev node server.js",
-    "start:dev": "NODE_ENV=dev nodemon server.js",
-    "start:prod": "NODE_ENV=prod forever start server.js",
-    "start:client": "cd client && yarn start",
     "build:client": "cd client && yarn build",
-    "seed": "node migration.js && node seed.js"
+    "install": "yarn install && cd client && yarn install",
+    "seed": "node migration.js && node seed.js",
+    "start": "NODE_ENV=dev node server.js",
+    "start:client": "cd client && yarn start",
+    "start:dev": "NODE_ENV=dev nodemon server.js",
+    "start:prod": "yarn build:client && NODE_ENV=prod forever start server.js",
+    "test": "mocha"
   },
   "author": "Tony Han",
   "license": "ISC",
