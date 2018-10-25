@@ -24,10 +24,10 @@
     width: 157px;
     min-height: 157px;
     padding: 1rem;
-    border: 2px solid #2f2f2f;
-    margin-left: .5rem;
-    margin-right: .5rem;
-    margin-bottom: 1rem;
+    margin: 1rem;
+    box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+    border-radius: 0.28571429rem;
+    border: 1px solid rgba(34, 36, 38, 0.5);
     text-align: center;
     word-break: break-word;
     font-size: 1.125rem;
@@ -66,7 +66,7 @@
 
   .button {
     padding: .5rem 1.5rem;
-    margin-bottom: 2rem;
+    margin: 1.5rem 0;
     font-size: 1rem;
     border-radius: 67px;
     background-color: #7e5a61;

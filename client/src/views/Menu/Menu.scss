@@ -23,7 +23,19 @@
       text-align: center;
       font-size: 1.125rem;
       letter-spacing: 2.5px;
-      font-weight: 800;
+      font-weight: 600;
+    }
+  }
+
+  &__table {
+    box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+    margin: 1rem 0em;
+    padding: 1rem;
+    border-radius: 0.28571429rem;
+    border: 1px solid rgba(34, 36, 38, 0.15);
+
+    @media (max-width: 820px) {
+      display: none;
     }
   }
 
@@ -56,7 +68,7 @@
 
     &__header {
       font-size: 1.125rem;
-      font-weight: 600;
+      font-weight: 400;
       line-height: 1.33;
       letter-spacing: 0.3px;
       color: #ffffff;
@@ -85,9 +97,7 @@
       }
     }
 
-    @media (max-width: 785px) {
-      display: none;
-    }
+
 
     button {
       @media (max-width: 1200px) {
@@ -98,15 +108,12 @@
 
   .button--add {
     margin-bottom: 2rem;
-    @media (max-width: 785px) {
-      display: none;
-    }
   }
 
   &__responsive--warning {
     color: #2f2f2f;
     margin-top: 8rem;
-    @media (min-width: 785px) {
+    @media (min-width: 820px) {
       display: none;
     }
   }

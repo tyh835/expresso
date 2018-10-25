@@ -336,7 +336,7 @@ class Menu extends Component {
     });
 
     return (
-      <div>
+      <div className="Menu__table">
         <div className="row row__header">
           <div className="row__item">Name</div>
           <div className="row__item">Price</div>
