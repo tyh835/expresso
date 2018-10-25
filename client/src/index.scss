@@ -25,7 +25,9 @@ footer, header, hgroup, menu, nav, section {
 }
 
 body {
+  width: 100vw;
   line-height: 1;
+  overflow-x: hidden;
 }
 
 ol, ul {
@@ -94,6 +96,7 @@ input {
   color: #fff;
   transition: .25s;
   border: none;
+  cursor: pointer;
 }
 
 button:focus {

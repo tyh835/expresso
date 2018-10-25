@@ -7,11 +7,26 @@ import Menu from './views/Menu/Menu.jsx';
 import Landing from './views/Landing/Landing.jsx';
 import Employee from './views/Employee/Employee.jsx';
 
+import {
+  Cloud1a,
+  Cloud1b,
+  Cloud2,
+  Cloud3,
+  Cloud4,
+  Cloud5
+} from './components/Clouds.jsx';
+
 class App extends Component {
   render() {
     return (
       <Router>
         <div>
+          <Cloud1a />
+          <Cloud1b />
+          <Cloud2 />
+          <Cloud3 />
+          <Cloud4 />
+          <Cloud5 />
           <header className={style.header}>
             <Link to="/">
               <Logo alt="logo" />
