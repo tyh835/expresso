@@ -400,9 +400,9 @@ class Employee extends Component {
         <h2 className="Employee__heading">Employee</h2>
         <div className="employee">
           {this.renderEmployment()}
-          <p className="strong">Name: <input onChange={this.updateEmployee} id="name" value={employee.name} /></p>
-          <p>Position: <input onChange={this.updateEmployee} id="position" value={employee.position} /></p>
-          <p>Wage: $ <input onChange={this.updateEmployee} id="wage" value={employee.wage} type="number" /> / hour</p>
+          <p className="strong"><span>Name: </span><input onChange={this.updateEmployee} id="name" value={employee.name} /></p>
+          <p><span>Positions: </span><input onChange={this.updateEmployee} id="position" value={employee.position} /></p>
+          <p><span>Wage ($/hour): </span><input onChange={this.updateEmployee} id="wage" value={employee.wage} type="number" /></p>
           {this.renderEmployeeButtons()}
         </div>
         {this.renderTimesheets()}
