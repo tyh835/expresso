@@ -1,7 +1,7 @@
 import camelcaseKeys from 'camelcase-keys';
 
 const Expresso = {};
-const baseUrl = 'http://localhost:4000/api';
+const baseUrl = process.env.BASE_URL || 'http://localhost:4000/api';
 
 Expresso.getEmployees = () => {
   const url = `${baseUrl}/employees`;

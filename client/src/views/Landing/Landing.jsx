@@ -44,7 +44,7 @@ class Landing extends Component {
     return this.state.menus.map(menu => {
       return (
         <Link to={`/menus/${menu.id}`}
-           className="item"
+           className="items__item--menu"
            key={menu.id}>
           <h3>{menu.title}</h3>
         </Link>
@@ -56,7 +56,7 @@ class Landing extends Component {
     return this.state.employees.map(employee => {
       return (
         <Link to={`/employees/${employee.id}`}
-           className="item"
+           className="items__item--employee"
            key={employee.id}>
            <h3>{employee.name}</h3>
         </Link>
@@ -67,16 +67,16 @@ class Landing extends Component {
   render() {
     return (
       <div className="Landing">
-        <h2>MANAGE MENUS</h2>
-        <div className="menu item-list">
+        <h2 className="Landing__heading">MANAGE MENUS</h2>
+        <div className="items">
           {this.renderMenus()}
         </div>
-        <Link to="/menus/new" className="button">ADD</Link>
-        <h2>MANAGE EMPLOYEES</h2>
-        <div className="employee item-list">
+        <Link to="/menus/new" className="button">Add</Link>
+        <h2 className="Landing__heading">MANAGE EMPLOYEES</h2>
+        <div className="items">
           {this.renderEmployees()}
         </div>
-        <Link to="/employees/new" className="button">ADD</Link>
+        <Link to="/employees/new" className="button">Add</Link>
       </div>
     );
   }

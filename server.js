@@ -11,7 +11,6 @@ app.use(cors());
 
 if (process.env.NODE_ENV === 'dev') {
   app.use(morgan('dev'));
-  app.use(errorhandler());
 } else if (process.env.NODE_ENV === 'prod') {
   app.use(morgan('common'));
   app.use(express.static('client/build'));
@@ -21,6 +20,10 @@ const apiRouter = require('./api/api.js');
 app.use('/api', apiRouter);
 
 const PORT = process.env.PORT || 4000;
+
+if (process.env.NODE_ENV === 'dev') {
+  app.use(errorhandler());
+}
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port: ${PORT}`);

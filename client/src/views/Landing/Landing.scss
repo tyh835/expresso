@@ -6,71 +6,74 @@
   padding-top: 4rem;
   padding-bottom: 8rem;
   background-color: #f3f3f3;
-}
 
-.Landing h2 {
-  margin-bottom: 1rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  text-align: center;
-  color: #7e5a61;
-}
+  &__heading {
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-align: center;
+    color: #7e5a61;
+  }
 
-.Landing .item-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0 2rem;
-}
+  %item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 157px;
+    min-height: 157px;
+    padding: 1rem;
+    border: 2px solid #2f2f2f;
+    margin-left: .5rem;
+    margin-right: .5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    word-break: break-word;
+    font-size: 1.125rem;
+    transition: .25s;
 
-.Landing .item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  width: 157px;
-  min-height: 157px;
-  padding: 1rem;
-  border: 2px solid #2f2f2f;
-  margin-left: .5rem;
-  margin-right: .5rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  word-break: break-word;
-  font-size: 1.125rem;
-  transition: .25s;
-}
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 
-.Landing .item:hover {
-  opacity: 0.8;
-}
+  .items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 2rem;
 
-.Landing .menu .item {
-  background-color: #a78881;
-}
+    &__item--menu {
+      @extend %item;
+      background-color: #a78881;
 
-.Landing .employee .item {
-  background-color: #c6a17e;
-}
+      h3 {
+        display: inline-block;
+        margin-bottom: 1rem;
+      }
+    }
 
-.Landing .item h3 {
-  display: inline-block;
-}
+    &__item--employee {
+      @extend %item;
+      background-color: #c6a17e;
 
-.Landing .menu .item h3 {
-  margin-bottom: 1rem;
-}
+      h3 {
+        display: inline-block;
+      }
+    }
+  }
 
-.Landing .button {
-  padding: .5rem 1.5rem;
-  margin-bottom: 2rem;
-  font-size: 1rem;
-  border-radius: 67px;
-  background-color: #7e5a61;
-  transition: .25s;
-}
+  .button {
+    padding: .5rem 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    border-radius: 67px;
+    background-color: #7e5a61;
+    transition: .25s;
+  }
 
-.Landing .button:hover {
-  background-color: #ad9696;
+  .button:hover {
+    background-color: #ad9696;
+  }
 }

@@ -269,23 +269,23 @@ class Menu extends Component {
     if (this.menuHasChanges() && this.menuHasAllRequiredFields()) {
       saveButton =<button className="button" onClick={this.saveMenu}>Save</button>;
     } else {
-      saveButton = <button className="button button--inactive">Save</button>;
+      saveButton = <button className="button--inactive">Save</button>;
     }
 
     if (this.menuHasChanges()) {
       cancelButton =<button className="button" onClick={this.cancelMenuEdit}>Cancel</button>
     } else {
-      cancelButton = <button className="button button--inactive">Cancel</button>;
+      cancelButton = <button className="button--inactive">Cancel</button>;
     }
 
     if (!this.state.menuItems.length) {
-      deleteButton = <button className="button button--delete" onClick={this.deleteMenu}>Delete</button>;
+      deleteButton = <button className="button--delete" onClick={this.deleteMenu}>Delete</button>;
     } else {
       deleteButton = '';
     }
 
     return (
-      <div className="buttons">
+      <div>
         {saveButton}
         {cancelButton}
         {deleteButton}
@@ -299,16 +299,16 @@ class Menu extends Component {
     if (this.menuItemHasChanges(menuItem, menuItemIndex) && this.menuItemHasAllRequiredFields(menuItem)) {
       saveButton =<button className="button" onClick={this.saveMenuItem.bind(this, menuItemIndex)}>Save</button>;
     } else {
-      saveButton = <button className="button button--inactive">Save</button>;
+      saveButton = <button className="button--inactive">Save</button>;
     }
 
     if (this.menuItemHasChanges(menuItem, menuItemIndex)) {
       cancelButton =<button className="button" onClick={this.cancelMenuItemEdit.bind(this, menuItemIndex)}>Cancel</button>
     } else {
-      cancelButton = <button className="button button--inactive">Cancel</button>;
+      cancelButton = <button className="button--inactive">Cancel</button>;
     }
 
-    deleteButton = <button className="button button--delete" onClick={this.deleteMenuItem.bind(this, menuItem, menuItemIndex)}>Delete</button>;
+    deleteButton = <button className="button--delete" onClick={this.deleteMenuItem.bind(this, menuItem, menuItemIndex)}>Delete</button>;
 
     return (
       <div>
@@ -326,23 +326,23 @@ class Menu extends Component {
     const menuItems = this.state.menuItems.map((menuItem, menuItemIndex) => {
       return (
         <div className="row" key={menuItem.id}>
-          <div className="item"><input onChange={(e) => this.updateMenuItemName(e, menuItemIndex)} value={menuItem.name}/></div>
-          <div className="item"><input type="number" onChange={(e) => this.updateMenuItemPrice(e, menuItemIndex)} value={menuItem.price} /></div>
-          <div className="item"><input type="number" onChange={(e) => this.updateMenuItemInventory(e, menuItemIndex)} value={menuItem.inventory} /></div>
-          <div className="item"><textarea onChange={(e) => this.updateMenuItemDescription(e, menuItemIndex)} value={menuItem.description} /></div>
-          <div className="item">{this.renderMenuItemButtons(menuItem, menuItemIndex)}</div>
+          <div className="row__item"><input onChange={(e) => this.updateMenuItemName(e, menuItemIndex)} value={menuItem.name}/></div>
+          <div className="row__item"><input type="number" onChange={(e) => this.updateMenuItemPrice(e, menuItemIndex)} value={menuItem.price} /></div>
+          <div className="row__item"><input type="number" onChange={(e) => this.updateMenuItemInventory(e, menuItemIndex)} value={menuItem.inventory} /></div>
+          <div className="row__item"><input type="text" onChange={(e) => this.updateMenuItemDescription(e, menuItemIndex)} value={menuItem.description} /></div>
+          <div className="row__item">{this.renderMenuItemButtons(menuItem, menuItemIndex)}</div>
         </div>
       );
     });
 
     return (
-      <div className="menu-item-container">
-        <div className="row header">
-          <div className="item">Name</div>
-          <div className="item">Price</div>
-          <div className="item">Inventory</div>
-          <div className="item">Description</div>
-          <div className="item"></div>
+      <div>
+        <div className="row row__header">
+          <div className="row__item">Name</div>
+          <div className="row__item">Price</div>
+          <div className="row__item">Inventory</div>
+          <div className="row__item">Description</div>
+          <div className="row__item"></div>
         </div>
         {menuItems}
       </div>
@@ -356,12 +356,13 @@ class Menu extends Component {
     const menu = this.state.menu;
     return (
       <div className="Menu">
-        <div className="title">
+        <div className="Menu__title">
           <input onChange={this.updateMenuTitle} value={menu.title} placeholder="Menu Title" />
           {this.renderMenuButtons()}
         </div>
         {this.renderMenuItems()}
-        <button className="button button--add" onClick={this.addMenuItem}>Add Menu Item</button>
+        <button className="button--add" onClick={this.addMenuItem}>Add Menu Item</button>
+        <p className="Menu__responsive--warning">Please widen your browser to enable Menu editing.</p>
       </div>
     );
   }

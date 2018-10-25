@@ -7,7 +7,7 @@
     "test": "mocha",
     "start": "NODE_ENV=dev node server.js",
     "start:dev": "NODE_ENV=dev nodemon server.js",
-    "start:prod": "NODE_ENV=prod node server.js",
+    "start:prod": "NODE_ENV=prod forever start server.js",
     "start:client": "cd client && yarn start",
     "build:client": "cd client && yarn build",
     "seed": "node migration.js && node seed.js"
@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "forever": "^0.15.3",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4"
   }

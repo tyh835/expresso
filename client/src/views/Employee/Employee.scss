@@ -1,66 +1,77 @@
 .Employee {
-  min-height: 100vh;
+  height: 100vh;
   padding: 1rem;
+  overflow-y: scroll;
   background-color: #e5dcd4;
   text-align: center;
   line-height: 1.33;
   letter-spacing: 0.3px;
   font-weight: 300;
   font-size: 1.125rem;
-}
 
-.Employee h2 {
-  margin: 2rem 0;
-  color: #7e5a61;;
-}
+  &__heading {
+    margin: 2rem 0;
+    color: #7e5a61;;
+  }
 
-.Employee .strong,
-.Employee .strong input {
-  font-weight: 600;
-}
+  .strong,
+  .strong input {
+    font-weight: 600;
+  }
 
-.Employee .box {
-  background-color : #a78881;
-}
+  p {
+    margin-bottom: .5rem;
+  }
 
-.Employee p {
-  margin-bottom: .5rem;
-}
+  input {
+    color: #fff;
+    font-size: 1.125rem;
+    font-weight: 300;
+  }
 
-.Employee input {
-  color: #fff;
-  font-size: 1.125rem;
-  font-weight: 300;
-}
+  .employee {
+    padding: 1rem;
+    text-align: left;
+    background-color : #a78881;
+  }
 
-.Employee .button {
-  margin-top: 1rem;
-  background-color: #f5f1ee;
-  color: #a78881;
-  font-size: .875rem;
-}
+  .timesheet {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 999px;
+    min-height: 240px;
+    margin: auto;
 
-.Employee .employee {
-  padding: 1rem;
-  text-align: left;
-}
+    &__card {
+      width: 250px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      background-color : #a78881;
 
-.Employee .timesheet-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  max-width: 999px;
-  margin: auto;
-}
+      input {
+        width: 60px;
+        text-align: center;
+      }
+    }
 
-.Employee .timesheet {
-  width: 250px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-}
+    &__buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      height: 50px;
+    }
+  }
 
-.Employee .timesheet input {
-  width: 60px;
-  text-align: center;
+  .button {
+    margin-top: 1rem;
+    background-color: #f5f1ee;
+    color: #a78881;
+    font-size: .875rem;
+  }
+
+  .button--add {
+    margin: 2rem;
+  }
 }

@@ -255,16 +255,25 @@ class Employee extends Component {
   }
 
   deleteTimesheet(timesheet, timesheetIndex) {
-    Expresso.deleteTimesheet(timesheet.id, this.state.employee.id).then(() => {
-      const timesheets = JSON.parse(JSON.stringify(this.state.timesheets));
+    const timesheets = JSON.parse(JSON.stringify(this.state.timesheets));
+    const savedTimesheets = JSON.parse(JSON.stringify(this.state.savedTimesheets));
+    if (!timesheet.id) {
       timesheets.splice(timesheetIndex, 1);
-      const savedTimesheets = JSON.parse(JSON.stringify(this.state.savedTimesheets));
       savedTimesheets.splice(timesheetIndex, 1);
       this.setState({
         timesheets: timesheets,
         savedTimesheets: savedTimesheets
       });
-    });
+    } else {
+      Expresso.deleteTimesheet(timesheet.id, this.state.employee.id).then(() => {
+        timesheets.splice(timesheetIndex, 1);
+        savedTimesheets.splice(timesheetIndex, 1);
+        this.setState({
+          timesheets: timesheets,
+          savedTimesheets: savedTimesheets
+        });
+      });
+    }
   }
 
   renderEmployment() {
@@ -279,27 +288,27 @@ class Employee extends Component {
     let saveButton, cancelButton, deleteButton;
 
     if (this.employeeHasChanges() && this.employeeHasAllRequiredFields()) {
-      saveButton =<button className={'button'} onClick={this.saveEmployee}>Save</button>;
+      saveButton =<button className="button" onClick={this.saveEmployee}>Save</button>;
     } else {
-      saveButton = <button className='button inactive'>Save</button>;
+      saveButton = <button className="button--inactive">Save</button>;
     }
 
     if (this.employeeHasChanges()) {
-      cancelButton =<button className={'button'} onClick={this.cancelEmployeeEdit}>Cancel</button>
+      cancelButton =<button className="button" onClick={this.cancelEmployeeEdit}>Cancel</button>
     } else {
-      cancelButton = <button className='button inactive'>Cancel</button>;
+      cancelButton = <button className="button--inactive">Cancel</button>;
     }
 
     if (employee.isCurrentEmployee && employee.id) {
-      deleteButton = <button className='button delete' onClick={this.deleteEmployee}>Delete</button>;
+      deleteButton = <button className="button--delete" onClick={this.deleteEmployee}>Delete</button>;
     } else if (employee.id) {
-      deleteButton = <button className='button' onClick={this.restoreEmployee}>Restore</button>
+      deleteButton = <button className="button" onClick={this.restoreEmployee}>Restore</button>
     } else {
       deleteButton = '';
     }
 
     return (
-      <div className="buttons">
+      <div>
         {saveButton}
         {cancelButton}
         {deleteButton}
@@ -313,19 +322,19 @@ class Employee extends Component {
     if (this.timesheetHasChanges(timesheet, timesheetIndex) && this.timesheetHasAllRequiredFields(timesheet)) {
       saveButton =<button className="button" onClick={this.saveTimesheet.bind(this, timesheetIndex)}>Save</button>;
     } else {
-      saveButton = <button className="button inactive">Save</button>;
+      saveButton = <button className="button--inactive">Save</button>;
     }
 
     if (this.timesheetHasChanges(timesheet, timesheetIndex)) {
       cancelButton =<button className="button" onClick={this.cancelTimesheetEdit.bind(this, timesheetIndex)}>Cancel</button>
     } else {
-      cancelButton = <button className='button inactive'>Cancel</button>;
+      cancelButton = <button className='button--inactive'>Cancel</button>;
     }
 
-    deleteButton = <button className='button delete' onClick={this.deleteTimesheet.bind(this, timesheet, timesheetIndex)}>Delete</button>;
+    deleteButton = <button className='button--delete' onClick={this.deleteTimesheet.bind(this, timesheet, timesheetIndex)}>Delete</button>;
 
     return (
-      <div className="buttons">
+      <div className="timesheet__buttons">
         {saveButton}
         {cancelButton}
         {deleteButton}
@@ -339,7 +348,7 @@ class Employee extends Component {
     }
     const timesheets = this.state.timesheets.map((timesheet, timesheetIndex) => {
       return (
-        <div className="timesheet box" key={timesheet.id}>
+        <div className="timesheet__card" key={timesheet.id}>
           <p className="strong">Date: {new Date(timesheet.date).toDateString()}</p>
           <p>Hours: <input onChange={(e) => this.updateTimesheetHours(e, timesheetIndex)} value={timesheet.hours} type="number" /></p>
           <p>Rate: $<input onChange={(e) => this.updateTimesheetRate(e, timesheetIndex)} value={timesheet.rate} type="number" /> / hour</p>
@@ -351,11 +360,10 @@ class Employee extends Component {
 
     return (
       <div>
-        <h2>Timesheets</h2>
-        <div className="timesheet-container">
+        <h2 className="Employee__heading">Timesheets</h2>
+        <div className="timesheet">
           {timesheets}
         </div>
-        <button className="button add" onClick={this.addTimesheet}>Add Timesheet</button>
       </div>
     );
   }
@@ -367,8 +375,8 @@ class Employee extends Component {
     const employee = this.state.employee;
     return (
       <div className="Employee">
-        <h2>Employee</h2>
-        <div className="employee box">
+        <h2 className="Employee__heading">Employee</h2>
+        <div className="employee">
           {this.renderEmployment()}
           <p className="strong">Name: <input onChange={this.updateEmployeeName} value={employee.name} /></p>
           <p>Position: <input onChange={this.updateEmployeePosition} value={employee.position} /></p>
@@ -376,6 +384,7 @@ class Employee extends Component {
           {this.renderEmployeeButtons()}
         </div>
         {this.renderTimesheets()}
+        <button className="button--add" onClick={this.addTimesheet}>Add Timesheet</button>
       </div>
     );
   }
