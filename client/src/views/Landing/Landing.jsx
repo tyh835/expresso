@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import EmployeeLinks from '../../components/EmployeeLinks/EmployeeLinks.jsx';
-import MenuLinks from '../../components/MenuLinks/MenuLinks.jsx';
+import { MenuLinks, EmployeeLinks } from '../../components/LinkItems/LinkItems.jsx';
 import './Landing.scss';
 
 import Expresso from '../../utils/Expresso';

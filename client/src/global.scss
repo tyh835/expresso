@@ -1,3 +1,5 @@
+@import './styles/button.scss';
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -85,58 +87,6 @@ input {
   border-bottom: 1px solid #2f2f2f;
 }
 
-%button {
-  display: inline-block;
-  padding: .5rem 1rem;
-  border-radius: 67px;
-  margin-right: .33rem;
-  background-color: #7e5a61;
-  font-size: 0.875rem;
-  letter-spacing: 0.3px;
-  color: #fff;
-  transition: .25s;
-  border: none;
-  cursor: pointer;
-}
-
 button:focus {
   outline: none;
-}
-
-.button {
-  @extend %button;
-  &:last-child {
-    margin-right: 0;
-  }
-  &:hover {
-    background-color: #ab888e;
-  }
-
-  &--delete {
-    @extend %button;
-    background-color: #f35858 !important;
-    color: #f5f1ee !important;
-
-    &:hover {
-      background-color: #ca0505 !important;
-    }
-  }
-
-  &--add {
-    @extend %button;
-    margin-top: 2rem;
-
-    &:hover {
-      background-color: #ab888e;
-    }
-  }
-
-  &--inactive,
-  &--inactive:hover {
-    @extend %button;
-    cursor: default !important;
-    background-color: grey !important;
-    color: #f5f1ee !important;
-    opacity: .8 !important;
-  }
 }

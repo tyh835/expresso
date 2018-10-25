@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link, HashRouter as Router, Route } from 'react-router-dom';
-import { ReactComponent as Logo } from './img/logo.svg';
+import { ReactComponent as Logo } from '../../img/logo.svg';
 import style from './App.module.scss';
 
-import Menu from './views/Menu/Menu.jsx';
-import Landing from './views/Landing/Landing.jsx';
-import Employee from './views/Employee/Employee.jsx';
+import Menu from '../../views/Menu/Menu.jsx';
+import Landing from '../../views/Landing/Landing.jsx';
+import Employee from '../../views/Employee/Employee.jsx';
 
 import {
   Cloud1a,
@@ -14,7 +14,7 @@ import {
   Cloud3,
   Cloud4,
   Cloud5
-} from './components/Clouds/Clouds.jsx';
+} from '../Clouds/Clouds.jsx';
 
 class App extends Component {
   state = {

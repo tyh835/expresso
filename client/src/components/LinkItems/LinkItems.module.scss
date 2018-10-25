@@ -9,3 +9,12 @@
     margin-bottom: 1rem;
   }
 }
+
+.employeeItem {
+  @extend %item;
+  background-color: #c6a17e;
+
+  h3 {
+    display: inline-block;
+  }
+}
