@@ -1,0 +1,43 @@
+@import '../../styles/button.scss';
+
+.odd {
+  @extend %button;
+  background-color: #f5f1ee;
+  color: #c6a17e;
+  margin: 3px;
+
+  &:hover {
+    background-color: #f7f2cf;
+  }
+}
+
+.even {
+  @extend %button;
+  background-color: #c6a17e;
+  color: #f5f1ee;
+  margin: 3px;
+
+  &:hover {
+    background-color: #906033;
+  }
+}
+
+.delete {
+  @extend %button;
+  margin: 3px;
+  background-color: #f35858;
+  color: #f5f1ee;
+
+  &:hover {
+    background-color: #ca0505;
+  }
+}
+
+.inactive, {
+  @extend %button;
+  margin: 3px;
+  cursor: default;
+  background-color: grey;
+  color: #f5f1ee;
+  opacity: .8;
+}

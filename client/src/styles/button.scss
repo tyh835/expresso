@@ -10,13 +10,15 @@
   transition: .25s;
   border: none;
   cursor: pointer;
+
+  &:hover {
+    background-color: #ab888e;
+  }
 }
 
 .button {
   @extend %button;
-  &:last-child {
-    margin-right: 0;
-  }
+
   &:hover {
     background-color: #ab888e;
   }

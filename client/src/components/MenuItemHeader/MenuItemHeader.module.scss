@@ -1,0 +1,15 @@
+@import '../../styles/row-item.scss';
+
+.header {
+  display: flex;
+  background-color: #c6a17e;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.33;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+}
+
+.rowItem {
+  @extend %row-item;
+}

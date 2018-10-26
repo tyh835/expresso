@@ -1,0 +1,30 @@
+@import '../../styles/button.scss';
+
+.default {
+  @extend %button;
+  margin: 3px;
+
+  &:hover {
+    background-color: #ab888e;
+  }
+}
+
+.delete {
+  @extend %button;
+  margin: 3px;
+  background-color: #f35858;
+  color: #f5f1ee;
+
+  &:hover {
+    background-color: #ca0505;
+  }
+}
+
+.inactive, {
+  @extend %button;
+  margin: 3px;
+  cursor: default;
+  background-color: grey;
+  color: #f5f1ee;
+  opacity: .8;
+}

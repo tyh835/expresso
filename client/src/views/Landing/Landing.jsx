@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { MenuLinks, EmployeeLinks } from '../../components/LinkItems/LinkItems.jsx';
-import './Landing.scss';
+import { MenuLinks, EmployeeLinks } from '../../components/Links/Links.jsx';
+import style from './Landing.module.scss';
 
 import Expresso from '../../utils/Expresso';
 
@@ -43,17 +43,17 @@ class Landing extends Component {
 
   render() {
     return (
-      <div className="Landing">
-        <h2 className="Landing__heading">MANAGE MENUS</h2>
-        <div className="items">
+      <div className={style.container}>
+        <h2 className={style.heading}>MANAGE MENUS</h2>
+        <div className={style.itemContainer}>
           <MenuLinks menus={this.state.menus} />
         </div>
-        <Link to="/menus/new" className="button">Add</Link>
-        <h2 className="Landing__heading">MANAGE EMPLOYEES</h2>
-        <div className="items">
+        <Link to="/menus/new" className={style.addButton}>Add</Link>
+        <h2 className={style.heading}>MANAGE EMPLOYEES</h2>
+        <div className={style.itemContainer}>
           <EmployeeLinks employees={this.state.employees} />
         </div>
-        <Link to="/employees/new" className="button">Add</Link>
+        <Link to="/employees/new" className={style.addButton}>Add</Link>
       </div>
     );
   }

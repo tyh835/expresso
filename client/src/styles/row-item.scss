@@ -1,0 +1,23 @@
+%row-item {
+  flex-basis: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  border-right: 2px solid rgba(126, 90, 97, 0.5);
+
+  textarea {
+    background-color: transparent;
+    border-bottom: 1px solid black;
+    font-size: .875rem;
+  }
+
+  input {
+    width: 120px;
+    font-size: .875rem;
+  }
+
+  &:last-child {
+    border-right: 0;
+  }
+}

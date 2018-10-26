@@ -1,7 +1,7 @@
-@import '../../styles/item.scss';
+@import '../../styles/link.scss';
 
-.menuItem {
-  @extend %item;
+.menuLink {
+  @extend %link;
   background-color: #a78881;
 
   h3 {
@@ -10,8 +10,8 @@
   }
 }
 
-.employeeItem {
-  @extend %item;
+.employeeLink {
+  @extend %link;
   background-color: #c6a17e;
 
   h3 {

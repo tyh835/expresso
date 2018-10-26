@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
-import './Menu.scss';
+import { withRouter } from 'react-router-dom';
+import MenuButtons from '../../components/MenuButtons/MenuButtons.jsx';
+import MenuItems from '../../components/MenuItems/MenuItems.jsx';
+import style from './Menu.module.scss';
 
 import Expresso from '../../utils/Expresso';
 
@@ -18,10 +20,14 @@ class Menu extends Component {
     this.saveMenu = this.saveMenu.bind(this);
     this.cancelMenuEdit = this.cancelMenuEdit.bind(this);
     this.deleteMenu = this.deleteMenu.bind(this);
+    this.menuHasChanges = this.menuHasChanges.bind(this);
+    this.menuHasAllRequiredFields = this.menuHasAllRequiredFields.bind(this);
     this.addMenuItem = this.addMenuItem.bind(this);
     this.saveMenuItem = this.saveMenuItem.bind(this);
     this.cancelMenuItemEdit = this.cancelMenuItemEdit.bind(this);
     this.deleteMenuItem = this.deleteMenuItem.bind(this);
+    this.menuItemHasChanges = this.menuItemHasChanges.bind(this);
+    this.menuItemHasAllRequiredFields = this.menuItemHasAllRequiredFields.bind(this);
   }
 
   componentDidMount() {
@@ -197,6 +203,8 @@ class Menu extends Component {
   }
 
   addMenuItem() {
+    if (this.props.match.params.id === 'new') return;
+
     const newMenuItem = {
       name: '',
       description: '',
@@ -278,106 +286,38 @@ class Menu extends Component {
     }
   }
 
-  renderMenuButtons() {
-    let saveButton, cancelButton, deleteButton;
-
-    if (this.menuHasChanges() && this.menuHasAllRequiredFields()) {
-      saveButton =<button className="button" onClick={this.saveMenu}>Save</button>;
-    } else {
-      saveButton = <button className="button--inactive">Save</button>;
-    }
-
-    if (this.menuHasChanges()) {
-      cancelButton =<button className="button" onClick={this.cancelMenuEdit}>Cancel</button>
-    } else {
-      cancelButton = <button className="button--inactive">Cancel</button>;
-    }
-
-    if (!this.state.menuItems.length) {
-      deleteButton = <button className="button--delete" onClick={this.deleteMenu}>Delete</button>;
-    } else {
-      deleteButton = '';
-    }
-
-    return (
-      <div>
-        {saveButton}
-        {cancelButton}
-        {deleteButton}
-      </div>
-    )
-  }
-
-  renderMenuItemButtons(menuItem, menuItemIndex) {
-    let saveButton, cancelButton, deleteButton;
-
-    if (this.menuItemHasChanges(menuItem, menuItemIndex) && this.menuItemHasAllRequiredFields(menuItem)) {
-      saveButton =<button className="button" onClick={this.saveMenuItem.bind(this, menuItemIndex)}>Save</button>;
-    } else {
-      saveButton = <button className="button--inactive">Save</button>;
-    }
-
-    if (this.menuItemHasChanges(menuItem, menuItemIndex)) {
-      cancelButton =<button className="button" onClick={this.cancelMenuItemEdit.bind(this, menuItemIndex)}>Cancel</button>
-    } else {
-      cancelButton = <button className="button--inactive">Cancel</button>;
-    }
-
-    deleteButton = <button className="button--delete" onClick={this.deleteMenuItem.bind(this, menuItemIndex)}>Delete</button>;
-
-    return (
-      <div>
-        {saveButton}
-        {cancelButton}
-        {deleteButton}
-      </div>
-    )
-  }
-
-  renderMenuItems() {
-    if (this.props.match.params.id === 'new') {
-      return '';
-    }
-    const menuItems = this.state.menuItems.map((menuItem, menuItemIndex) => {
-      return (
-        <div className="row" key={menuItem.id}>
-          <div className="row__item"><input onChange={(e) => this.updateMenuItem(e, menuItemIndex)} id="name" value={menuItem.name}/></div>
-          <div className="row__item"><input type="number" onChange={(e) => this.updateMenuItem(e, menuItemIndex)} id="price" value={menuItem.price} /></div>
-          <div className="row__item"><input type="number" onChange={(e) => this.updateMenuItem(e, menuItemIndex)} id="inventory" value={menuItem.inventory} /></div>
-          <div className="row__item"><input type="text" onChange={(e) => this.updateMenuItem(e, menuItemIndex)} id="description" value={menuItem.description} /></div>
-          <div className="row__item">{this.renderMenuItemButtons(menuItem, menuItemIndex)}</div>
-        </div>
-      );
-    });
-
-    return (
-      <div className="Menu__table">
-        <div className="row row__header">
-          <div className="row__item">Name</div>
-          <div className="row__item">Price</div>
-          <div className="row__item">Inventory</div>
-          <div className="row__item">Description</div>
-          <div className="row__item"></div>
-        </div>
-        {menuItems}
-      </div>
-    );
-  }
-
   render() {
     if (!this.state.menu) {
-      return <div className="Menu"></div>
+      return <div className={style.Menu}></div>
     }
     const menu = this.state.menu;
     return (
-      <div className="Menu">
-        <div className="Menu__title">
+      <div className={style.container}>
+        <div className={style.menuName}>
           <input onChange={this.updateMenuTitle} value={menu.title} placeholder="Menu Title" />
-          {this.renderMenuButtons()}
+          <MenuButtons
+            isEmptyMenu={!this.state.menuItems.length}
+            menuHasChanges={this.menuHasChanges}
+            menuHasAllRequiredFields={this.menuHasAllRequiredFields}
+            saveMenu={this.saveMenu}
+            cancelMenuEdit={this.cancelMenuEdit}
+            deleteMenu={this.deleteMenu}
+          />
         </div>
-        {this.renderMenuItems()}
-        <button className="button--add" onClick={this.addMenuItem}>Add Menu Item</button>
-        <p className="Menu__responsive--warning">Please widen your browser to enable Menu editing.</p>
+        {this.props.match.params.id === 'new' || (
+          <MenuItems
+            menuItems={this.state.menuItems}
+            updateMenuItem={this.updateMenuItem}
+            menuItemHasChanges={this.menuItemHasChanges}
+            menuItemHasAllRequiredFields={this.menuItemHasAllRequiredFields}
+            saveMenuItem={this.saveMenuItem}
+            cancelMenuItemEdit={this.cancelMenuItemEdit}
+            deleteMenuItem={this.deleteMenuItem}
+          />
+          )
+        }
+        <button className={style.addButton} onClick={this.addMenuItem}>Add Menu Item</button>
+        <p className={style.responsiveMessage}>Please widen your browser to enable Menu editing.</p>
       </div>
     );
   }
