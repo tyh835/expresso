@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
-import './Employee.scss';
+import style from './Employee.module.scss';
 
+import EmployeeInfo from '../../components/EmployeeInfo/EmployeeInfo.jsx';
+import EmployeeButtons from '../../components/EmployeeButtons/EmployeeButtons.jsx';
+import Timesheets from '../../components/Timesheets/Timesheets.jsx';
 import Expresso from '../../utils/Expresso';
 
 class Employee extends Component {
@@ -216,6 +219,8 @@ class Employee extends Component {
   }
 
   addTimesheet() {
+    if (this.props.match.params.id === 'new') return;
+
     const newtimesheet = {
       hours: 0,
       rate: this.state.employee.wage,
@@ -302,108 +307,40 @@ class Employee extends Component {
     }
   }
 
-  renderEmployeeButtons() {
-    const employee = this.state.employee;
-    let saveButton, cancelButton, deleteButton;
-
-    if (this.employeeHasChanges() && this.employeeHasAllRequiredFields()) {
-      saveButton =<button className="button" onClick={this.saveEmployee}>Save</button>;
-    } else {
-      saveButton = <button className="button--inactive">Save</button>;
-    }
-
-    if (this.employeeHasChanges()) {
-      cancelButton =<button className="button" onClick={this.cancelEmployeeEdit}>Cancel</button>
-    } else {
-      cancelButton = <button className="button--inactive">Cancel</button>;
-    }
-
-    if (employee.isCurrentEmployee && employee.id) {
-      deleteButton = <button className="button--delete" onClick={this.deleteEmployee}>Delete</button>;
-    } else if (employee.id) {
-      deleteButton = <button className="button" onClick={this.restoreEmployee}>Restore</button>
-    } else {
-      deleteButton = '';
-    }
-
-    return (
-      <div>
-        {saveButton}
-        {cancelButton}
-        {deleteButton}
-      </div>
-    )
-  }
-
-  renderTimesheetButtons(timesheet, timesheetIndex) {
-    let saveButton, cancelButton, deleteButton;
-
-    if (this.timesheetHasChanges(timesheet, timesheetIndex) && this.timesheetHasAllRequiredFields(timesheet)) {
-      saveButton =<button className="button" onClick={this.saveTimesheet.bind(this, timesheetIndex)}>Save</button>;
-    } else {
-      saveButton = <button className="button--inactive">Save</button>;
-    }
-
-    if (this.timesheetHasChanges(timesheet, timesheetIndex)) {
-      cancelButton =<button className="button" onClick={this.cancelTimesheetEdit.bind(this, timesheetIndex)}>Cancel</button>
-    } else {
-      cancelButton = <button className='button--inactive'>Cancel</button>;
-    }
-
-    deleteButton = <button className='button--delete' onClick={this.deleteTimesheet.bind(this, timesheetIndex)}>Delete</button>;
-
-    return (
-      <div className="timesheet__buttons">
-        {saveButton}
-        {cancelButton}
-        {deleteButton}
-      </div>
-    )
-  }
-
-  renderTimesheets() {
-    if (this.props.match.params.id === 'new') {
-      return '';
-    }
-    const timesheets = this.state.timesheets.map((timesheet, timesheetIndex) => {
-      return (
-        <div className="timesheet__card" key={timesheet.id}>
-          <p className="strong">Date: {new Date(timesheet.date).toDateString()}</p>
-          <p>Hours: <input onChange={e => this.updateTimesheet(e, timesheetIndex)} id="hours" value={timesheet.hours} type="number" /></p>
-          <p>Rate: $<input onChange={e => this.updateTimesheet(e, timesheetIndex)} id="rate" value={timesheet.rate} type="number" /> / hour</p>
-          <p>Total: ${timesheet.hours * timesheet.rate}</p>
-          {this.renderTimesheetButtons(timesheet, timesheetIndex)}
-        </div>
-      );
-    });
-
-    return (
-      <div>
-        <h2 className="Employee__heading">Timesheets</h2>
-        <div className="timesheet">
-          {timesheets}
-        </div>
-      </div>
-    );
-  }
-
   render() {
     if (!this.state.employee) {
-      return <div className="Employee"></div>
+      return <div className={style.container}></div>
     }
-    const employee = this.state.employee;
     return (
-      <div className="Employee">
-        <h2 className="Employee__heading">Employee</h2>
-        <div className="employee">
-          {!this.state.employee.isCurrentEmployee && <h3 className="strong">Retired</h3>}
-          <p className="strong"><span>Name: </span><input onChange={this.updateEmployee} id="name" value={employee.name} /></p>
-          <p><span>Positions: </span><input onChange={this.updateEmployee} id="position" value={employee.position} /></p>
-          <p><span>Wage ($/hour): </span><input onChange={this.updateEmployee} id="wage" value={employee.wage} type="number" /></p>
-          {this.renderEmployeeButtons()}
+      <div className={style.container}>
+        <h2 className={style.heading}>Employee</h2>
+        <div className={style.employeeInfo}>
+          <EmployeeInfo
+            employee={this.state.employee}
+            updateEmployee={this.updateEmployee}
+          />
+          <EmployeeButtons
+            employee={this.state.employee}
+            employeeHasChanges={this.employeeHasChanges}
+            employeeHasAllRequiredFields={this.employeeHasAllRequiredFields}
+            saveEmployee={this.saveEmployee}
+            cancelEmployeeEdit={this.cancelEmployeeEdit}
+            deleteEmployee={this.deleteEmployee}
+            restoreEmployee={this.restoreEmployee}
+          />
         </div>
-        {this.renderTimesheets()}
-        <button className="button--add" onClick={this.addTimesheet}>Add Timesheet</button>
+        {this.props.match.params.id === 'new' ||
+          <Timesheets
+            timesheets={this.state.timesheets}
+            updateTimesheet={this.updateTimesheet}
+            timesheetHasChanges={this.timesheetHasChanges}
+            timesheetHasAllRequiredFields={this.timesheetHasAllRequiredFields}
+            saveTimesheet={this.saveTimesheet}
+            cancelTimesheetEdit={this.cancelTimesheetEdit}
+            deleteTimesheet={this.deleteTimesheet}
+          />
+        }
+        <button className={style.addButton} onClick={this.addTimesheet}>Add Timesheet</button>
       </div>
     );
   }
