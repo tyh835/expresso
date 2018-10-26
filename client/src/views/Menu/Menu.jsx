@@ -69,6 +69,12 @@ class Menu extends Component {
 
   sortMenuItems(menuItems) {
     return menuItems.sort((menuItem1, menuItem2) => {
+      if (!menuItem1.name) {
+        return -1;
+      }
+      if (!menuItem2.name) {
+        return -1;
+      }
       if (menuItem1.name < menuItem2.name) {
         return -1;
       } else {
