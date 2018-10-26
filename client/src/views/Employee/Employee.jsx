@@ -19,10 +19,14 @@ class Employee extends Component {
     this.cancelEmployeeEdit = this.cancelEmployeeEdit.bind(this);
     this.deleteEmployee = this.deleteEmployee.bind(this);
     this.restoreEmployee = this.restoreEmployee.bind(this);
+    this.employeeHasChanges = this.employeeHasChanges.bind(this);
+    this.employeeHasAllRequiredFields = this.employeeHasAllRequiredFields.bind(this);
     this.addTimesheet = this.addTimesheet.bind(this);
     this.saveTimesheet = this.saveTimesheet.bind(this);
     this.cancelTimesheetEdit = this.cancelTimesheetEdit.bind(this);
     this.deleteTimesheet = this.deleteTimesheet.bind(this);
+    this.timesheetHasChanges = this.timesheetHasChanges.bind(this);
+    this.timesheetHasAllRequiredFields = this.timesheetHasAllRequiredFields.bind(this);
   }
 
   componentDidMount() {
@@ -298,13 +302,6 @@ class Employee extends Component {
     }
   }
 
-  renderEmployment() {
-    if (!this.state.employee.isCurrentEmployee) {
-      return <h3 className="strong">Retired</h3>;
-    }
-    return '';
-  }
-
   renderEmployeeButtons() {
     const employee = this.state.employee;
     let saveButton, cancelButton, deleteButton;
@@ -399,7 +396,7 @@ class Employee extends Component {
       <div className="Employee">
         <h2 className="Employee__heading">Employee</h2>
         <div className="employee">
-          {this.renderEmployment()}
+          {!this.state.employee.isCurrentEmployee && <h3 className="strong">Retired</h3>}
           <p className="strong"><span>Name: </span><input onChange={this.updateEmployee} id="name" value={employee.name} /></p>
           <p><span>Positions: </span><input onChange={this.updateEmployee} id="position" value={employee.position} /></p>
           <p><span>Wage ($/hour): </span><input onChange={this.updateEmployee} id="wage" value={employee.wage} type="number" /></p>
