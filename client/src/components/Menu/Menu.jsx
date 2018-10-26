@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import style from './Menu.module.scss';
 
-import MenuButtons from '../../components/MenuButtons/MenuButtons.jsx';
-import MenuItems from '../../components/MenuItems/MenuItems.jsx';
+import MenuButtons from '../MenuButtons/MenuButtons.jsx';
+import MenuItems from '../MenuItems/MenuItems.jsx';
 import Expresso from '../../utils/Expresso';
 
 class Menu extends Component {

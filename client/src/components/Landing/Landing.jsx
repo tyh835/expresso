@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import style from './Landing.module.scss';
 
-import { MenuLinks, EmployeeLinks } from '../../components/Links/Links.jsx';
+import { MenuLinks, EmployeeLinks } from '../Links/Links.jsx';
 import Expresso from '../../utils/Expresso';
 
 class Landing extends Component {

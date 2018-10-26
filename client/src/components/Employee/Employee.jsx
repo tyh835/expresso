@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import style from './Employee.module.scss';
 
-import EmployeeInfo from '../../components/EmployeeInfo/EmployeeInfo.jsx';
-import EmployeeButtons from '../../components/EmployeeButtons/EmployeeButtons.jsx';
-import Timesheets from '../../components/Timesheets/Timesheets.jsx';
+import EmployeeInfo from '../EmployeeInfo/EmployeeInfo.jsx';
+import EmployeeButtons from '../EmployeeButtons/EmployeeButtons.jsx';
+import Timesheets from '../Timesheets/Timesheets.jsx';
 import Expresso from '../../utils/Expresso';
 
 class Employee extends Component {
