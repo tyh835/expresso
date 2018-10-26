@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import uuid from 'uuid/v4';
 import style from './Menu.module.scss';
+
 
 import MenuButtons from '../MenuButtons/MenuButtons.jsx';
 import MenuItems from '../MenuItems/MenuItems.jsx';
@@ -212,13 +214,18 @@ class Menu extends Component {
       name: '',
       description: '',
       inventory: 0,
-      price: 0
+      price: 0,
+      tempId: uuid()
     };
 
     this.setState(state => {
       return {
         menuItems: [
           ...state.menuItems,
+          newMenuItem
+        ],
+        savedMenuItems: [
+          ...state.savedMenuItems,
           newMenuItem
         ]
       }

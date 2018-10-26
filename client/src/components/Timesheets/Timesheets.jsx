@@ -12,7 +12,6 @@ const Timesheets = ({
   cancelTimesheetEdit,
   deleteTimesheet
 }) => {
-  let newIndex = 0;
   return (
     <div>
       <h2 className={style.heading}>Timesheets</h2>
@@ -20,7 +19,7 @@ const Timesheets = ({
         {
           timesheets.map((timesheet, timesheetIndex) => {
             return (
-              <div className={style.timesheet} key={timesheet.id || `new${++newIndex}`}>
+              <div className={style.timesheet} key={timesheet.id || timesheet.tempId}>
                 <TimesheetInfo
                   timesheet={timesheet}
                   timesheetIndex={timesheetIndex}

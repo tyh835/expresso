@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
+import uuid from 'uuid/v4';
 import style from './Employee.module.scss';
 
 import EmployeeInfo from '../EmployeeInfo/EmployeeInfo.jsx';
@@ -225,7 +226,8 @@ class Employee extends Component {
       hours: 0,
       rate: this.state.employee.wage,
       date: Date.now(),
-      employeeId: this.state.employee.id
+      employeeId: this.state.employee.id,
+      tempId: uuid()
     };
 
     this.setState(state => {
