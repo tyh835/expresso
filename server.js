@@ -19,12 +19,12 @@ if (process.env.NODE_ENV === 'dev') {
 const apiRouter = require('./api_v1/api.js');
 app.use('/api/v1', apiRouter);
 
-const PORT = process.env.PORT || 4000;
 
 if (process.env.NODE_ENV === 'dev') {
   app.use(errorhandler());
 }
 
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server is listening on port: ${PORT}`);
 });
