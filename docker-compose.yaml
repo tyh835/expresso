@@ -3,12 +3,16 @@ version: '3'
 services:
   web:
     image: nginx:1.15-alpine
-    volume:
-      - /client/build:/usr/share/nginx/html
+    ports:
+      - 80:80
+    volumes:
+      - ./client/build:/usr/share/nginx/html
   backend:
     build: backend
     ports:
       - 4000:4000
+    volumes:
+      - app:/usr/src/app
   # postgres:
   #   image: postgres:11.1-alpine
   #   environment:
@@ -19,5 +23,5 @@ services:
   #     - postgres:/var/lib/postgresql/data
 
 volumes:
-  static:
+  app:
   # postgres:

@@ -4,8 +4,8 @@
   "description": "Simple CRUD Express Application with React Frontend",
   "main": "server.js",
   "scripts": {
-    "build:client": "cd client && yarn build",
-    "migrate": "node migration.js && node seed.js",
+    "migrate": "node migration.js",
+    "seed": "node seed.js",
     "start": "nodemon server.js",
     "test": "mocha"
   },

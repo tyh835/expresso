@@ -11,8 +11,10 @@ COPY yarn.lock .
 RUN yarn install
 
 COPY . .
-RUN chmod 755 docker-entrypoint.sh
+RUN chmod 755 ./docker-entrypoint.sh
 
-ENTRYPOINT /usr/src/app/docker-entrypoint.sh
+EXPOSE 4000
+
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
 
 CMD ["yarn", "start"]
