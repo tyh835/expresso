@@ -11,14 +11,15 @@ app.use(cors());
 
 if (process.env.NODE_ENV === 'dev') {
   app.use(morgan('dev'));
-} else if (process.env.NODE_ENV === 'prod') {
+}
+
+if (process.env.NODE_ENV === 'prod') {
   app.use(morgan('common'));
   app.use(express.static('client/build'));
 }
 
 const apiRouter = require('./api_v1/api.js');
 app.use('/api/v1', apiRouter);
-
 
 if (process.env.NODE_ENV === 'dev') {
   app.use(errorhandler());
