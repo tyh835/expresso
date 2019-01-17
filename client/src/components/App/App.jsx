@@ -6,43 +6,25 @@ import style from './App.module.scss';
 import Menu from '../Menu/Menu.jsx';
 import Landing from '../Landing/Landing.jsx';
 import Employee from '../Employee/Employee.jsx';
-
-import {
-  Cloud1a,
-  Cloud1b,
-  Cloud2,
-  Cloud3,
-  Cloud4,
-  Cloud5
-} from '../Clouds/Clouds.jsx';
+import Clouds from '../Clouds/Clouds.jsx';
 
 class App extends Component {
   state = {
     showClouds: false
-  }
+  };
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({showClouds: true});
-    }, 2500)
+      this.setState({ showClouds: true });
+    }, 2500);
   }
 
   render() {
+    const { showClouds } = this.state;
     return (
       <Router>
         <div className={style.container}>
-          {
-            this.state.showClouds && (
-              <>
-                <Cloud1a />
-                <Cloud1b />
-                <Cloud2 />
-                <Cloud3 />
-                <Cloud4 />
-                <Cloud5 />
-              </>
-            )
-          }
+          {showClouds && <Clouds />}
           <header className={style.header}>
             <Link to="/">
               <Logo alt="logo" />

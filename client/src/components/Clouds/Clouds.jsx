@@ -8,3 +8,14 @@ export const Cloud2 = () => <div className={style.Cloud2} />;
 export const Cloud3 = () => <div className={style.Cloud3} />;
 export const Cloud4 = () => <div className={style.Cloud4} />;
 export const Cloud5 = () => <div className={style.Cloud5} />;
+
+export default () => (
+  <>
+    <Cloud1a />
+    <Cloud1b />
+    <Cloud2 />
+    <Cloud3 />
+    <Cloud4 />
+    <Cloud5 />
+  </>
+);
