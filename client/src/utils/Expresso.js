@@ -1,7 +1,7 @@
 import camelcaseKeys from 'camelcase-keys';
 
 const Expresso = {};
-const baseUrl = process.env.BASE_URL || 'http://localhost:4000/api/v1';
+const baseUrl = process.env.API_URL || 'http://localhost:4000/api/v1';
 
 Expresso.getEmployees = () => {
   const url = `${baseUrl}/employees`;
@@ -35,7 +35,7 @@ Expresso.createEmployee = employee => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({employee: employee})
+    body: JSON.stringify({ employee: employee })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
@@ -54,7 +54,7 @@ Expresso.updateEmployee = employee => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({employee: employee})
+    body: JSON.stringify({ employee: employee })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
@@ -74,7 +74,7 @@ Expresso.restoreEmployee = employee => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({employee: employee})
+    body: JSON.stringify({ employee: employee })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
@@ -126,7 +126,7 @@ Expresso.createMenu = menu => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({menu: menu})
+    body: JSON.stringify({ menu: menu })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
@@ -145,7 +145,7 @@ Expresso.updateMenu = menu => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({menu: menu})
+    body: JSON.stringify({ menu: menu })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
@@ -184,7 +184,7 @@ Expresso.createMenuItem = (menuItem, menuId) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({menuItem: menuItem})
+    body: JSON.stringify({ menuItem: menuItem })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
@@ -203,7 +203,7 @@ Expresso.updateMenuItem = (menuItem, menuId) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({menuItem: menuItem})
+    body: JSON.stringify({ menuItem: menuItem })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
@@ -242,7 +242,7 @@ Expresso.createTimesheet = (timesheet, employeeId) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({timesheet: timesheet})
+    body: JSON.stringify({ timesheet: timesheet })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
@@ -261,7 +261,7 @@ Expresso.updateTimesheet = (timesheet, employeeId) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({timesheet: timesheet})
+    body: JSON.stringify({ timesheet: timesheet })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
