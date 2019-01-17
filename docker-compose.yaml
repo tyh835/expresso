@@ -2,11 +2,9 @@ version: '3'
 
 services:
   web:
-    image: nginx:1.15-alpine
+    build: client
     ports:
       - 80:80
-    volumes:
-      - ./client/build:/usr/share/nginx/html
   backend:
     build: backend
     ports:
