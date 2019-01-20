@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import style from './Landing.module.scss';
 
-import { MenuLinks, EmployeeLinks } from '../Links/Links.jsx';
+import { MenuLinks, EmployeeLinks } from '../Links/Links';
 import Expresso from '../../utils/Expresso';
 
 class Landing extends Component {
@@ -19,14 +19,14 @@ class Landing extends Component {
     Expresso.getMenus().then(menus => {
       if (menus.length) {
         const sortedMenus = this.sortItemNames(menus, 'title');
-        this.setState({menus: sortedMenus});
+        this.setState({ menus: sortedMenus });
       }
     });
 
     Expresso.getEmployees().then(employees => {
       if (employees.length) {
         const sortedEmployees = this.sortItemNames(employees, 'name');
-        this.setState({employees: sortedEmployees});
+        this.setState({ employees: sortedEmployees });
       }
     });
   }
@@ -48,12 +48,16 @@ class Landing extends Component {
         <div className={style.itemContainer}>
           <MenuLinks menus={this.state.menus} />
         </div>
-        <Link to="/menus/new" className={style.addButton}>Add</Link>
+        <Link to="/menus/new" className={style.addButton}>
+          Add
+        </Link>
         <h2 className={style.heading}>MANAGE EMPLOYEES</h2>
         <div className={style.itemContainer}>
           <EmployeeLinks employees={this.state.employees} />
         </div>
-        <Link to="/employees/new" className={style.addButton}>Add</Link>
+        <Link to="/employees/new" className={style.addButton}>
+          Add
+        </Link>
       </div>
     );
   }

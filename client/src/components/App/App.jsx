@@ -3,10 +3,10 @@ import { Link, HashRouter as Router, Route } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../img/logo.svg';
 import style from './App.module.scss';
 
-import Menu from '../Menu/Menu.jsx';
-import Landing from '../Landing/Landing.jsx';
-import Employee from '../Employee/Employee.jsx';
-import Clouds from '../Clouds/Clouds.jsx';
+import Menus from '../Menus/Menus';
+import Landing from '../Landing/Landing';
+import Employees from '../Employees/Employees';
+import Clouds from '../Clouds/Clouds';
 
 class App extends Component {
   state = {
@@ -31,8 +31,8 @@ class App extends Component {
             </Link>
           </header>
           <Route exact path="/" component={Landing} />
-          <Route path="/menus/:id" component={Menu} />
-          <Route path="/employees/:id" component={Employee} />
+          <Route path="/menus/:id" component={Menus} />
+          <Route path="/employees/:id" component={Employees} />
         </div>
       </Router>
     );

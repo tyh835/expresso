@@ -1,6 +1,6 @@
 import React from 'react';
-import TimesheetInfo from '../TimesheetInfo/TimesheetInfo.jsx';
-import TimesheetButtons from '../TimesheetButtons/TimesheetButtons.jsx';
+import TimesheetInfo from '../TimesheetInfo/TimesheetInfo';
+import TimesheetButtons from '../TimesheetButtons/TimesheetButtons';
 import style from './Timesheets.module.scss';
 
 const Timesheets = ({
@@ -16,31 +16,32 @@ const Timesheets = ({
     <div>
       <h2 className={style.heading}>Timesheets</h2>
       <div className={style.container}>
-        {
-          timesheets.map((timesheet, timesheetIndex) => {
-            return (
-              <div className={style.timesheet} key={timesheet.id || timesheet.tempId}>
-                <TimesheetInfo
-                  timesheet={timesheet}
-                  timesheetIndex={timesheetIndex}
-                  updateTimesheet={updateTimesheet}
-                />
-                <TimesheetButtons
-                  timesheet={timesheet}
-                  timesheetIndex={timesheetIndex}
-                  timesheetHasChanges={timesheetHasChanges}
-                  timesheetHasAllRequiredFields={timesheetHasAllRequiredFields}
-                  saveTimesheet={saveTimesheet}
-                  cancelTimesheetEdit={cancelTimesheetEdit}
-                  deleteTimesheet={deleteTimesheet}
-                />
-              </div>
-            );
-          })
-        }
+        {timesheets.map((timesheet, timesheetIndex) => {
+          return (
+            <div
+              className={style.timesheet}
+              key={timesheet.id || timesheet.tempId}
+            >
+              <TimesheetInfo
+                timesheet={timesheet}
+                timesheetIndex={timesheetIndex}
+                updateTimesheet={updateTimesheet}
+              />
+              <TimesheetButtons
+                timesheet={timesheet}
+                timesheetIndex={timesheetIndex}
+                timesheetHasChanges={timesheetHasChanges}
+                timesheetHasAllRequiredFields={timesheetHasAllRequiredFields}
+                saveTimesheet={saveTimesheet}
+                cancelTimesheetEdit={cancelTimesheetEdit}
+                deleteTimesheet={deleteTimesheet}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
-  )
+  );
 };
 
 export default Timesheets;

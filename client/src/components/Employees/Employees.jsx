@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import uuid from 'uuid/v4';
-import style from './Employee.module.scss';
+import style from './Employees.module.scss';
 
-import EmployeeInfo from '../EmployeeInfo/EmployeeInfo.jsx';
-import EmployeeButtons from '../EmployeeButtons/EmployeeButtons.jsx';
-import Timesheets from '../Timesheets/Timesheets.jsx';
+import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
+import EmployeeButtons from '../EmployeeButtons/EmployeeButtons';
+import Timesheets from '../Timesheets/Timesheets';
 import Expresso from '../../utils/Expresso';
 
 class Employee extends Component {

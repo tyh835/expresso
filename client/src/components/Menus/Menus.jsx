@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import uuid from 'uuid/v4';
-import style from './Menu.module.scss';
+import style from './Menus.module.scss';
 
-
-import MenuButtons from '../MenuButtons/MenuButtons.jsx';
-import MenuItems from '../MenuItems/MenuItems.jsx';
+import MenuButtons from '../MenuButtons/MenuButtons';
+import MenuItems from '../MenuItems/MenuItems';
 import Expresso from '../../utils/Expresso';
 
 class Menu extends Component {
@@ -29,7 +28,9 @@ class Menu extends Component {
     this.cancelMenuItemEdit = this.cancelMenuItemEdit.bind(this);
     this.deleteMenuItem = this.deleteMenuItem.bind(this);
     this.menuItemHasChanges = this.menuItemHasChanges.bind(this);
-    this.menuItemHasAllRequiredFields = this.menuItemHasAllRequiredFields.bind(this);
+    this.menuItemHasAllRequiredFields = this.menuItemHasAllRequiredFields.bind(
+      this
+    );
   }
 
   componentDidMount() {
@@ -62,9 +63,7 @@ class Menu extends Component {
       const sortedMenuItems = this.sortMenuItems(menuItems);
       this.setState({
         menuItems: sortedMenuItems,
-        savedMenuItems: [
-          ...sortedMenuItems
-        ]
+        savedMenuItems: [...sortedMenuItems]
       });
     });
   }
@@ -110,10 +109,12 @@ class Menu extends Component {
       return false;
     }
 
-    if (menuItem.name === savedMenuItem.name &&
-        menuItem.description === savedMenuItem.description &&
-        menuItem.inventory === savedMenuItem.inventory &&
-        menuItem.price === savedMenuItem.price) {
+    if (
+      menuItem.name === savedMenuItem.name &&
+      menuItem.description === savedMenuItem.description &&
+      menuItem.inventory === savedMenuItem.inventory &&
+      menuItem.price === savedMenuItem.price
+    ) {
       return false;
     }
 
@@ -121,10 +122,12 @@ class Menu extends Component {
   }
 
   menuItemHasAllRequiredFields(menuItem) {
-    return !!menuItem.name
-        && !!menuItem.inventory
-        && !!menuItem.price
-        && !!menuItem.description;
+    return (
+      !!menuItem.name &&
+      !!menuItem.inventory &&
+      !!menuItem.price &&
+      !!menuItem.description
+    );
   }
 
   updateMenuTitle(e) {
@@ -136,7 +139,7 @@ class Menu extends Component {
           ...state.menu,
           title
         }
-      }
+      };
     });
   }
 
@@ -147,11 +150,11 @@ class Menu extends Component {
       state.menuItems[menuItemIndex] = {
         ...state.menuItems[menuItemIndex],
         [type]: newValue
-      }
+      };
       return {
         ...state,
         menuItems: state.menuItems
-      }
+      };
     });
   }
 
@@ -178,9 +181,7 @@ class Menu extends Component {
           const sortedMenuItems = this.sortMenuItems(menuItems);
           this.setState({
             menuItems: sortedMenuItems,
-            savedMenuItems: [
-              ...sortedMenuItems
-            ]
+            savedMenuItems: [...sortedMenuItems]
           });
         });
       });
@@ -193,7 +194,7 @@ class Menu extends Component {
         menu: {
           ...state.savedMenu
         }
-      }
+      };
     });
   }
 
@@ -220,42 +221,44 @@ class Menu extends Component {
 
     this.setState(state => {
       return {
-        menuItems: [
-          ...state.menuItems,
-          newMenuItem
-        ],
-        savedMenuItems: [
-          ...state.savedMenuItems,
-          newMenuItem
-        ]
-      }
+        menuItems: [...state.menuItems, newMenuItem],
+        savedMenuItems: [...state.savedMenuItems, newMenuItem]
+      };
     });
   }
 
   saveMenuItem(menuItemIndex) {
     if (this.state.menuItems[menuItemIndex].id) {
-      Expresso.updateMenuItem(this.state.menuItems[menuItemIndex], this.state.menu.id)
-        .then(newMenuItem => {
-          let menuItems = this.state.menuItems.map((menuItem, i) => i === menuItemIndex ? newMenuItem : menuItem);
-          menuItems = this.sortMenuItems(menuItems);
-          this.setState({
-            menuItems,
-            savedMenuItems: [
-              ...menuItems
-            ]
-          });
+      Expresso.updateMenuItem(
+        this.state.menuItems[menuItemIndex],
+        this.state.menu.id
+      ).then(newMenuItem => {
+        let menuItems = this.state.menuItems.map((menuItem, i) =>
+          i === menuItemIndex ? newMenuItem : menuItem
+        );
+        menuItems = this.sortMenuItems(menuItems);
+        this.setState({
+          menuItems,
+          savedMenuItems: [...menuItems]
         });
+      });
     } else {
-      Expresso.createMenuItem(this.state.menuItems[menuItemIndex], this.state.menu.id)
-        .then(newMenuItem => {
-          let menuItems = this.state.menuItems.map((menuItem, i) => i === menuItemIndex ? newMenuItem : menuItem);
-          let savedMenuItems = this.state.savedMenuItems.map((menuItem, i) => i === menuItemIndex ? newMenuItem : menuItem);
-          menuItems = this.sortMenuItems(menuItems);
-          savedMenuItems = this.sortMenuItems(savedMenuItems);
-          this.setState({
-            menuItems,
-            savedMenuItems
-          });
+      Expresso.createMenuItem(
+        this.state.menuItems[menuItemIndex],
+        this.state.menu.id
+      ).then(newMenuItem => {
+        let menuItems = this.state.menuItems.map((menuItem, i) =>
+          i === menuItemIndex ? newMenuItem : menuItem
+        );
+        let savedMenuItems = this.state.savedMenuItems.map((menuItem, i) =>
+          i === menuItemIndex ? newMenuItem : menuItem
+        );
+        menuItems = this.sortMenuItems(menuItems);
+        savedMenuItems = this.sortMenuItems(savedMenuItems);
+        this.setState({
+          menuItems,
+          savedMenuItems
+        });
       });
     }
   }
@@ -270,7 +273,7 @@ class Menu extends Component {
           menuItems: state.menuItems.map((menuItem, i) => {
             return i === menuItemIndex ? state.savedMenuItems[i] : menuItem;
           })
-        }
+        };
       });
     }
   }
@@ -281,16 +284,20 @@ class Menu extends Component {
       this.setState(state => {
         return {
           menuItems: state.menuItems.filter((_, i) => i !== menuItemIndex),
-          savedMenuItems: state.savedMenuItems.filter((_, i) => i !== menuItemIndex)
-        }
+          savedMenuItems: state.savedMenuItems.filter(
+            (_, i) => i !== menuItemIndex
+          )
+        };
       });
     } else {
       Expresso.deleteMenuItem(menuItem.id, this.state.menu.id).then(() => {
         this.setState(state => {
           return {
             menuItems: state.menuItems.filter((_, i) => i !== menuItemIndex),
-            savedMenuItems: state.savedMenuItems.filter((_, i) => i !== menuItemIndex)
-          }
+            savedMenuItems: state.savedMenuItems.filter(
+              (_, i) => i !== menuItemIndex
+            )
+          };
         });
       });
     }
@@ -298,13 +305,17 @@ class Menu extends Component {
 
   render() {
     if (!this.state.menu) {
-      return <div className={style.Menu}></div>
+      return <div className={style.Menu} />;
     }
     const menu = this.state.menu;
     return (
       <div className={style.container}>
         <div className={style.menuName}>
-          <input onChange={this.updateMenuTitle} value={menu.title} placeholder="Menu Title" />
+          <input
+            onChange={this.updateMenuTitle}
+            value={menu.title}
+            placeholder="Menu Title"
+          />
           <MenuButtons
             isEmptyMenu={!this.state.menuItems.length}
             menuHasChanges={this.menuHasChanges}
@@ -324,10 +335,13 @@ class Menu extends Component {
             cancelMenuItemEdit={this.cancelMenuItemEdit}
             deleteMenuItem={this.deleteMenuItem}
           />
-          )
-        }
-        <button className={style.addButton} onClick={this.addMenuItem}>Add Menu Item</button>
-        <p className={style.responsiveMessage}>Please widen your browser to enable Menu editing.</p>
+        )}
+        <button className={style.addButton} onClick={this.addMenuItem}>
+          Add Menu Item
+        </button>
+        <p className={style.responsiveMessage}>
+          Please widen your browser to enable Menu editing.
+        </p>
       </div>
     );
   }
