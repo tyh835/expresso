@@ -6,4 +6,4 @@ export const FETCH_MENU_LIST = 'FETCH_MENU_LIST';
 // Employees Action Types
 export const FETCH_EMPLOYEE_LIST = 'FETCH_EMPLOYEES_LIST';
 
-// Timesheets Action Types
+// Time Sheets Action Types
