@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 
 import App from './components/App/App.jsx';
 import rootReducer from './reducers';
-import './styles/global.scss';
+import './styles/normalize.scss';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
