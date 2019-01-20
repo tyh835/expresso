@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'prod') {
   app.use(express.static('client/build'));
 }
 
-const apiRouter = require('./api_v1/api.js');
+const apiRouter = require('./api/v1');
 app.use('/api/v1', apiRouter);
 
 if (process.env.NODE_ENV === 'dev') {
