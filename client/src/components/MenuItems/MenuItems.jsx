@@ -7,7 +7,6 @@ const MenuItems = ({
   menuItems,
   updateMenuItem,
   menuItemHasChanges,
-  menuItemHasAllRequiredFields,
   saveMenuItem,
   cancelMenuItemEdit,
   deleteMenuItem
@@ -54,7 +53,6 @@ const MenuItems = ({
                 menuItem={menuItem}
                 menuItemIndex={menuItemIndex}
                 menuItemHasChanges={menuItemHasChanges}
-                menuItemHasAllRequiredFields={menuItemHasAllRequiredFields}
                 saveMenuItem={saveMenuItem}
                 cancelMenuItemEdit={cancelMenuItemEdit}
                 deleteMenuItem={deleteMenuItem}

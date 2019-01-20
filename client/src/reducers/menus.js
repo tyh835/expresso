@@ -1,7 +1,9 @@
 import { FETCH_MENU_LIST } from '../actionTypes';
 
 const initialState = {
-  menuList: []
+  menuList: [],
+  currentMenu: {},
+  cachedMenu: {}
 };
 
 export default (state = initialState, action) => {

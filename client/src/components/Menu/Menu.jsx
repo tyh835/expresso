@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import uuid from 'uuid/v4';
 import style from './Menu.module.scss';
@@ -6,6 +7,7 @@ import style from './Menu.module.scss';
 import MenuButtons from '../MenuButtons/MenuButtons';
 import MenuItems from '../MenuItems/MenuItems';
 import Expresso from '../../utils/Expresso';
+import { sortMenuItems } from '../../utils/sort';
 
 class Menu extends Component {
   constructor(props) {
@@ -21,16 +23,10 @@ class Menu extends Component {
     this.saveMenu = this.saveMenu.bind(this);
     this.cancelMenuEdit = this.cancelMenuEdit.bind(this);
     this.deleteMenu = this.deleteMenu.bind(this);
-    this.menuHasChanges = this.menuHasChanges.bind(this);
-    this.menuHasAllRequiredFields = this.menuHasAllRequiredFields.bind(this);
     this.addMenuItem = this.addMenuItem.bind(this);
     this.saveMenuItem = this.saveMenuItem.bind(this);
     this.cancelMenuItemEdit = this.cancelMenuItemEdit.bind(this);
     this.deleteMenuItem = this.deleteMenuItem.bind(this);
-    this.menuItemHasChanges = this.menuItemHasChanges.bind(this);
-    this.menuItemHasAllRequiredFields = this.menuItemHasAllRequiredFields.bind(
-      this
-    );
   }
 
   componentDidMount() {
@@ -60,74 +56,12 @@ class Menu extends Component {
     });
 
     Expresso.getMenuItems(this.props.match.params.id).then(menuItems => {
-      const sortedMenuItems = this.sortMenuItems(menuItems);
+      const sortedMenuItems = sortMenuItems(menuItems);
       this.setState({
         menuItems: sortedMenuItems,
         savedMenuItems: [...sortedMenuItems]
       });
     });
-  }
-
-  sortMenuItems(menuItems) {
-    return menuItems.sort((menuItem1, menuItem2) => {
-      if (!menuItem2.id) {
-        return -1;
-      }
-      if (menuItem1.name < menuItem2.name) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
-  }
-
-  menuHasChanges() {
-    const menu = this.state.menu;
-    const savedMenu = this.state.savedMenu;
-    if (!savedMenu) {
-      return false;
-    }
-
-    if (menu.title === savedMenu.title) {
-      return false;
-    }
-
-    return true;
-  }
-
-  menuHasAllRequiredFields() {
-    return !!this.state.menu.title;
-  }
-
-  menuItemHasChanges(menuItem, menuItemIndex) {
-    const savedMenuItem = this.state.savedMenuItems[menuItemIndex];
-    if (!menuItem.id) {
-      return true;
-    }
-
-    if (!savedMenuItem) {
-      return false;
-    }
-
-    if (
-      menuItem.name === savedMenuItem.name &&
-      menuItem.description === savedMenuItem.description &&
-      menuItem.inventory === savedMenuItem.inventory &&
-      menuItem.price === savedMenuItem.price
-    ) {
-      return false;
-    }
-
-    return true;
-  }
-
-  menuItemHasAllRequiredFields(menuItem) {
-    return (
-      !!menuItem.name &&
-      !!menuItem.inventory &&
-      !!menuItem.price &&
-      !!menuItem.description
-    );
   }
 
   updateMenuTitle(e) {
@@ -178,7 +112,7 @@ class Menu extends Component {
           }
         });
         Expresso.getMenuItems(this.props.match.params.id).then(menuItems => {
-          const sortedMenuItems = this.sortMenuItems(menuItems);
+          const sortedMenuItems = sortMenuItems(menuItems);
           this.setState({
             menuItems: sortedMenuItems,
             savedMenuItems: [...sortedMenuItems]
@@ -236,7 +170,7 @@ class Menu extends Component {
         let menuItems = this.state.menuItems.map((menuItem, i) =>
           i === menuItemIndex ? newMenuItem : menuItem
         );
-        menuItems = this.sortMenuItems(menuItems);
+        menuItems = sortMenuItems(menuItems);
         this.setState({
           menuItems,
           savedMenuItems: [...menuItems]
@@ -253,8 +187,8 @@ class Menu extends Component {
         let savedMenuItems = this.state.savedMenuItems.map((menuItem, i) =>
           i === menuItemIndex ? newMenuItem : menuItem
         );
-        menuItems = this.sortMenuItems(menuItems);
-        savedMenuItems = this.sortMenuItems(savedMenuItems);
+        menuItems = sortMenuItems(menuItems);
+        savedMenuItems = sortMenuItems(savedMenuItems);
         this.setState({
           menuItems,
           savedMenuItems
@@ -317,9 +251,6 @@ class Menu extends Component {
             placeholder="Menu Title"
           />
           <MenuButtons
-            isEmptyMenu={!this.state.menuItems.length}
-            menuHasChanges={this.menuHasChanges}
-            menuHasAllRequiredFields={this.menuHasAllRequiredFields}
             saveMenu={this.saveMenu}
             cancelMenuEdit={this.cancelMenuEdit}
             deleteMenu={this.deleteMenu}
@@ -329,8 +260,6 @@ class Menu extends Component {
           <MenuItems
             menuItems={this.state.menuItems}
             updateMenuItem={this.updateMenuItem}
-            menuItemHasChanges={this.menuItemHasChanges}
-            menuItemHasAllRequiredFields={this.menuItemHasAllRequiredFields}
             saveMenuItem={this.saveMenuItem}
             cancelMenuItemEdit={this.cancelMenuItemEdit}
             deleteMenuItem={this.deleteMenuItem}
@@ -347,4 +276,9 @@ class Menu extends Component {
   }
 }
 
-export default withRouter(Menu);
+const mapStateToProps = state => ({
+  currentMenu: state.menus.currentMenu,
+  cachedMenu: state.menus.cachedMenu
+});
+
+export default connect(mapStateToProps)(withRouter(Menu));
