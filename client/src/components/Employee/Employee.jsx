@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 import uuid from 'uuid/v4';
 import style from './Employee.module.scss';
 
@@ -14,7 +14,10 @@ class Employee extends Component {
 
     this.state = {
       employee: null,
-      timesheets: []
+      timesheets: [],
+      savedTimesheet: {},
+      savedTimesheets: [],
+      savedEmployee: {}
     };
 
     this.updateEmployee = this.updateEmployee.bind(this);
@@ -24,13 +27,17 @@ class Employee extends Component {
     this.deleteEmployee = this.deleteEmployee.bind(this);
     this.restoreEmployee = this.restoreEmployee.bind(this);
     this.employeeHasChanges = this.employeeHasChanges.bind(this);
-    this.employeeHasAllRequiredFields = this.employeeHasAllRequiredFields.bind(this);
+    this.employeeHasAllRequiredFields = this.employeeHasAllRequiredFields.bind(
+      this
+    );
     this.addTimesheet = this.addTimesheet.bind(this);
     this.saveTimesheet = this.saveTimesheet.bind(this);
     this.cancelTimesheetEdit = this.cancelTimesheetEdit.bind(this);
     this.deleteTimesheet = this.deleteTimesheet.bind(this);
     this.timesheetHasChanges = this.timesheetHasChanges.bind(this);
-    this.timesheetHasAllRequiredFields = this.timesheetHasAllRequiredFields.bind(this);
+    this.timesheetHasAllRequiredFields = this.timesheetHasAllRequiredFields.bind(
+      this
+    );
   }
 
   componentDidMount() {
@@ -66,9 +73,7 @@ class Employee extends Component {
       const sortedTimesheets = this.sortTimesheets(timesheets);
       this.setState({
         timesheets: sortedTimesheets,
-        savedTimesheets: [
-          ...sortedTimesheets
-        ]
+        savedTimesheets: [...sortedTimesheets]
       });
     });
   }
@@ -90,9 +95,11 @@ class Employee extends Component {
       return false;
     }
 
-    if (employee.name === savedEmployee.name &&
-        employee.position === savedEmployee.position &&
-        employee.wage === savedEmployee.wage) {
+    if (
+      employee.name === savedEmployee.name &&
+      employee.position === savedEmployee.position &&
+      employee.wage === savedEmployee.wage
+    ) {
       return false;
     }
 
@@ -100,9 +107,11 @@ class Employee extends Component {
   }
 
   employeeHasAllRequiredFields() {
-    return !!this.state.employee.name
-        && !!this.state.employee.position
-        && !!this.state.employee.wage;
+    return (
+      !!this.state.employee.name &&
+      !!this.state.employee.position &&
+      !!this.state.employee.wage
+    );
   }
 
   timesheetHasChanges(timesheet, timesheetIndex) {
@@ -115,7 +124,10 @@ class Employee extends Component {
       return false;
     }
 
-    if (timesheet.hours === savedTimesheet.hours && timesheet.rate === savedTimesheet.rate) {
+    if (
+      timesheet.hours === savedTimesheet.hours &&
+      timesheet.rate === savedTimesheet.rate
+    ) {
       return false;
     }
 
@@ -136,7 +148,7 @@ class Employee extends Component {
           ...state.employee,
           [type]: newValue
         }
-      }
+      };
     });
   }
 
@@ -147,11 +159,11 @@ class Employee extends Component {
       state.timesheets[timesheetIndex] = {
         ...state.timesheets[timesheetIndex],
         [type]: newValue
-      }
+      };
       return {
         ...state,
         timesheets: state.timesheets
-      }
+      };
     });
   }
 
@@ -179,9 +191,7 @@ class Employee extends Component {
           const sortedTimesheets = this.sortTimesheets(timesheets);
           this.setState({
             timesheets: sortedTimesheets,
-            savedTimesheets: {
-              ...sortedTimesheets
-            }
+            savedTimesheets: [...sortedTimesheets]
           });
         });
       });
@@ -195,7 +205,7 @@ class Employee extends Component {
         employee: {
           ...state.savedEmployee
         }
-      }
+      };
     });
   }
 
@@ -214,7 +224,7 @@ class Employee extends Component {
             isCurrentEmployee: employee.isCurrentEmployee
           },
           savedEmployee: employee
-        }
+        };
       });
     });
   }
@@ -233,42 +243,44 @@ class Employee extends Component {
     this.setState(state => {
       return {
         ...state,
-        timesheets: [
-          newtimesheet,
-          ...state.timesheets
-        ],
-        savedTimesheets: [
-          newtimesheet,
-          ...state.savedTimesheets
-        ]
-      }}
-    );
+        timesheets: [newtimesheet, ...state.timesheets],
+        savedTimesheets: [newtimesheet, ...state.savedTimesheets]
+      };
+    });
   }
 
   saveTimesheet(timesheetIndex) {
     if (this.state.timesheets[timesheetIndex].id) {
-      Expresso.updateTimesheet(this.state.timesheets[timesheetIndex], this.state.employee.id)
-        .then(newTimesheet => {
-          let timesheets = this.state.timesheets.map((timesheet, i) => i === timesheetIndex ? newTimesheet : timesheet);
-          timesheets = this.sortTimesheets(timesheets);
-          this.setState({
-            timesheets,
-            savedTimesheets: [
-              ...timesheets
-            ]
-          });
+      Expresso.updateTimesheet(
+        this.state.timesheets[timesheetIndex],
+        this.state.employee.id
+      ).then(newTimesheet => {
+        let timesheets = this.state.timesheets.map((timesheet, i) =>
+          i === timesheetIndex ? newTimesheet : timesheet
+        );
+        timesheets = this.sortTimesheets(timesheets);
+        this.setState({
+          timesheets,
+          savedTimesheets: [...timesheets]
         });
+      });
     } else {
-      Expresso.createTimesheet(this.state.timesheets[timesheetIndex], this.state.employee.id)
-        .then(newTimesheet => {
-          let timesheets = this.state.timesheets.map((timesheet, i) => i === timesheetIndex ? newTimesheet : timesheet);
-          let savedTimesheets = this.state.savedTimesheets.map((timesheet, i) => i === timesheetIndex ? newTimesheet : timesheet);
-          timesheets = this.sortTimesheets(timesheets);
-          savedTimesheets = this.sortTimesheets(savedTimesheets);
-          this.setState({
-            timesheets,
-            savedTimesheets
-          });
+      Expresso.createTimesheet(
+        this.state.timesheets[timesheetIndex],
+        this.state.employee.id
+      ).then(newTimesheet => {
+        let timesheets = this.state.timesheets.map((timesheet, i) =>
+          i === timesheetIndex ? newTimesheet : timesheet
+        );
+        let savedTimesheets = this.state.savedTimesheets.map((timesheet, i) =>
+          i === timesheetIndex ? newTimesheet : timesheet
+        );
+        timesheets = this.sortTimesheets(timesheets);
+        savedTimesheets = this.sortTimesheets(savedTimesheets);
+        this.setState({
+          timesheets,
+          savedTimesheets
+        });
       });
     }
   }
@@ -283,7 +295,7 @@ class Employee extends Component {
           timesheets: state.timesheets.map((timesheet, i) => {
             return i === timesheetIndex ? state.savedTimesheets[i] : timesheet;
           })
-        }
+        };
       });
     }
   }
@@ -294,24 +306,32 @@ class Employee extends Component {
       this.setState(state => {
         return {
           timesheets: state.timesheets.filter((_, i) => i !== timesheetIndex),
-          savedTimesheets: state.savedTimesheets.filter((_, i) => i !== timesheetIndex)
-        }
+          savedTimesheets: state.savedTimesheets.filter(
+            (_, i) => i !== timesheetIndex
+          )
+        };
       });
     } else {
-      Expresso.deleteTimesheet(timesheet.id, this.state.employee.id).then(() => {
-        this.setState(state => {
-          return {
-            timesheets: state.timesheets.filter((_, i) => i !== timesheetIndex),
-            savedTimesheets: state.savedTimesheets.filter((_, i) => i !== timesheetIndex)
-          }
-        });
-      });
+      Expresso.deleteTimesheet(timesheet.id, this.state.employee.id).then(
+        () => {
+          this.setState(state => {
+            return {
+              timesheets: state.timesheets.filter(
+                (_, i) => i !== timesheetIndex
+              ),
+              savedTimesheets: state.savedTimesheets.filter(
+                (_, i) => i !== timesheetIndex
+              )
+            };
+          });
+        }
+      );
     }
   }
 
   render() {
     if (!this.state.employee) {
-      return <div className={style.container}></div>
+      return <div className={style.container} />;
     }
     return (
       <div className={style.container}>
@@ -331,7 +351,7 @@ class Employee extends Component {
             restoreEmployee={this.restoreEmployee}
           />
         </div>
-        {this.props.match.params.id === 'new' ||
+        {this.props.match.params.id === 'new' || (
           <Timesheets
             timesheets={this.state.timesheets}
             updateTimesheet={this.updateTimesheet}
@@ -341,8 +361,10 @@ class Employee extends Component {
             cancelTimesheetEdit={this.cancelTimesheetEdit}
             deleteTimesheet={this.deleteTimesheet}
           />
-        }
-        <button className={style.addButton} onClick={this.addTimesheet}>Add Timesheet</button>
+        )}
+        <button className={style.addButton} onClick={this.addTimesheet}>
+          Add Timesheet
+        </button>
       </div>
     );
   }
