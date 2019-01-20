@@ -3,9 +3,9 @@ import { Link, HashRouter as Router, Route } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../img/logo.svg';
 import style from './App.module.scss';
 
-import Menus from '../Menus/Menus';
+import Menu from '../Menu/Menu';
 import Landing from '../Landing/Landing';
-import Employees from '../Employees/Employees';
+import Employee from '../Employee/Employee';
 import Clouds from '../Clouds/Clouds';
 
 class App extends Component {
@@ -31,8 +31,8 @@ class App extends Component {
             </Link>
           </header>
           <Route exact path="/" component={Landing} />
-          <Route path="/menus/:id" component={Menus} />
-          <Route path="/employees/:id" component={Employees} />
+          <Route path="/menus/:id" component={Menu} />
+          <Route path="/employees/:id" component={Employee} />
         </div>
       </Router>
     );

@@ -3,6 +3,16 @@ import camelcaseKeys from 'camelcase-keys';
 const Expresso = {};
 const baseUrl = process.env.API_URL || 'http://localhost:4000/api/v1';
 
+Expresso.sortItemNames = (items, field) => {
+  return items.sort((item1, item2) => {
+    if (item2[field].toLowerCase() < item1[field].toLowerCase()) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+};
+
 Expresso.getEmployees = () => {
   const url = `${baseUrl}/employees`;
 
