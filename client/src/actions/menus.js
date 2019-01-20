@@ -1,13 +1,13 @@
 import Expresso from '../utils/Expresso';
-import { FETCH_MENUS } from '../actionTypes';
+import { FETCH_MENU_LIST } from '../actionTypes';
 
-export const fetchMenus = () => async dispatch => {
-  const menus = await Expresso.getMenus();
+export const fetchMenuList = () => async dispatch => {
+  const menus = await Expresso.getMenuList();
 
   if (menus.length) {
     const sortedMenus = Expresso.sortItemNames(menus, 'title');
-    dispatch({ type: FETCH_MENUS, payload: sortedMenus });
+    dispatch({ type: FETCH_MENU_LIST, payload: sortedMenus });
   } else {
-    dispatch({ type: FETCH_MENUS, payload: [] });
+    dispatch({ type: FETCH_MENU_LIST, payload: [] });
   }
 };

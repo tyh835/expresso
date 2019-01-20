@@ -13,7 +13,7 @@ Expresso.sortItemNames = (items, field) => {
   });
 };
 
-Expresso.getEmployees = () => {
+Expresso.getEmployeeList = () => {
   const url = `${baseUrl}/employees`;
 
   return fetch(url).then(response => {
@@ -104,7 +104,7 @@ Expresso.deleteEmployee = id => {
   return fetch(url, fetchOptions);
 };
 
-Expresso.getMenus = () => {
+Expresso.getMenuList = () => {
   const url = `${baseUrl}/menus`;
 
   return fetch(url).then(response => {

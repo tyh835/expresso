@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import style from './Landing.module.scss';
 
 import { MenuLinks, EmployeeLinks } from '../Links/Links';
-import { fetchMenus, fetchEmployees } from '../../actions';
+import { fetchMenuList, fetchEmployeeList } from '../../actions';
 
 class Landing extends Component {
   componentDidMount() {
-    this.props.fetchMenus();
-    this.props.fetchEmployees();
+    this.props.fetchMenuList();
+    this.props.fetchEmployeeList();
   }
 
   render() {
@@ -41,5 +41,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchMenus, fetchEmployees }
+  { fetchMenuList, fetchEmployeeList }
 )(Landing);

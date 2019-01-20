@@ -1,13 +1,13 @@
 import Expresso from '../utils/Expresso';
-import { FETCH_EMPLOYEES } from '../actionTypes';
+import { FETCH_EMPLOYEE_LIST } from '../actionTypes';
 
-export const fetchEmployees = () => async dispatch => {
-  const employees = await Expresso.getEmployees();
+export const fetchEmployeeList = () => async dispatch => {
+  const employees = await Expresso.getEmployeeList();
 
   if (employees.length) {
     const sortedEmployees = Expresso.sortItemNames(employees, 'name');
-    dispatch({ type: FETCH_EMPLOYEES, payload: sortedEmployees });
+    dispatch({ type: FETCH_EMPLOYEE_LIST, payload: sortedEmployees });
   } else {
-    dispatch({ type: FETCH_EMPLOYEES, payload: [] });
+    dispatch({ type: FETCH_EMPLOYEE_LIST, payload: [] });
   }
 };

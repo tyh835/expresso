@@ -1,8 +1,8 @@
-import { fetchMenus } from './menus';
-import { fetchEmployees } from './employees';
+import { fetchMenuList } from './menus';
+import { fetchEmployeeList } from './employees';
 
 // Menu action exports
-export { fetchMenus };
+export { fetchMenuList };
 
 // Employee action exports
-export { fetchEmployees };
+export { fetchEmployeeList };

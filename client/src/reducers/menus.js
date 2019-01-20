@@ -1,4 +1,4 @@
-import { FETCH_MENUS } from '../actionTypes';
+import { FETCH_MENU_LIST } from '../actionTypes';
 
 const initialState = {
   menuList: []
@@ -6,7 +6,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_MENUS:
+    case FETCH_MENU_LIST:
       return {
         ...state,
         menuList: action.payload
