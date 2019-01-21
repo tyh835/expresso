@@ -7,14 +7,14 @@ export const menuItemHasAllRequiredFields = menuItem => {
   );
 };
 
-export const menuItemHasChanges = (menuItem, cachedMenuItem) => {
-  if (!menuItem.id) return true;
+export const menuItemHasChanges = (currentMenuItem, cachedMenuItem) => {
+  if (!currentMenuItem.id) return true;
   else if (!cachedMenuItem) return false;
   else if (
-    menuItem.name === cachedMenuItem.name &&
-    menuItem.description === cachedMenuItem.description &&
-    menuItem.inventory === cachedMenuItem.inventory &&
-    menuItem.price === cachedMenuItem.price
+    currentMenuItem.name === cachedMenuItem.name &&
+    currentMenuItem.description === cachedMenuItem.description &&
+    currentMenuItem.inventory === cachedMenuItem.inventory &&
+    currentMenuItem.price === cachedMenuItem.price
   ) {
     return false;
   } else return true;

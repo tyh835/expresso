@@ -16,7 +16,6 @@ class Employee extends Component {
 
     this.state = {
       timesheets: [],
-      savedTimesheet: {},
       savedTimesheets: []
     };
 

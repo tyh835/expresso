@@ -1,11 +1,10 @@
-export const timesheetHasChanges = (timesheet, timesheetIndex) => {
-  const savedTimesheet = this.state.savedTimesheets[timesheetIndex];
-  if (!timesheet.id) return true;
-  if (!savedTimesheet) return false;
+export const timesheetHasChanges = (currentTimesheet, cachedTimesheet) => {
+  if (!currentTimesheet.id) return true;
+  if (!cachedTimesheet) return false;
 
   if (
-    timesheet.hours === savedTimesheet.hours &&
-    timesheet.rate === savedTimesheet.rate
+    currentTimesheet.hours === cachedTimesheet.hours &&
+    currentTimesheet.rate === cachedTimesheet.rate
   ) {
     return false;
   }
