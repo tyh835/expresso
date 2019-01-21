@@ -1,12 +1,7 @@
 export const timesheetHasChanges = (timesheet, timesheetIndex) => {
   const savedTimesheet = this.state.savedTimesheets[timesheetIndex];
-  if (!timesheet.id) {
-    return true;
-  }
-
-  if (!savedTimesheet) {
-    return false;
-  }
+  if (!timesheet.id) return true;
+  if (!savedTimesheet) return false;
 
   if (
     timesheet.hours === savedTimesheet.hours &&
