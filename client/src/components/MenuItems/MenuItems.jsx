@@ -1,7 +1,7 @@
 import React from 'react';
+import style from './MenuItems.module.scss';
 import MenuItemHeader from '../MenuItemHeader/MenuItemHeader';
 import MenuItemButtons from '../MenuItemButtons/MenuItemButtons';
-import style from './MenuItems.module.scss';
 
 const MenuItems = ({
   menuItems,

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link, HashRouter as Router, Route } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../img/logo.svg';
 import style from './App.module.scss';
-
 import Menu from '../Menu/Menu';
 import Landing from '../Landing/Landing';
 import Employee from '../Employee/Employee';

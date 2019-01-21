@@ -1,7 +1,7 @@
 import React from 'react';
+import style from './Timesheets.module.scss';
 import TimesheetInfo from '../TimesheetInfo/TimesheetInfo';
 import TimesheetButtons from '../TimesheetButtons/TimesheetButtons';
-import style from './Timesheets.module.scss';
 
 const Timesheets = ({
   timesheets,

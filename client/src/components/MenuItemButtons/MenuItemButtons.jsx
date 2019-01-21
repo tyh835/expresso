@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import style from './MenuItemButtons.module.scss';
 import {
   menuItemHasChanges,
   menuItemHasAllRequiredFields
 } from '../../utils/menuItems';
-import style from './MenuItemButtons.module.scss';
 
 const MenuButtons = ({
   cachedMenuItems,

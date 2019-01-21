@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import style from './MenuButtons.module.scss';
 import { cancelMenuEdit, deleteMenu, saveMenu } from '../../actions';
 import { menuHasChanges, menuHasAllRequiredFields } from '../../utils/menus';
-import style from './MenuButtons.module.scss';
 
 const MenuButtons = ({
   cachedMenu,

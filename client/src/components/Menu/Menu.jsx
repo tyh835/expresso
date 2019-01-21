@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import uuid from 'uuid/v4';
+import style from './Menu.module.scss';
 import MenuButtons from '../MenuButtons/MenuButtons';
 import MenuItems from '../MenuItems/MenuItems';
+import Expresso from '../../utils/Expresso';
+import { sortMenuItems } from '../../utils/sort';
 import {
   clearMenu,
   fetchMenu,
   fetchMenuItems,
   updateMenuTitle
 } from '../../actions';
-import Expresso from '../../utils/Expresso';
-import { sortMenuItems } from '../../utils/sort';
-import style from './Menu.module.scss';
 
 class Menu extends Component {
   constructor(props) {
