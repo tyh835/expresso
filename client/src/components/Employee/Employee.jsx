@@ -6,6 +6,7 @@ import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
 import EmployeeButtons from '../EmployeeButtons/EmployeeButtons';
 import Timesheets from '../Timesheets/Timesheets';
 import Expresso from '../../utils/Expresso';
+import { sortTimesheets } from '../../utils/sort';
 
 class Employee extends Component {
   constructor(props) {
@@ -25,18 +26,10 @@ class Employee extends Component {
     this.cancelEmployeeEdit = this.cancelEmployeeEdit.bind(this);
     this.deleteEmployee = this.deleteEmployee.bind(this);
     this.restoreEmployee = this.restoreEmployee.bind(this);
-    this.employeeHasChanges = this.employeeHasChanges.bind(this);
-    this.employeeHasAllRequiredFields = this.employeeHasAllRequiredFields.bind(
-      this
-    );
     this.addTimesheet = this.addTimesheet.bind(this);
     this.saveTimesheet = this.saveTimesheet.bind(this);
     this.cancelTimesheetEdit = this.cancelTimesheetEdit.bind(this);
     this.deleteTimesheet = this.deleteTimesheet.bind(this);
-    this.timesheetHasChanges = this.timesheetHasChanges.bind(this);
-    this.timesheetHasAllRequiredFields = this.timesheetHasAllRequiredFields.bind(
-      this
-    );
   }
 
   componentDidMount() {
@@ -69,72 +62,12 @@ class Employee extends Component {
     });
 
     Expresso.getTimesheets(this.props.match.params.id).then(timesheets => {
-      const sortedTimesheets = this.sortTimesheets(timesheets);
+      const sortedTimesheets = sortTimesheets(timesheets);
       this.setState({
         timesheets: sortedTimesheets,
         savedTimesheets: [...sortedTimesheets]
       });
     });
-  }
-
-  sortTimesheets(timesheets) {
-    return timesheets.sort((timesheet1, timesheet2) => {
-      if (timesheet1.date > timesheet2.date) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
-  }
-
-  employeeHasChanges() {
-    const employee = this.state.employee;
-    const savedEmployee = this.state.savedEmployee;
-    if (!savedEmployee) {
-      return false;
-    }
-
-    if (
-      employee.name === savedEmployee.name &&
-      employee.position === savedEmployee.position &&
-      employee.wage === savedEmployee.wage
-    ) {
-      return false;
-    }
-
-    return true;
-  }
-
-  employeeHasAllRequiredFields() {
-    return (
-      !!this.state.employee.name &&
-      !!this.state.employee.position &&
-      !!this.state.employee.wage
-    );
-  }
-
-  timesheetHasChanges(timesheet, timesheetIndex) {
-    const savedTimesheet = this.state.savedTimesheets[timesheetIndex];
-    if (!timesheet.id) {
-      return true;
-    }
-
-    if (!savedTimesheet) {
-      return false;
-    }
-
-    if (
-      timesheet.hours === savedTimesheet.hours &&
-      timesheet.rate === savedTimesheet.rate
-    ) {
-      return false;
-    }
-
-    return true;
-  }
-
-  timesheetHasAllRequiredFields(timesheet) {
-    return !!timesheet.hours && !!timesheet.rate;
   }
 
   updateEmployee(e) {
@@ -187,7 +120,7 @@ class Employee extends Component {
           }
         });
         Expresso.getTimesheets(this.props.match.params.id).then(timesheets => {
-          const sortedTimesheets = this.sortTimesheets(timesheets);
+          const sortedTimesheets = sortTimesheets(timesheets);
           this.setState({
             timesheets: sortedTimesheets,
             savedTimesheets: [...sortedTimesheets]
@@ -257,7 +190,7 @@ class Employee extends Component {
         let timesheets = this.state.timesheets.map((timesheet, i) =>
           i === timesheetIndex ? newTimesheet : timesheet
         );
-        timesheets = this.sortTimesheets(timesheets);
+        timesheets = sortTimesheets(timesheets);
         this.setState({
           timesheets,
           savedTimesheets: [...timesheets]
@@ -274,8 +207,8 @@ class Employee extends Component {
         let savedTimesheets = this.state.savedTimesheets.map((timesheet, i) =>
           i === timesheetIndex ? newTimesheet : timesheet
         );
-        timesheets = this.sortTimesheets(timesheets);
-        savedTimesheets = this.sortTimesheets(savedTimesheets);
+        timesheets = sortTimesheets(timesheets);
+        savedTimesheets = sortTimesheets(savedTimesheets);
         this.setState({
           timesheets,
           savedTimesheets
@@ -342,20 +275,16 @@ class Employee extends Component {
           />
           <EmployeeButtons
             employee={this.state.employee}
-            employeeHasChanges={this.employeeHasChanges}
-            employeeHasAllRequiredFields={this.employeeHasAllRequiredFields}
             saveEmployee={this.saveEmployee}
             cancelEmployeeEdit={this.cancelEmployeeEdit}
             deleteEmployee={this.deleteEmployee}
             restoreEmployee={this.restoreEmployee}
           />
         </div>
-        {this.props.match.params.id === 'new' || (
+        {true || ( // used to be this.props.match.params.id === 'new'
           <Timesheets
             timesheets={this.state.timesheets}
             updateTimesheet={this.updateTimesheet}
-            timesheetHasChanges={this.timesheetHasChanges}
-            timesheetHasAllRequiredFields={this.timesheetHasAllRequiredFields}
             saveTimesheet={this.saveTimesheet}
             cancelTimesheetEdit={this.cancelTimesheetEdit}
             deleteTimesheet={this.deleteTimesheet}

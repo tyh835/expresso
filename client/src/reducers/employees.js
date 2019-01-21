@@ -1,4 +1,4 @@
-import { FETCH_EMPLOYEE_LIST } from '../actionTypes';
+import { SET_EMPLOYEE_LIST } from '../actionTypes';
 
 const initialState = {
   employeeList: []
@@ -6,7 +6,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_EMPLOYEE_LIST:
+    case SET_EMPLOYEE_LIST:
       return {
         ...state,
         employeeList: action.payload

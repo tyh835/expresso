@@ -17,6 +17,6 @@ export const SET_MENU_ITEMS = 'SET_MENU_ITEMS';
 export const UPDATE_MENU_ITEM = 'UPDATE_MENU_ITEM';
 
 // Employees Action Types
-export const FETCH_EMPLOYEE_LIST = 'FETCH_EMPLOYEES_LIST';
+export const SET_EMPLOYEE_LIST = 'SET_EMPLOYEE_LIST';
 
 // Timesheets Action Types

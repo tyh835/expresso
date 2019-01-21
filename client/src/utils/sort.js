@@ -22,3 +22,14 @@ export const sortMenuItems = menuItems => {
     }
   });
 };
+
+export const sortTimesheets = timesheets => {
+  if (timesheets.length === 0) return [];
+  return timesheets.sort((timesheet1, timesheet2) => {
+    if (timesheet1.date > timesheet2.date) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+};
