@@ -58,7 +58,13 @@ const mapStateToProps = state => ({
   isEmptyMenu: !state.menuItems.currentMenuItems.length
 });
 
+const mapDispatchToProps = {
+  cancelMenuEdit,
+  deleteMenu,
+  saveMenu
+};
+
 export default connect(
   mapStateToProps,
-  { cancelMenuEdit, deleteMenu, saveMenu }
+  mapDispatchToProps
 )(MenuButtons);

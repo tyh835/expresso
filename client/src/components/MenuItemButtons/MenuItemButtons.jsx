@@ -67,7 +67,12 @@ const mapStateToProps = state => ({
   cachedMenuItems: state.menuItems.cachedMenuItems
 });
 
+const mapDispatchToProps = {
+  cancelMenuItemEdit,
+  deleteMenuItem
+};
+
 export default connect(
   mapStateToProps,
-  { cancelMenuItemEdit, deleteMenuItem }
+  mapDispatchToProps
 )(MenuButtons);

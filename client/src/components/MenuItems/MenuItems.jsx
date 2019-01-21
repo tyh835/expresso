@@ -57,7 +57,11 @@ const mapStateToProps = state => ({
   currentMenuItems: state.menuItems.currentMenuItems
 });
 
+const mapDispatchToProps = {
+  updateMenuItem
+};
+
 export default connect(
   mapStateToProps,
-  { updateMenuItem }
+  mapDispatchToProps
 )(MenuItems);

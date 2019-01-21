@@ -45,7 +45,14 @@ const mapStateToProps = state => ({
   employeeList: state.employees.employeeList
 });
 
+const mapDispatchToProps = {
+  clearMenu,
+  clearMenuItems,
+  fetchMenuList,
+  fetchEmployeeList
+};
+
 export default connect(
   mapStateToProps,
-  { clearMenu, clearMenuItems, fetchMenuList, fetchEmployeeList }
+  mapDispatchToProps
 )(Landing);

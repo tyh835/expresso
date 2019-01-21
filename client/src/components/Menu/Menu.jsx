@@ -17,7 +17,6 @@ import {
 class Menu extends Component {
   constructor(props) {
     super(props);
-    this.updateMenuItem = this.updateMenuItem.bind(this);
     this.saveMenuItem = this.saveMenuItem.bind(this);
   }
 
@@ -30,21 +29,6 @@ class Menu extends Component {
       this.props.fetchMenu(id);
       this.props.fetchMenuItems(id);
     }
-  }
-
-  updateMenuItem(e, menuItemIndex) {
-    const type = e.target.id;
-    const newValue = e.target.value;
-    this.setState(state => {
-      state.menuItems[menuItemIndex] = {
-        ...state.menuItems[menuItemIndex],
-        [type]: newValue
-      };
-      return {
-        ...state,
-        menuItems: state.menuItems
-      };
-    });
   }
 
   saveMenuItem(menuItemIndex) {
@@ -84,19 +68,15 @@ class Menu extends Component {
   }
 
   render() {
-    const { addMenuItem, currentMenu, updateMenuTitle } = this.props;
+    const { addMenuItem, menuTitle, updateMenuTitle } = this.props;
     const menuId = this.props.match.params.id;
-
-    if (!currentMenu) {
-      return <div className={style.container} />;
-    }
 
     return (
       <div className={style.container}>
         <div className={style.menuName}>
           <input
             onChange={e => updateMenuTitle(e)}
-            value={currentMenu.title}
+            value={menuTitle}
             placeholder="Menu Title"
           />
           <MenuButtons navigate={this.props.history.push} />
@@ -114,11 +94,18 @@ class Menu extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentMenu: state.menus.currentMenu,
-  cachedMenu: state.menus.cachedMenu
+  menuTitle: state.menus.currentMenu.title
 });
+
+const mapDispatchToProps = {
+  addMenuItem,
+  clearMenu,
+  fetchMenu,
+  fetchMenuItems,
+  updateMenuTitle
+};
 
 export default connect(
   mapStateToProps,
-  { addMenuItem, clearMenu, fetchMenu, fetchMenuItems, updateMenuTitle }
+  mapDispatchToProps
 )(withRouter(Menu));

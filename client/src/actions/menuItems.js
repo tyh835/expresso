@@ -71,14 +71,4 @@ export const updateMenuItem = (e, menuItemIndex) => {
       menuItemIndex
     }
   };
-  // this.setState(state => {
-  //   state.menuItems[menuItemIndex] = {
-  //     ...state.menuItems[menuItemIndex],
-  //     [type]: newValue
-  //   };
-  //   return {
-  //     ...state,
-  //     menuItems: state.menuItems
-  //   };
-  // });
 };
