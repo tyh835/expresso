@@ -34,7 +34,7 @@ const MenuButtons = ({
     <button className={style.inactive}>Cancel</button>
   );
 
-  const deleteButton = isEmptyMenu && (
+  const deleteButton = (
     <button
       className={style.delete}
       onClick={() => deleteMenu(currentMenu.id, navigate)}
@@ -47,7 +47,7 @@ const MenuButtons = ({
     <div>
       {saveButton}
       {cancelButton}
-      {deleteButton}
+      {isEmptyMenu && deleteButton}
     </div>
   );
 };
