@@ -3,6 +3,7 @@ import {
   CANCEL_MENU_ITEM_EDIT,
   CLEAR_MENU_ITEMS,
   DELETE_MENU_ITEM,
+  SAVE_MENU_ITEMS,
   SET_MENU_ITEMS,
   UPDATE_MENU_ITEM
 } from '../actionTypes';
@@ -42,6 +43,12 @@ export default (state = initialState, action) => {
         cachedMenuItems: state.cachedMenuItems.filter(
           (_, i) => i !== action.payload
         )
+      };
+    case SAVE_MENU_ITEMS:
+      return {
+        ...state,
+        currentMenuItems: action.payload.newMenuItems,
+        cachedMenuItems: action.payload.newCachedMenuItems
       };
     case SET_MENU_ITEMS:
       return {

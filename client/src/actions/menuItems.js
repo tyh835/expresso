@@ -6,7 +6,7 @@ import {
   CANCEL_MENU_ITEM_EDIT,
   CLEAR_MENU_ITEMS,
   DELETE_MENU_ITEM,
-  SAVE_MENU_ITEM,
+  SAVE_MENU_ITEMS,
   SET_MENU_ITEMS,
   UPDATE_MENU_ITEM
 } from '../actionTypes';
@@ -58,7 +58,38 @@ export const fetchMenuItems = id => async dispatch => {
   dispatch({ type: SET_MENU_ITEMS, payload: sortedMenuItems });
 };
 
-export const saveMenuItem = () => {};
+export const saveMenuItem = (
+  currentMenuItems,
+  cachedMenuItems,
+  menuItemIndex,
+  menuId
+) => async dispatch => {
+  const savedMenuItem = currentMenuItems[menuItemIndex];
+  let newMenuItem;
+
+  if (savedMenuItem.id) {
+    newMenuItem = await Expresso.updateMenuItem(savedMenuItem, menuId);
+  } else {
+    newMenuItem = await Expresso.createMenuItem(savedMenuItem, menuId);
+  }
+
+  let newMenuItems = currentMenuItems.map((menuItem, i) =>
+    i === menuItemIndex ? newMenuItem : menuItem
+  );
+  let newCachedMenuItems = cachedMenuItems.map((menuItem, i) =>
+    i === menuItemIndex ? newMenuItem : menuItem
+  );
+  newMenuItems = sortMenuItems(newMenuItems);
+  newCachedMenuItems = sortMenuItems(newCachedMenuItems);
+
+  dispatch({
+    type: SAVE_MENU_ITEMS,
+    payload: {
+      newMenuItems,
+      newCachedMenuItems
+    }
+  });
+};
 
 export const updateMenuItem = (e, menuItemIndex) => {
   const type = e.target.id;

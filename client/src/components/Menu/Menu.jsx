@@ -4,8 +4,6 @@ import { withRouter } from 'react-router-dom';
 import style from './Menu.module.scss';
 import MenuButtons from '../MenuButtons/MenuButtons';
 import MenuItems from '../MenuItems/MenuItems';
-import Expresso from '../../utils/Expresso';
-import { sortMenuItems } from '../../utils/sort';
 import {
   addMenuItem,
   clearMenu,
@@ -15,14 +13,8 @@ import {
 } from '../../actions';
 
 class Menu extends Component {
-  constructor(props) {
-    super(props);
-    this.saveMenuItem = this.saveMenuItem.bind(this);
-  }
-
   componentDidMount() {
     const { id } = this.props.match.params;
-
     if (id === 'new') {
       return this.props.clearMenu();
     } else {
@@ -31,44 +23,9 @@ class Menu extends Component {
     }
   }
 
-  saveMenuItem(menuItemIndex) {
-    if (this.state.menuItems[menuItemIndex].id) {
-      Expresso.updateMenuItem(
-        this.state.menuItems[menuItemIndex],
-        this.state.menu.id
-      ).then(newMenuItem => {
-        let menuItems = this.state.menuItems.map((menuItem, i) =>
-          i === menuItemIndex ? newMenuItem : menuItem
-        );
-        menuItems = sortMenuItems(menuItems);
-        this.setState({
-          menuItems,
-          savedMenuItems: [...menuItems]
-        });
-      });
-    } else {
-      Expresso.createMenuItem(
-        this.state.menuItems[menuItemIndex],
-        this.state.menu.id
-      ).then(newMenuItem => {
-        let menuItems = this.state.menuItems.map((menuItem, i) =>
-          i === menuItemIndex ? newMenuItem : menuItem
-        );
-        let savedMenuItems = this.state.savedMenuItems.map((menuItem, i) =>
-          i === menuItemIndex ? newMenuItem : menuItem
-        );
-        menuItems = sortMenuItems(menuItems);
-        savedMenuItems = sortMenuItems(savedMenuItems);
-        this.setState({
-          menuItems,
-          savedMenuItems
-        });
-      });
-    }
-  }
-
   render() {
     const { addMenuItem, menuTitle, updateMenuTitle } = this.props;
+    const navigate = this.props.history.push;
     const menuId = this.props.match.params.id;
 
     return (
@@ -79,7 +36,7 @@ class Menu extends Component {
             value={menuTitle}
             placeholder="Menu Title"
           />
-          <MenuButtons navigate={this.props.history.push} />
+          <MenuButtons navigate={navigate} />
         </div>
         {menuId === 'new' || <MenuItems menuId={menuId} />}
         <button className={style.addButton} onClick={() => addMenuItem(menuId)}>

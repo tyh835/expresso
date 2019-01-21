@@ -5,7 +5,11 @@ import {
   menuItemHasChanges,
   menuItemHasAllRequiredFields
 } from '../../utils/menuItems';
-import { cancelMenuItemEdit, deleteMenuItem } from '../../actions';
+import {
+  cancelMenuItemEdit,
+  deleteMenuItem,
+  saveMenuItem
+} from '../../actions';
 
 const MenuButtons = ({
   cachedMenuItems,
@@ -25,7 +29,9 @@ const MenuButtons = ({
     menuItemHasAllRequiredFields(currentMenuItem) ? (
       <button
         className={menuItemIndex % 2 ? style.odd : style.even}
-        onClick={() => {}}
+        onClick={() =>
+          saveMenuItem(currentMenuItems, cachedMenuItems, menuItemIndex, menuId)
+        }
       >
         Save
       </button>
@@ -69,7 +75,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   cancelMenuItemEdit,
-  deleteMenuItem
+  deleteMenuItem,
+  saveMenuItem
 };
 
 export default connect(

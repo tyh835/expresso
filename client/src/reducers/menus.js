@@ -10,8 +10,12 @@ import {
 
 const initialState = {
   menuList: [],
-  currentMenu: {},
-  cachedMenu: {}
+  currentMenu: {
+    title: ''
+  },
+  cachedMenu: {
+    title: ''
+  }
 };
 
 export default (state = initialState, action) => {
