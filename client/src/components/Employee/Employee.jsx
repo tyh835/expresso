@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import uuid from 'uuid/v4';
 import style from './Employee.module.scss';
@@ -7,25 +8,19 @@ import EmployeeButtons from '../EmployeeButtons/EmployeeButtons';
 import Timesheets from '../Timesheets/Timesheets';
 import Expresso from '../../utils/Expresso';
 import { sortTimesheets } from '../../utils/sort';
+import { clearEmployee, fetchEmployee } from '../../actions';
 
 class Employee extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      employee: null,
       timesheets: [],
       savedTimesheet: {},
-      savedTimesheets: [],
-      savedEmployee: {}
+      savedTimesheets: []
     };
 
-    this.updateEmployee = this.updateEmployee.bind(this);
     this.updateTimesheet = this.updateTimesheet.bind(this);
-    this.saveEmployee = this.saveEmployee.bind(this);
-    this.cancelEmployeeEdit = this.cancelEmployeeEdit.bind(this);
-    this.deleteEmployee = this.deleteEmployee.bind(this);
-    this.restoreEmployee = this.restoreEmployee.bind(this);
     this.addTimesheet = this.addTimesheet.bind(this);
     this.saveTimesheet = this.saveTimesheet.bind(this);
     this.cancelTimesheetEdit = this.cancelTimesheetEdit.bind(this);
@@ -33,33 +28,12 @@ class Employee extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.id === 'new') {
-      const newEmployee = {
-        name: '',
-        position: '',
-        wage: 0,
-        isCurrentEmployee: 1
-      };
-
-      this.setState({
-        employee: newEmployee,
-        savedEmployee: {
-          ...newEmployee
-        }
-      });
-      return;
+    const { id } = this.props.match.params;
+    if (id === 'new') {
+      return this.props.clearEmployee();
+    } else {
+      this.props.fetchEmployee(id);
     }
-
-    Expresso.getEmployee(this.props.match.params.id).then(employee => {
-      if (employee) {
-        this.setState({
-          employee: employee,
-          savedEmployee: {
-            ...employee
-          }
-        });
-      }
-    });
 
     Expresso.getTimesheets(this.props.match.params.id).then(timesheets => {
       const sortedTimesheets = sortTimesheets(timesheets);
@@ -67,20 +41,6 @@ class Employee extends Component {
         timesheets: sortedTimesheets,
         savedTimesheets: [...sortedTimesheets]
       });
-    });
-  }
-
-  updateEmployee(e) {
-    const type = e.target.id;
-    const newValue = e.target.value;
-    this.setState(state => {
-      return {
-        ...state,
-        employee: {
-          ...state.employee,
-          [type]: newValue
-        }
-      };
     });
   }
 
@@ -96,68 +56,6 @@ class Employee extends Component {
         ...state,
         timesheets: state.timesheets
       };
-    });
-  }
-
-  saveEmployee(e) {
-    e.preventDefault();
-    if (this.state.employee.id) {
-      Expresso.updateEmployee(this.state.employee).then(employee => {
-        this.setState({
-          employee: employee,
-          savedEmployee: {
-            ...employee
-          }
-        });
-      });
-    } else {
-      Expresso.createEmployee(this.state.employee).then(employee => {
-        this.props.history.push(`/employees/${employee.id}`);
-        this.setState({
-          employee: employee,
-          savedEmployee: {
-            ...employee
-          }
-        });
-        Expresso.getTimesheets(this.props.match.params.id).then(timesheets => {
-          const sortedTimesheets = sortTimesheets(timesheets);
-          this.setState({
-            timesheets: sortedTimesheets,
-            savedTimesheets: [...sortedTimesheets]
-          });
-        });
-      });
-    }
-  }
-
-  cancelEmployeeEdit() {
-    this.setState(state => {
-      return {
-        ...state,
-        employee: {
-          ...state.savedEmployee
-        }
-      };
-    });
-  }
-
-  deleteEmployee() {
-    Expresso.deleteEmployee(this.state.employee.id).then(() => {
-      this.props.history.push('/');
-    });
-  }
-
-  restoreEmployee() {
-    Expresso.restoreEmployee(this.state.savedEmployee).then(employee => {
-      this.setState(state => {
-        return {
-          employee: {
-            ...state.employee,
-            isCurrentEmployee: employee.isCurrentEmployee
-          },
-          savedEmployee: employee
-        };
-      });
     });
   }
 
@@ -262,24 +160,15 @@ class Employee extends Component {
   }
 
   render() {
-    if (!this.state.employee) {
-      return <div className={style.container} />;
-    }
+    const navigate = this.props.history.push;
+    const employeeId = this.props.match.params.id;
+
     return (
       <div className={style.container}>
         <h2 className={style.heading}>Employee</h2>
         <div className={style.employeeInfo}>
-          <EmployeeInfo
-            employee={this.state.employee}
-            updateEmployee={this.updateEmployee}
-          />
-          <EmployeeButtons
-            employee={this.state.employee}
-            saveEmployee={this.saveEmployee}
-            cancelEmployeeEdit={this.cancelEmployeeEdit}
-            deleteEmployee={this.deleteEmployee}
-            restoreEmployee={this.restoreEmployee}
-          />
+          <EmployeeInfo />
+          <EmployeeButtons navigate={navigate} />
         </div>
         {true || ( // used to be this.props.match.params.id === 'new'
           <Timesheets
@@ -298,4 +187,16 @@ class Employee extends Component {
   }
 }
 
-export default withRouter(Employee);
+const mapStateToProps = state => ({
+  currentEmployee: state.employees.currentEmployee
+});
+
+const mapDispatchToProps = {
+  clearEmployee,
+  fetchEmployee
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Employee));

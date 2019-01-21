@@ -16,7 +16,16 @@ import {
   saveMenuItem,
   updateMenuItem
 } from './menuItems';
-import { fetchEmployeeList } from './employees';
+import {
+  cancelEmployeeEdit,
+  clearEmployee,
+  deleteEmployee,
+  fetchEmployee,
+  fetchEmployeeList,
+  restoreEmployee,
+  saveEmployee,
+  updateEmployee
+} from './employees';
 
 // Menus action exports
 export {
@@ -41,6 +50,15 @@ export {
 };
 
 // Employees action exports
-export { fetchEmployeeList };
+export {
+  cancelEmployeeEdit,
+  clearEmployee,
+  deleteEmployee,
+  fetchEmployee,
+  fetchEmployeeList,
+  restoreEmployee,
+  saveEmployee,
+  updateEmployee
+};
 
 // Timesheets action exports

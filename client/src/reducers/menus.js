@@ -1,8 +1,8 @@
 import {
+  ADD_MENU,
   CANCEL_MENU_EDIT,
   CLEAR_MENU,
   DELETE_MENU,
-  SAVE_MENU,
   SET_MENU,
   SET_MENU_LIST,
   UPDATE_MENU_TITLE
@@ -20,6 +20,11 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ADD_MENU:
+      return {
+        ...state,
+        menuList: [...state.menuList, action.payload]
+      };
     case CANCEL_MENU_EDIT:
       return {
         ...state,
@@ -41,11 +46,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         menuList: state.menuList.filter(menu => menu.id !== action.payload)
-      };
-    case SAVE_MENU:
-      return {
-        ...state,
-        menuList: [...state.menuList, action.payload]
       };
     case SET_MENU:
       return {

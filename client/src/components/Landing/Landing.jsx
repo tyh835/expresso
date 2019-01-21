@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import style from './Landing.module.scss';
 import { MenuLinks, EmployeeLinks } from '../Links/Links';
 import {
+  clearEmployee,
   clearMenu,
   clearMenuItems,
   fetchMenuList,
@@ -12,6 +13,7 @@ import {
 
 class Landing extends Component {
   componentDidMount() {
+    this.props.clearEmployee();
     this.props.clearMenu();
     this.props.clearMenuItems();
     this.props.fetchMenuList();
@@ -46,6 +48,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  clearEmployee,
   clearMenu,
   clearMenuItems,
   fetchMenuList,

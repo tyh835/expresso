@@ -1,10 +1,10 @@
 import Expresso from '../utils/Expresso';
 import { sortItemNames } from '../utils/sort';
 import {
+  ADD_MENU,
   CANCEL_MENU_EDIT,
   CLEAR_MENU,
   DELETE_MENU,
-  SAVE_MENU,
   SET_MENU,
   SET_MENU_LIST,
   UPDATE_MENU_TITLE
@@ -12,6 +12,10 @@ import {
 
 export const cancelMenuEdit = () => ({
   type: CANCEL_MENU_EDIT
+});
+
+export const clearMenu = () => ({
+  type: CLEAR_MENU
 });
 
 export const deleteMenu = (id, navigate) => async dispatch => {
@@ -36,10 +40,6 @@ export const fetchMenuList = () => async dispatch => {
   dispatch({ type: SET_MENU_LIST, payload: sortedMenus });
 };
 
-export const clearMenu = () => ({
-  type: CLEAR_MENU
-});
-
 export const saveMenu = (menu, navigate) => async dispatch => {
   if (menu.id) {
     const updatedMenu = await Expresso.updateMenu(menu);
@@ -47,7 +47,7 @@ export const saveMenu = (menu, navigate) => async dispatch => {
   } else {
     const newMenu = await Expresso.createMenu(menu);
     dispatch({ type: SET_MENU, payload: newMenu });
-    dispatch({ type: SAVE_MENU, payload: newMenu });
+    dispatch({ type: ADD_MENU, payload: newMenu });
     navigate(`/menus/${newMenu.id}`);
   }
 };

@@ -19,8 +19,14 @@ Expresso.getEmployeeList = () => {
 Expresso.getEmployee = id => {
   const url = `${baseUrl}/employees/${id}`;
   return fetch(url).then(response => {
+    const emptyEmployee = {
+      isCurrentEmployee: 1,
+      name: '',
+      position: '',
+      wage: 0
+    };
     if (!response.ok) {
-      return new Promise(resolve => resolve(null));
+      return new Promise(resolve => resolve(emptyEmployee));
     }
     return response.json().then(jsonResponse => {
       return camelcaseKeys(jsonResponse.employee);
@@ -35,11 +41,17 @@ Expresso.createEmployee = employee => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ employee: employee })
+    body: JSON.stringify({ employee })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
-      return new Promise(resolve => resolve(null));
+      const emptyEmployee = {
+        isCurrentEmployee: 1,
+        name: '',
+        position: '',
+        wage: 0
+      };
+      return new Promise(resolve => resolve(emptyEmployee));
     }
     return response.json().then(jsonResponse => {
       return camelcaseKeys(jsonResponse.employee);
@@ -54,11 +66,17 @@ Expresso.updateEmployee = employee => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ employee: employee })
+    body: JSON.stringify({ employee })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
-      return new Promise(resolve => resolve(null));
+      const emptyEmployee = {
+        isCurrentEmployee: 1,
+        name: '',
+        position: '',
+        wage: 0
+      };
+      return new Promise(resolve => resolve(emptyEmployee));
     }
     return response.json().then(jsonResponse => {
       return camelcaseKeys(jsonResponse.employee);
@@ -74,7 +92,7 @@ Expresso.restoreEmployee = employee => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ employee: employee })
+    body: JSON.stringify({ employee })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
@@ -126,11 +144,11 @@ Expresso.createMenu = menu => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ menu: menu })
+    body: JSON.stringify({ menu })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
-      return new Promise(resolve => resolve(null));
+      return new Promise(resolve => resolve({ title: '' }));
     }
     return response.json().then(jsonResponse => {
       return camelcaseKeys(jsonResponse.menu);
@@ -145,11 +163,11 @@ Expresso.updateMenu = menu => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ menu: menu })
+    body: JSON.stringify({ menu })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
-      return new Promise(resolve => resolve(null));
+      return new Promise(resolve => resolve({ title: '' }));
     }
     return response.json().then(jsonResponse => {
       return camelcaseKeys(jsonResponse.menu);
@@ -184,11 +202,18 @@ Expresso.createMenuItem = (menuItem, menuId) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ menuItem: menuItem })
+    body: JSON.stringify({ menuItem })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
-      return new Promise(resolve => resolve(null));
+      const emptyMenuItem = {
+        description: '',
+        inventory: 0,
+        menuId,
+        name: '',
+        price: 0
+      };
+      return new Promise(resolve => resolve(emptyMenuItem));
     }
     return response.json().then(jsonResponse => {
       return camelcaseKeys(jsonResponse.menuItem);
@@ -203,11 +228,18 @@ Expresso.updateMenuItem = (menuItem, menuId) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ menuItem: menuItem })
+    body: JSON.stringify({ menuItem })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
-      return new Promise(resolve => resolve(null));
+      const emptyMenuItem = {
+        description: '',
+        inventory: 0,
+        menuId,
+        name: '',
+        price: 0
+      };
+      return new Promise(resolve => resolve(emptyMenuItem));
     }
     return response.json().then(jsonResponse => {
       return camelcaseKeys(jsonResponse.menuItem);
@@ -242,7 +274,7 @@ Expresso.createTimesheet = (timesheet, employeeId) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ timesheet: timesheet })
+    body: JSON.stringify({ timesheet })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
@@ -261,7 +293,7 @@ Expresso.updateTimesheet = (timesheet, employeeId) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ timesheet: timesheet })
+    body: JSON.stringify({ timesheet })
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
