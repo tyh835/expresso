@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import style from './Landing.module.scss';
-
 import { MenuLinks, EmployeeLinks } from '../Links/Links';
-import { fetchMenuList, fetchEmployeeList } from '../../actions';
+import {
+  clearMenu,
+  clearMenuItems,
+  fetchMenuList,
+  fetchEmployeeList
+} from '../../actions';
+import style from './Landing.module.scss';
 
 class Landing extends Component {
   componentDidMount() {
+    this.props.clearMenu();
+    this.props.clearMenuItems();
     this.props.fetchMenuList();
     this.props.fetchEmployeeList();
   }
@@ -41,5 +47,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchMenuList, fetchEmployeeList }
+  { clearMenu, clearMenuItems, fetchMenuList, fetchEmployeeList }
 )(Landing);

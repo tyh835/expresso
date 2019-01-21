@@ -2,27 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import uuid from 'uuid/v4';
-import style from './Menu.module.scss';
-
 import MenuButtons from '../MenuButtons/MenuButtons';
 import MenuItems from '../MenuItems/MenuItems';
+import {
+  clearMenu,
+  fetchMenu,
+  fetchMenuItems,
+  updateMenuTitle
+} from '../../actions';
 import Expresso from '../../utils/Expresso';
 import { sortMenuItems } from '../../utils/sort';
+import style from './Menu.module.scss';
 
 class Menu extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      menu: null,
-      menuItems: []
-    };
-
-    this.updateMenuTitle = this.updateMenuTitle.bind(this);
     this.updateMenuItem = this.updateMenuItem.bind(this);
-    this.saveMenu = this.saveMenu.bind(this);
-    this.cancelMenuEdit = this.cancelMenuEdit.bind(this);
-    this.deleteMenu = this.deleteMenu.bind(this);
     this.addMenuItem = this.addMenuItem.bind(this);
     this.saveMenuItem = this.saveMenuItem.bind(this);
     this.cancelMenuItemEdit = this.cancelMenuItemEdit.bind(this);
@@ -30,51 +25,14 @@ class Menu extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.id === 'new') {
-      const newMenu = {
-        title: ''
-      };
+    const { id } = this.props.match.params;
 
-      this.setState({
-        menu: newMenu,
-        savedMenu: {
-          ...newMenu
-        }
-      });
-      return;
+    if (id === 'new') {
+      return this.props.clearMenu();
+    } else {
+      this.props.fetchMenu(id);
+      this.props.fetchMenuItems(id);
     }
-
-    Expresso.getMenu(this.props.match.params.id).then(menu => {
-      if (menu) {
-        this.setState({
-          menu: menu,
-          savedMenu: {
-            ...menu
-          }
-        });
-      }
-    });
-
-    Expresso.getMenuItems(this.props.match.params.id).then(menuItems => {
-      const sortedMenuItems = sortMenuItems(menuItems);
-      this.setState({
-        menuItems: sortedMenuItems,
-        savedMenuItems: [...sortedMenuItems]
-      });
-    });
-  }
-
-  updateMenuTitle(e) {
-    const title = e.target.value;
-    this.setState(state => {
-      return {
-        ...state,
-        menu: {
-          ...state.menu,
-          title
-        }
-      };
-    });
   }
 
   updateMenuItem(e, menuItemIndex) {
@@ -90,56 +48,6 @@ class Menu extends Component {
         menuItems: state.menuItems
       };
     });
-  }
-
-  saveMenu() {
-    if (this.state.menu.id) {
-      Expresso.updateMenu(this.state.menu).then(menu => {
-        this.setState({
-          menu,
-          savedMenu: {
-            ...menu
-          }
-        });
-      });
-    } else {
-      Expresso.createMenu(this.state.menu).then(menu => {
-        this.props.history.push(`/menus/${menu.id}`);
-        this.setState({
-          menu,
-          savedMenu: {
-            ...menu
-          }
-        });
-        Expresso.getMenuItems(this.props.match.params.id).then(menuItems => {
-          const sortedMenuItems = sortMenuItems(menuItems);
-          this.setState({
-            menuItems: sortedMenuItems,
-            savedMenuItems: [...sortedMenuItems]
-          });
-        });
-      });
-    }
-  }
-
-  cancelMenuEdit() {
-    this.setState(state => {
-      return {
-        menu: {
-          ...state.savedMenu
-        }
-      };
-    });
-  }
-
-  deleteMenu() {
-    if (this.state.menu.id) {
-      Expresso.deleteMenu(this.state.menu.id).then(() => {
-        this.props.history.push('/');
-      });
-    } else {
-      this.props.history.push('/');
-    }
   }
 
   addMenuItem() {
@@ -238,27 +146,25 @@ class Menu extends Component {
   }
 
   render() {
-    if (!this.state.menu) {
-      return <div className={style.Menu} />;
+    const { currentMenu, currentMenuItems, updateMenuTitle } = this.props;
+
+    if (!currentMenu) {
+      return <div className={style.container} />;
     }
-    const menu = this.state.menu;
+
     return (
       <div className={style.container}>
         <div className={style.menuName}>
           <input
-            onChange={this.updateMenuTitle}
-            value={menu.title}
+            onChange={e => updateMenuTitle(e)}
+            value={currentMenu.title}
             placeholder="Menu Title"
           />
-          <MenuButtons
-            saveMenu={this.saveMenu}
-            cancelMenuEdit={this.cancelMenuEdit}
-            deleteMenu={this.deleteMenu}
-          />
+          <MenuButtons navigate={this.props.history.push} />
         </div>
         {this.props.match.params.id === 'new' || (
           <MenuItems
-            menuItems={this.state.menuItems}
+            menuItems={currentMenuItems}
             updateMenuItem={this.updateMenuItem}
             saveMenuItem={this.saveMenuItem}
             cancelMenuItemEdit={this.cancelMenuItemEdit}
@@ -278,7 +184,11 @@ class Menu extends Component {
 
 const mapStateToProps = state => ({
   currentMenu: state.menus.currentMenu,
-  cachedMenu: state.menus.cachedMenu
+  cachedMenu: state.menus.cachedMenu,
+  currentMenuItems: state.menuItems.currentMenuItems
 });
 
-export default connect(mapStateToProps)(withRouter(Menu));
+export default connect(
+  mapStateToProps,
+  { clearMenu, fetchMenu, fetchMenuItems, updateMenuTitle }
+)(withRouter(Menu));

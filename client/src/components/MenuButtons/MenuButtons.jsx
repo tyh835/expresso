@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { cancelMenuEdit, deleteMenu, saveMenu } from '../../actions';
 import { menuHasChanges, menuHasAllRequiredFields } from '../../utils/menus';
 import style from './MenuButtons.module.scss';
 
@@ -7,14 +8,18 @@ const MenuButtons = ({
   cachedMenu,
   currentMenu,
   isEmptyMenu,
-  saveMenu,
   cancelMenuEdit,
-  deleteMenu
+  saveMenu,
+  deleteMenu,
+  navigate
 }) => {
   const saveButton =
     menuHasChanges(currentMenu, cachedMenu) &&
     menuHasAllRequiredFields(currentMenu) ? (
-      <button className={style.default} onClick={saveMenu}>
+      <button
+        className={style.default}
+        onClick={() => saveMenu(currentMenu, navigate)}
+      >
         Save
       </button>
     ) : (
@@ -30,7 +35,10 @@ const MenuButtons = ({
   );
 
   const deleteButton = isEmptyMenu && (
-    <button className={style.delete} onClick={deleteMenu}>
+    <button
+      className={style.delete}
+      onClick={() => deleteMenu(currentMenu.id, navigate)}
+    >
       Delete
     </button>
   );
@@ -47,7 +55,10 @@ const MenuButtons = ({
 const mapStateToProps = state => ({
   currentMenu: state.menus.currentMenu,
   cachedMenu: state.menus.cachedMenu,
-  isEmptyMenu: state.menuItems.length
+  isEmptyMenu: !state.menuItems.currentMenuItems.length
 });
 
-export default connect(mapStateToProps)(MenuButtons);
+export default connect(
+  mapStateToProps,
+  { cancelMenuEdit, deleteMenu, saveMenu }
+)(MenuButtons);
