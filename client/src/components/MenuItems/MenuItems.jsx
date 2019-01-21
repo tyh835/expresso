@@ -10,13 +10,15 @@ const MenuItems = ({ currentMenuItems, updateMenuItem, menuId }) => {
     <div className={style.table}>
       <MenuItemHeader />
       {currentMenuItems.map((menuItem, menuItemIndex) => {
+        const { name, price, inventory, description } = menuItem;
+
         return (
           <div className={style.row} key={menuItem.id || menuItem.tempId}>
             <div className={style.rowItem}>
               <input
                 onChange={e => updateMenuItem(e, menuItemIndex)}
                 id="name"
-                value={menuItem.name}
+                value={name}
               />
             </div>
             <div className={style.rowItem}>
@@ -24,7 +26,7 @@ const MenuItems = ({ currentMenuItems, updateMenuItem, menuId }) => {
                 type="number"
                 onChange={e => updateMenuItem(e, menuItemIndex)}
                 id="price"
-                value={menuItem.price}
+                value={price}
               />
             </div>
             <div className={style.rowItem}>
@@ -32,7 +34,7 @@ const MenuItems = ({ currentMenuItems, updateMenuItem, menuId }) => {
                 type="number"
                 onChange={e => updateMenuItem(e, menuItemIndex)}
                 id="inventory"
-                value={menuItem.inventory}
+                value={inventory}
               />
             </div>
             <div className={style.rowItem}>
@@ -40,7 +42,7 @@ const MenuItems = ({ currentMenuItems, updateMenuItem, menuId }) => {
                 type="text"
                 onChange={e => updateMenuItem(e, menuItemIndex)}
                 id="description"
-                value={menuItem.description}
+                value={description}
               />
             </div>
             <div className={style.rowItem}>
