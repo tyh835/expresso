@@ -101,9 +101,7 @@ class Menu extends Component {
           />
           <MenuButtons navigate={this.props.history.push} />
         </div>
-        {menuId === 'new' || (
-          <MenuItems menuId={menuId} updateMenuItem={this.updateMenuItem} />
-        )}
+        {menuId === 'new' || <MenuItems menuId={menuId} />}
         <button className={style.addButton} onClick={() => addMenuItem(menuId)}>
           Add Menu Item
         </button>

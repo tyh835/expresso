@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import style from './MenuItems.module.scss';
 import MenuItemHeader from '../MenuItemHeader/MenuItemHeader';
 import MenuItemButtons from '../MenuItemButtons/MenuItemButtons';
+import { updateMenuItem } from '../../actions';
 
 const MenuItems = ({ currentMenuItems, updateMenuItem, menuId }) => {
   return (
@@ -56,4 +57,7 @@ const mapStateToProps = state => ({
   currentMenuItems: state.menuItems.currentMenuItems
 });
 
-export default connect(mapStateToProps)(MenuItems);
+export default connect(
+  mapStateToProps,
+  { updateMenuItem }
+)(MenuItems);

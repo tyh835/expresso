@@ -3,7 +3,8 @@ import {
   CANCEL_MENU_ITEM_EDIT,
   CLEAR_MENU_ITEMS,
   DELETE_MENU_ITEM,
-  SET_MENU_ITEMS
+  SET_MENU_ITEMS,
+  UPDATE_MENU_ITEM
 } from '../actionTypes';
 
 const initialState = {
@@ -47,6 +48,19 @@ export default (state = initialState, action) => {
         ...state,
         currentMenuItems: action.payload,
         cachedMenuItems: [...action.payload]
+      };
+    case UPDATE_MENU_ITEM:
+      const { type, value, menuItemIndex } = action.payload;
+      return {
+        ...state,
+        currentMenuItems: state.currentMenuItems.map((menuItem, i) => {
+          return i !== menuItemIndex
+            ? menuItem
+            : {
+                ...menuItem,
+                [type]: value
+              };
+        })
       };
     default:
       return state;

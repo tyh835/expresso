@@ -27,9 +27,8 @@ export const addMenuItem = id => {
   };
 };
 
-export const cancelMenuItemEdit = (currentMenuItems, menuItemIndex) => {
-  const menuItem = currentMenuItems[menuItemIndex];
-  if (!menuItem.id) {
+export const cancelMenuItemEdit = (id, menuItemIndex) => {
+  if (!id) {
     return {
       type: DELETE_MENU_ITEM,
       payload: menuItemIndex
@@ -46,13 +45,7 @@ export const clearMenuItems = () => ({
   type: CLEAR_MENU_ITEMS
 });
 
-export const deleteMenuItem = (
-  currentMenuItems,
-  menuId,
-  menuItemIndex
-) => async dispatch => {
-  const { id } = currentMenuItems[menuItemIndex];
-
+export const deleteMenuItem = (id, menuId, menuItemIndex) => async dispatch => {
   if (!id) return dispatch({ type: DELETE_MENU_ITEM, payload: menuItemIndex });
 
   const response = await Expresso.deleteMenuItem(id, menuId);
@@ -67,4 +60,25 @@ export const fetchMenuItems = id => async dispatch => {
 
 export const saveMenuItem = () => {};
 
-export const updateMenuItem = () => {};
+export const updateMenuItem = (e, menuItemIndex) => {
+  const type = e.target.id;
+  const value = e.target.value;
+  return {
+    type: UPDATE_MENU_ITEM,
+    payload: {
+      type,
+      value,
+      menuItemIndex
+    }
+  };
+  // this.setState(state => {
+  //   state.menuItems[menuItemIndex] = {
+  //     ...state.menuItems[menuItemIndex],
+  //     [type]: newValue
+  //   };
+  //   return {
+  //     ...state,
+  //     menuItems: state.menuItems
+  //   };
+  // });
+};

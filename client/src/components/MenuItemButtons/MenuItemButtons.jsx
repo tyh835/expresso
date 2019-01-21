@@ -16,10 +16,13 @@ const MenuButtons = ({
   cancelMenuItemEdit,
   deleteMenuItem
 }) => {
+  const currentMenuItem = currentMenuItems[menuItemIndex];
   const cachedMenuItem = cachedMenuItems[menuItemIndex];
+  const menuItemId = currentMenuItem.id;
+
   const saveButton =
-    menuItemHasChanges(currentMenuItems, cachedMenuItem) &&
-    menuItemHasAllRequiredFields(currentMenuItems) ? (
+    menuItemHasChanges(currentMenuItem, cachedMenuItem) &&
+    menuItemHasAllRequiredFields(currentMenuItem) ? (
       <button
         className={menuItemIndex % 2 ? style.odd : style.even}
         onClick={() => {}}
@@ -30,10 +33,10 @@ const MenuButtons = ({
       <button className={style.inactive}>Save</button>
     );
 
-  const cancelButton = menuItemHasChanges(currentMenuItems, cachedMenuItem) ? (
+  const cancelButton = menuItemHasChanges(currentMenuItem, cachedMenuItem) ? (
     <button
       className={menuItemIndex % 2 ? style.odd : style.even}
-      onClick={() => cancelMenuItemEdit(currentMenuItems, menuItemIndex)}
+      onClick={() => cancelMenuItemEdit(menuItemId, menuItemIndex)}
     >
       Cancel
     </button>
@@ -44,7 +47,7 @@ const MenuButtons = ({
   const deleteButton = (
     <button
       className={style.delete}
-      onClick={() => deleteMenuItem(currentMenuItems, menuId, menuItemIndex)}
+      onClick={() => deleteMenuItem(menuItemId, menuId, menuItemIndex)}
     >
       Delete
     </button>
