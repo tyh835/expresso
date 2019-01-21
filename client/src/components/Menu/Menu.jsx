@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import uuid from 'uuid/v4';
 import style from './Menu.module.scss';
 import MenuButtons from '../MenuButtons/MenuButtons';
 import MenuItems from '../MenuItems/MenuItems';
 import Expresso from '../../utils/Expresso';
 import { sortMenuItems } from '../../utils/sort';
 import {
+  addMenuItem,
   clearMenu,
   fetchMenu,
   fetchMenuItems,
@@ -18,10 +18,7 @@ class Menu extends Component {
   constructor(props) {
     super(props);
     this.updateMenuItem = this.updateMenuItem.bind(this);
-    this.addMenuItem = this.addMenuItem.bind(this);
     this.saveMenuItem = this.saveMenuItem.bind(this);
-    this.cancelMenuItemEdit = this.cancelMenuItemEdit.bind(this);
-    this.deleteMenuItem = this.deleteMenuItem.bind(this);
   }
 
   componentDidMount() {
@@ -46,25 +43,6 @@ class Menu extends Component {
       return {
         ...state,
         menuItems: state.menuItems
-      };
-    });
-  }
-
-  addMenuItem() {
-    if (this.props.match.params.id === 'new') return;
-
-    const newMenuItem = {
-      name: '',
-      description: '',
-      inventory: 0,
-      price: 0,
-      tempId: uuid()
-    };
-
-    this.setState(state => {
-      return {
-        menuItems: [...state.menuItems, newMenuItem],
-        savedMenuItems: [...state.savedMenuItems, newMenuItem]
       };
     });
   }
@@ -105,48 +83,9 @@ class Menu extends Component {
     }
   }
 
-  cancelMenuItemEdit(menuItemIndex) {
-    const menuItem = this.state.menuItems[menuItemIndex];
-    if (!menuItem.id) {
-      this.deleteMenuItem(menuItemIndex);
-    } else {
-      this.setState(state => {
-        return {
-          menuItems: state.menuItems.map((menuItem, i) => {
-            return i === menuItemIndex ? state.savedMenuItems[i] : menuItem;
-          })
-        };
-      });
-    }
-  }
-
-  deleteMenuItem(menuItemIndex) {
-    const menuItem = this.state.menuItems[menuItemIndex];
-    if (!menuItem.id) {
-      this.setState(state => {
-        return {
-          menuItems: state.menuItems.filter((_, i) => i !== menuItemIndex),
-          savedMenuItems: state.savedMenuItems.filter(
-            (_, i) => i !== menuItemIndex
-          )
-        };
-      });
-    } else {
-      Expresso.deleteMenuItem(menuItem.id, this.state.menu.id).then(() => {
-        this.setState(state => {
-          return {
-            menuItems: state.menuItems.filter((_, i) => i !== menuItemIndex),
-            savedMenuItems: state.savedMenuItems.filter(
-              (_, i) => i !== menuItemIndex
-            )
-          };
-        });
-      });
-    }
-  }
-
   render() {
-    const { currentMenu, currentMenuItems, updateMenuTitle } = this.props;
+    const { addMenuItem, currentMenu, updateMenuTitle } = this.props;
+    const menuId = this.props.match.params.id;
 
     if (!currentMenu) {
       return <div className={style.container} />;
@@ -162,16 +101,10 @@ class Menu extends Component {
           />
           <MenuButtons navigate={this.props.history.push} />
         </div>
-        {this.props.match.params.id === 'new' || (
-          <MenuItems
-            menuItems={currentMenuItems}
-            updateMenuItem={this.updateMenuItem}
-            saveMenuItem={this.saveMenuItem}
-            cancelMenuItemEdit={this.cancelMenuItemEdit}
-            deleteMenuItem={this.deleteMenuItem}
-          />
+        {menuId === 'new' || (
+          <MenuItems menuId={menuId} updateMenuItem={this.updateMenuItem} />
         )}
-        <button className={style.addButton} onClick={this.addMenuItem}>
+        <button className={style.addButton} onClick={() => addMenuItem(menuId)}>
           Add Menu Item
         </button>
         <p className={style.responsiveMessage}>
@@ -184,11 +117,10 @@ class Menu extends Component {
 
 const mapStateToProps = state => ({
   currentMenu: state.menus.currentMenu,
-  cachedMenu: state.menus.cachedMenu,
-  currentMenuItems: state.menuItems.currentMenuItems
+  cachedMenu: state.menus.cachedMenu
 });
 
 export default connect(
   mapStateToProps,
-  { clearMenu, fetchMenu, fetchMenuItems, updateMenuTitle }
+  { addMenuItem, clearMenu, fetchMenu, fetchMenuItems, updateMenuTitle }
 )(withRouter(Menu));

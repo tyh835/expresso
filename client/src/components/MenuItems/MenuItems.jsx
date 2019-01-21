@@ -1,20 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import style from './MenuItems.module.scss';
 import MenuItemHeader from '../MenuItemHeader/MenuItemHeader';
 import MenuItemButtons from '../MenuItemButtons/MenuItemButtons';
 
-const MenuItems = ({
-  menuItems,
-  updateMenuItem,
-  menuItemHasChanges,
-  saveMenuItem,
-  cancelMenuItemEdit,
-  deleteMenuItem
-}) => {
+const MenuItems = ({ currentMenuItems, updateMenuItem, menuId }) => {
   return (
     <div className={style.table}>
       <MenuItemHeader />
-      {menuItems.map((menuItem, menuItemIndex) => {
+      {currentMenuItems.map((menuItem, menuItemIndex) => {
         return (
           <div className={style.row} key={menuItem.id || menuItem.tempId}>
             <div className={style.rowItem}>
@@ -49,14 +43,7 @@ const MenuItems = ({
               />
             </div>
             <div className={style.rowItem}>
-              <MenuItemButtons
-                menuItem={menuItem}
-                menuItemIndex={menuItemIndex}
-                menuItemHasChanges={menuItemHasChanges}
-                saveMenuItem={saveMenuItem}
-                cancelMenuItemEdit={cancelMenuItemEdit}
-                deleteMenuItem={deleteMenuItem}
-              />
+              <MenuItemButtons menuItemIndex={menuItemIndex} menuId={menuId} />
             </div>
           </div>
         );
@@ -65,4 +52,8 @@ const MenuItems = ({
   );
 };
 
-export default MenuItems;
+const mapStateToProps = state => ({
+  currentMenuItems: state.menuItems.currentMenuItems
+});
+
+export default connect(mapStateToProps)(MenuItems);

@@ -1,4 +1,5 @@
 export const sortItemNames = (items, field) => {
+  if (items.length === 0) return [];
   return items.sort((item1, item2) => {
     if (item2[field].toLowerCase() < item1[field].toLowerCase()) {
       return 1;
@@ -9,6 +10,7 @@ export const sortItemNames = (items, field) => {
 };
 
 export const sortMenuItems = menuItems => {
+  if (menuItems.length === 0) return [];
   return menuItems.sort((menuItem1, menuItem2) => {
     if (!menuItem2.id) {
       return -1;

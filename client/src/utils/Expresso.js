@@ -111,7 +111,7 @@ Expresso.getMenu = id => {
   const url = `${baseUrl}/menus/${id}`;
   return fetch(url).then(response => {
     if (!response.ok) {
-      return new Promise(resolve => resolve(null));
+      return new Promise(resolve => resolve({ title: '' }));
     }
     return response.json().then(jsonResponse => {
       return camelcaseKeys(jsonResponse.menu);

@@ -5,11 +5,12 @@ import {
   menuItemHasChanges,
   menuItemHasAllRequiredFields
 } from '../../utils/menuItems';
+import { cancelMenuItemEdit, deleteMenuItem } from '../../actions';
 
 const MenuButtons = ({
   cachedMenuItems,
   currentMenuItems,
-  menuItem,
+  menuId,
   menuItemIndex,
   saveMenuItem,
   cancelMenuItemEdit,
@@ -17,11 +18,11 @@ const MenuButtons = ({
 }) => {
   const cachedMenuItem = cachedMenuItems[menuItemIndex];
   const saveButton =
-    menuItemHasChanges(menuItem, cachedMenuItem) &&
-    menuItemHasAllRequiredFields(menuItem) ? (
+    menuItemHasChanges(currentMenuItems, cachedMenuItem) &&
+    menuItemHasAllRequiredFields(currentMenuItems) ? (
       <button
         className={menuItemIndex % 2 ? style.odd : style.even}
-        onClick={() => saveMenuItem(menuItemIndex)}
+        onClick={() => {}}
       >
         Save
       </button>
@@ -29,10 +30,10 @@ const MenuButtons = ({
       <button className={style.inactive}>Save</button>
     );
 
-  const cancelButton = menuItemHasChanges(menuItem, cachedMenuItem) ? (
+  const cancelButton = menuItemHasChanges(currentMenuItems, cachedMenuItem) ? (
     <button
       className={menuItemIndex % 2 ? style.odd : style.even}
-      onClick={() => cancelMenuItemEdit(menuItemIndex)}
+      onClick={() => cancelMenuItemEdit(currentMenuItems, menuItemIndex)}
     >
       Cancel
     </button>
@@ -43,7 +44,7 @@ const MenuButtons = ({
   const deleteButton = (
     <button
       className={style.delete}
-      onClick={() => deleteMenuItem(menuItemIndex)}
+      onClick={() => deleteMenuItem(currentMenuItems, menuId, menuItemIndex)}
     >
       Delete
     </button>
@@ -63,4 +64,7 @@ const mapStateToProps = state => ({
   cachedMenuItems: state.menuItems.cachedMenuItems
 });
 
-export default connect(mapStateToProps)(MenuButtons);
+export default connect(
+  mapStateToProps,
+  { cancelMenuItemEdit, deleteMenuItem }
+)(MenuButtons);

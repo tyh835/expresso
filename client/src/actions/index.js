@@ -7,7 +7,15 @@ import {
   saveMenu,
   updateMenuTitle
 } from './menus';
-import { clearMenuItems, fetchMenuItems } from './menuItems';
+import {
+  addMenuItem,
+  cancelMenuItemEdit,
+  clearMenuItems,
+  deleteMenuItem,
+  fetchMenuItems,
+  saveMenuItem,
+  updateMenuItem
+} from './menuItems';
 import { fetchEmployeeList } from './employees';
 
 // Menus action exports
@@ -22,7 +30,15 @@ export {
 };
 
 // MenuItems action exports
-export { clearMenuItems, fetchMenuItems };
+export {
+  addMenuItem,
+  cancelMenuItemEdit,
+  clearMenuItems,
+  deleteMenuItem,
+  fetchMenuItems,
+  saveMenuItem,
+  updateMenuItem
+};
 
 // Employees action exports
 export { fetchEmployeeList };

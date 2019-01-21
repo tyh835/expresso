@@ -1,6 +1,5 @@
 import Expresso from '../utils/Expresso';
 import { sortItemNames } from '../utils/sort';
-import { fetchMenuItems } from './menuItems';
 import {
   CANCEL_MENU_EDIT,
   CLEAR_MENU,
@@ -28,23 +27,13 @@ export const deleteMenu = (id, navigate) => async dispatch => {
 
 export const fetchMenu = id => async dispatch => {
   const menu = await Expresso.getMenu(id);
-
-  if (menu) {
-    dispatch({ type: SET_MENU, payload: menu });
-  } else {
-    dispatch({ type: CLEAR_MENU });
-  }
+  dispatch({ type: SET_MENU, payload: menu });
 };
 
 export const fetchMenuList = () => async dispatch => {
   const menus = await Expresso.getMenuList();
-
-  if (menus.length) {
-    const sortedMenus = sortItemNames(menus, 'title');
-    dispatch({ type: SET_MENU_LIST, payload: sortedMenus });
-  } else {
-    dispatch({ type: SET_MENU_LIST, payload: [] });
-  }
+  const sortedMenus = sortItemNames(menus, 'title');
+  dispatch({ type: SET_MENU_LIST, payload: sortedMenus });
 };
 
 export const clearMenu = () => ({
@@ -60,7 +49,6 @@ export const saveMenu = (menu, navigate) => async dispatch => {
     dispatch({ type: SET_MENU, payload: newMenu });
     dispatch({ type: SAVE_MENU, payload: newMenu });
     navigate(`/menus/${newMenu.id}`);
-    fetchMenuItems(newMenu.id)(dispatch);
   }
 };
 
