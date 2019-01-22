@@ -23,13 +23,10 @@ const TimesheetButtons = ({
   const currentTimesheet = currentTimesheets[timesheetIndex];
   const cachedTimesheet = cachedTimesheets[timesheetIndex];
   const timesheetId = currentTimesheet.id;
-  let saveButton, cancelButton, deleteButton;
 
-  if (
+  const saveButton =
     timesheetHasChanges(currentTimesheet, cachedTimesheet) &&
-    timesheetHasAllRequiredFields(currentTimesheet)
-  ) {
-    saveButton = (
+    timesheetHasAllRequiredFields(currentTimesheet) ? (
       <button
         className={style.default}
         onClick={() =>
@@ -43,25 +40,25 @@ const TimesheetButtons = ({
       >
         Save
       </button>
+    ) : (
+      <button className={style.inactive}>Save</button>
     );
-  } else {
-    saveButton = <button className={style.inactive}>Save</button>;
-  }
 
-  if (timesheetHasChanges(currentTimesheet, cachedTimesheet)) {
-    cancelButton = (
-      <button
-        className={style.default}
-        onClick={() => cancelTimesheetEdit(timesheetId, timesheetIndex)}
-      >
-        Cancel
-      </button>
-    );
-  } else {
-    cancelButton = <button className={style.inactive}>Cancel</button>;
-  }
+  const cancelButton = timesheetHasChanges(
+    currentTimesheet,
+    cachedTimesheet
+  ) ? (
+    <button
+      className={style.default}
+      onClick={() => cancelTimesheetEdit(timesheetId, timesheetIndex)}
+    >
+      Cancel
+    </button>
+  ) : (
+    <button className={style.inactive}>Cancel</button>
+  );
 
-  deleteButton = (
+  const deleteButton = (
     <button
       className={style.delete}
       onClick={() => deleteTimesheet(timesheetId, employeeId, timesheetIndex)}
