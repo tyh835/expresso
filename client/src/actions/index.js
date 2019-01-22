@@ -1,3 +1,4 @@
+// Menus action imports
 import {
   cancelMenuEdit,
   clearMenu,
@@ -7,6 +8,8 @@ import {
   saveMenu,
   updateMenuTitle
 } from './menus';
+
+// MenuItems action imports
 import {
   addMenuItem,
   cancelMenuItemEdit,
@@ -16,6 +19,8 @@ import {
   saveMenuItem,
   updateMenuItem
 } from './menuItems';
+
+// Employees action imports
 import {
   cancelEmployeeEdit,
   clearEmployee,
@@ -26,6 +31,21 @@ import {
   saveEmployee,
   updateEmployee
 } from './employees';
+
+// Timesheets action imports
+import {
+  addTimesheet,
+  cancelTimesheetEdit,
+  clearTimesheets,
+  deleteTimesheet,
+  fetchTimesheets,
+  saveTimesheets,
+  updateTimesheet
+} from './timesheets';
+
+/*
+ * Exports
+ */
 
 // Menus action exports
 export {
@@ -62,3 +82,12 @@ export {
 };
 
 // Timesheets action exports
+export {
+  addTimesheet,
+  cancelTimesheetEdit,
+  clearTimesheets,
+  deleteTimesheet,
+  fetchTimesheets,
+  saveTimesheets,
+  updateTimesheet
+};

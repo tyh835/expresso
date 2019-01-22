@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import style from './EmployeeInfo.module.scss';
 import { updateEmployee } from '../../actions';
 
-const EmployeeInfo = ({ currentEmployee, updateEmployee }) => {
-  const { isCurrentEmployee, name, position, wage } = currentEmployee;
+const EmployeeInfo = ({ employee, updateEmployee }) => {
+  const { isCurrentEmployee, name, position, wage } = employee;
 
   return (
     <>
@@ -26,7 +26,7 @@ const EmployeeInfo = ({ currentEmployee, updateEmployee }) => {
 };
 
 const mapStateToProps = state => ({
-  currentEmployee: state.employees.currentEmployee
+  employee: state.employees.currentEmployee
 });
 
 const mapDispatchToProps = {

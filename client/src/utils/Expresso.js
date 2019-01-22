@@ -96,7 +96,13 @@ Expresso.restoreEmployee = employee => {
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
-      return new Promise(resolve => resolve(null));
+      const emptyEmployee = {
+        isCurrentEmployee: 1,
+        name: '',
+        position: '',
+        wage: 0
+      };
+      return new Promise(resolve => resolve(emptyEmployee));
     }
     return response.json().then(jsonResponse => {
       return camelcaseKeys(jsonResponse.employee);
@@ -278,7 +284,13 @@ Expresso.createTimesheet = (timesheet, employeeId) => {
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
-      return new Promise(resolve => resolve(null));
+      const emptyTimesheet = {
+        hours: 0,
+        rate: this.state.employee.wage,
+        date: Date.now(),
+        employeeId: this.state.employee.id
+      };
+      return new Promise(resolve => resolve(emptyTimesheet));
     }
     return response.json().then(jsonResponse => {
       return camelcaseKeys(jsonResponse.timesheet);
@@ -297,7 +309,13 @@ Expresso.updateTimesheet = (timesheet, employeeId) => {
   };
   return fetch(url, fetchOptions).then(response => {
     if (!response.ok) {
-      return new Promise(resolve => resolve(null));
+      const emptyTimesheet = {
+        hours: 0,
+        rate: this.state.employee.wage,
+        date: Date.now(),
+        employeeId: this.state.employee.id
+      };
+      return new Promise(resolve => resolve(emptyTimesheet));
     }
     return response.json().then(jsonResponse => {
       return camelcaseKeys(jsonResponse.timesheet);

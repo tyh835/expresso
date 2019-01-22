@@ -7,6 +7,7 @@ import {
   clearEmployee,
   clearMenu,
   clearMenuItems,
+  clearTimesheets,
   fetchMenuList,
   fetchEmployeeList
 } from '../../actions';
@@ -16,6 +17,7 @@ class Landing extends Component {
     this.props.clearEmployee();
     this.props.clearMenu();
     this.props.clearMenuItems();
+    this.props.clearTimesheets();
     this.props.fetchMenuList();
     this.props.fetchEmployeeList();
   }
@@ -51,6 +53,7 @@ const mapDispatchToProps = {
   clearEmployee,
   clearMenu,
   clearMenuItems,
+  clearTimesheets,
   fetchMenuList,
   fetchEmployeeList
 };

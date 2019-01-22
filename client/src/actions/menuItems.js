@@ -52,8 +52,8 @@ export const deleteMenuItem = (id, menuId, menuItemIndex) => async dispatch => {
   if (response.ok) dispatch({ type: DELETE_MENU_ITEM, payload: menuItemIndex });
 };
 
-export const fetchMenuItems = id => async dispatch => {
-  const menuItems = await Expresso.getMenuItems(id);
+export const fetchMenuItems = menuId => async dispatch => {
+  const menuItems = await Expresso.getMenuItems(menuId);
   const sortedMenuItems = sortMenuItems(menuItems);
   dispatch({ type: SET_MENU_ITEMS, payload: sortedMenuItems });
 };

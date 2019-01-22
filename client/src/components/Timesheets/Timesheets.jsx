@@ -1,17 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import style from './Timesheets.module.scss';
 import TimesheetInfo from '../TimesheetInfo/TimesheetInfo';
 import TimesheetButtons from '../TimesheetButtons/TimesheetButtons';
 
-const Timesheets = ({
-  timesheets,
-  updateTimesheet,
-  timesheetHasChanges,
-  timesheetHasAllRequiredFields,
-  saveTimesheet,
-  cancelTimesheetEdit,
-  deleteTimesheet
-}) => {
+const Timesheets = ({ employeeId, timesheets }) => {
   return (
     <div>
       <h2 className={style.heading}>Timesheets</h2>
@@ -25,16 +18,10 @@ const Timesheets = ({
               <TimesheetInfo
                 timesheet={timesheet}
                 timesheetIndex={timesheetIndex}
-                updateTimesheet={updateTimesheet}
               />
               <TimesheetButtons
-                timesheet={timesheet}
+                employeeId={employeeId}
                 timesheetIndex={timesheetIndex}
-                timesheetHasChanges={timesheetHasChanges}
-                timesheetHasAllRequiredFields={timesheetHasAllRequiredFields}
-                saveTimesheet={saveTimesheet}
-                cancelTimesheetEdit={cancelTimesheetEdit}
-                deleteTimesheet={deleteTimesheet}
               />
             </div>
           );
@@ -44,4 +31,8 @@ const Timesheets = ({
   );
 };
 
-export default Timesheets;
+const mapStateToProps = state => ({
+  timesheets: state.timesheets.currentTimesheets
+});
+
+export default connect(mapStateToProps)(Timesheets);

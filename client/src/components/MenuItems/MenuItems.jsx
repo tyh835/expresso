@@ -5,11 +5,11 @@ import MenuItemHeader from '../MenuItemHeader/MenuItemHeader';
 import MenuItemButtons from '../MenuItemButtons/MenuItemButtons';
 import { updateMenuItem } from '../../actions';
 
-const MenuItems = ({ currentMenuItems, updateMenuItem, menuId }) => {
+const MenuItems = ({ menuItems, updateMenuItem, menuId }) => {
   return (
     <div className={style.table}>
       <MenuItemHeader />
-      {currentMenuItems.map((menuItem, menuItemIndex) => {
+      {menuItems.map((menuItem, menuItemIndex) => {
         const { name, price, inventory, description } = menuItem;
 
         return (
@@ -56,7 +56,7 @@ const MenuItems = ({ currentMenuItems, updateMenuItem, menuId }) => {
 };
 
 const mapStateToProps = state => ({
-  currentMenuItems: state.menuItems.currentMenuItems
+  menuItems: state.menuItems.currentMenuItems
 });
 
 const mapDispatchToProps = {
