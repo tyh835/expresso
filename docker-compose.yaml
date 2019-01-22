@@ -1,10 +1,10 @@
 version: '3'
 
 services:
-  # web:
-  #   build: client
-  #   ports:
-  #     - 80:80
+  web:
+    build: client
+    ports:
+      - 80:80
   backend:
     build: backend
     ports:
