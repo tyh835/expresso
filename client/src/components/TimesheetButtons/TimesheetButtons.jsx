@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import style from './TimesheetButtons.module.scss';
 import {
   timesheetHasChanges,
@@ -74,6 +75,34 @@ const TimesheetButtons = ({
       {deleteButton}
     </div>
   );
+};
+
+TimesheetButtons.propTypes = {
+  currentTimesheets: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      hours: PropTypes.number,
+      rate: PropTypes.number,
+      date: PropTypes.number,
+      employeeId: PropTypes.number,
+      tempId: PropTypes.string
+    })
+  ),
+  cachedTimesheets: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      hours: PropTypes.number,
+      rate: PropTypes.number,
+      date: PropTypes.number,
+      employeeId: PropTypes.number,
+      tempId: PropTypes.string
+    })
+  ),
+  employeeId: PropTypes.string,
+  cancelTimesheetEdit: PropTypes.func,
+  deleteTimesheet: PropTypes.func,
+  saveTimesheets: PropTypes.func,
+  timesheetIndex: PropTypes.number
 };
 
 const mapStateToProps = state => ({

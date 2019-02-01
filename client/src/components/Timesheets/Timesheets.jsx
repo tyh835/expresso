@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import style from './Timesheets.module.scss';
 import TimesheetInfo from '../TimesheetInfo/TimesheetInfo';
 import TimesheetButtons from '../TimesheetButtons/TimesheetButtons';
@@ -29,6 +30,20 @@ const Timesheets = ({ employeeId, timesheets }) => {
       </div>
     </div>
   );
+};
+
+Timesheets.propTypes = {
+  employeeId: PropTypes.string,
+  timesheets: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      hours: PropTypes.number,
+      rate: PropTypes.number,
+      date: PropTypes.number,
+      employeeId: PropTypes.number,
+      tempId: PropTypes.string
+    })
+  )
 };
 
 const mapStateToProps = state => ({

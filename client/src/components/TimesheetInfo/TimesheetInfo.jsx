@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import style from './TimesheetInfo.module.scss';
 import { updateTimesheet } from '../../actions';
 
@@ -31,6 +32,19 @@ const TimesheetInfo = ({ timesheet, timesheetIndex, updateTimesheet }) => {
       <p>Total: ${hours * rate}</p>
     </>
   );
+};
+
+TimesheetInfo.propTypes = {
+  timesheet: PropTypes.shape({
+    id: PropTypes.number,
+    hours: PropTypes.number,
+    rate: PropTypes.number,
+    date: PropTypes.number,
+    employeeId: PropTypes.number,
+    tempId: PropTypes.string
+  }),
+  timesheetIndex: PropTypes.number,
+  updateTimesheet: PropTypes.func
 };
 
 const mapDispatchToProps = {

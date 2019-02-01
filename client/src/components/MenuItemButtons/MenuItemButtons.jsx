@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import style from './MenuItemButtons.module.scss';
 import {
   menuItemHasChanges,
@@ -11,7 +12,7 @@ import {
   saveMenuItem
 } from '../../actions';
 
-const MenuButtons = ({
+const MenuItemButtons = ({
   cachedMenuItems,
   currentMenuItems,
   menuId,
@@ -68,6 +69,36 @@ const MenuButtons = ({
   );
 };
 
+MenuItemButtons.propTypes = {
+  cachedMenuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      description: PropTypes.string,
+      inventory: PropTypes.number,
+      price: PropTypes.number,
+      menuId: PropTypes.number,
+      tempId: PropTypes.string
+    })
+  ),
+  currentMenuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      description: PropTypes.string,
+      inventory: PropTypes.number,
+      price: PropTypes.number,
+      menuId: PropTypes.number,
+      tempId: PropTypes.string
+    })
+  ),
+  menuId: PropTypes.string,
+  menuItemIndex: PropTypes.number,
+  saveMenuItem: PropTypes.func,
+  cancelMenuItemEdit: PropTypes.func,
+  deleteMenuItem: PropTypes.func
+};
+
 const mapStateToProps = state => ({
   currentMenuItems: state.menuItems.currentMenuItems,
   cachedMenuItems: state.menuItems.cachedMenuItems
@@ -82,4 +113,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MenuButtons);
+)(MenuItemButtons);

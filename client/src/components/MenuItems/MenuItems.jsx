@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import style from './MenuItems.module.scss';
 import MenuItemHeader from '../MenuItemHeader/MenuItemHeader';
 import MenuItemButtons from '../MenuItemButtons/MenuItemButtons';
 import { updateMenuItem } from '../../actions';
 
-const MenuItems = ({ menuItems, updateMenuItem, menuId }) => {
+const MenuItems = ({ menuId, menuItems, updateMenuItem }) => {
   return (
     <div className={style.table}>
       <MenuItemHeader />
@@ -53,6 +54,22 @@ const MenuItems = ({ menuItems, updateMenuItem, menuId }) => {
       })}
     </div>
   );
+};
+
+MenuItems.propTypes = {
+  menuId: PropTypes.string,
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      description: PropTypes.string,
+      inventory: PropTypes.number,
+      price: PropTypes.number,
+      menuId: PropTypes.number,
+      tempId: PropTypes.string
+    })
+  ),
+  updateMenuItem: PropTypes.func
 };
 
 const mapStateToProps = state => ({
