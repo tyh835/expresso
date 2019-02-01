@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import style from './MenuButtons.module.scss';
 import { cancelMenuEdit, deleteMenu, saveMenu } from '../../actions';
 import { menuHasChanges, menuHasAllRequiredFields } from '../../utils/menus';
@@ -50,6 +51,22 @@ const MenuButtons = ({
       {isEmptyMenu && deleteButton}
     </div>
   );
+};
+
+MenuButtons.propTypes = {
+  cachedMenu: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string
+  }),
+  currentMenu: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string
+  }),
+  isEmptyMenu: PropTypes.bool,
+  cancelMenuEdit: PropTypes.func,
+  saveMenu: PropTypes.func,
+  deleteMenu: PropTypes.func,
+  navigate: PropTypes.func
 };
 
 const mapStateToProps = state => ({

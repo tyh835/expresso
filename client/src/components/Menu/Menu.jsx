@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import style from './Menu.module.scss';
 import MenuButtons from '../MenuButtons/MenuButtons';
 import MenuItems from '../MenuItems/MenuItems';
@@ -49,6 +50,15 @@ class Menu extends Component {
     );
   }
 }
+
+Menu.propTypes = {
+  addMenuItem: PropTypes.func,
+  clearMenu: PropTypes.func,
+  fetchMenu: PropTypes.func,
+  fetchMenuItems: PropTypes.func,
+  updateMenuTitle: PropTypes.func,
+  menuTitle: PropTypes.string
+};
 
 const mapStateToProps = state => ({
   menuTitle: state.menus.currentMenu.title
