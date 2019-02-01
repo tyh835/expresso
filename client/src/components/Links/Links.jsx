@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import style from './Links.module.scss';
 
-export const MenuLinks = ({ menus }) => {
+const MenuLinks = ({ menus }) => {
   return menus.map(menu => {
     return (
       <Link to={`/menus/${menu.id}`} className={style.menuLink} key={menu.id}>
@@ -12,7 +13,16 @@ export const MenuLinks = ({ menus }) => {
   });
 };
 
-export const EmployeeLinks = ({ employees }) => {
+MenuLinks.propTypes = {
+  menus: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string
+    })
+  )
+};
+
+const EmployeeLinks = ({ employees }) => {
   return employees.map(employee => {
     return (
       <Link
@@ -25,3 +35,17 @@ export const EmployeeLinks = ({ employees }) => {
     );
   });
 };
+
+EmployeeLinks.propTypes = {
+  employees: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      position: PropTypes.string,
+      wage: PropTypes.number,
+      isCurrentEmployee: PropTypes.number
+    })
+  )
+};
+
+export { MenuLinks, EmployeeLinks };
