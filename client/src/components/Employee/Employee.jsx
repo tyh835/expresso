@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import style from './Employee.module.scss';
 import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
 import EmployeeButtons from '../EmployeeButtons/EmployeeButtons';
@@ -46,6 +47,20 @@ class Employee extends Component {
     );
   }
 }
+
+Employee.propTypes = {
+  employee: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    position: PropTypes.string,
+    wage: PropTypes.number,
+    isCurrentEmployee: PropTypes.number
+  }),
+  addTimesheet: PropTypes.func,
+  clearEmployee: PropTypes.func,
+  fetchEmployee: PropTypes.func,
+  fetchTimesheets: PropTypes.func
+};
 
 const mapStateToProps = state => ({
   employee: state.employees.currentEmployee

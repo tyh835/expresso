@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import style from './EmployeeButtons.module.scss';
 import {
   employeeHasChanges,
@@ -65,6 +66,28 @@ const EmployeeButtons = ({
       {currentEmployee.id && deleteButton}
     </div>
   );
+};
+
+EmployeeButtons.propTypes = {
+  currentEmployee: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    position: PropTypes.string,
+    wage: PropTypes.number,
+    isCurrentEmployee: PropTypes.number
+  }),
+  cachedEmployee: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    position: PropTypes.string,
+    wage: PropTypes.number,
+    isCurrentEmployee: PropTypes.number
+  }),
+  cancelEmployeeEdit: PropTypes.func,
+  deleteEmployee: PropTypes.func,
+  navigate: PropTypes.func,
+  restoreEmployee: PropTypes.func,
+  saveEmployee: PropTypes.func
 };
 
 const mapStateToProps = state => ({

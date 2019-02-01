@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import style from './Landing.module.scss';
 import { MenuLinks, EmployeeLinks } from '../Links/Links';
 import {
@@ -43,6 +44,30 @@ class Landing extends Component {
     );
   }
 }
+
+Landing.propTypes = {
+  clearEmployee: PropTypes.func,
+  clearMenu: PropTypes.func,
+  clearMenuItems: PropTypes.func,
+  clearTimesheets: PropTypes.func,
+  fetchMenuList: PropTypes.func,
+  fetchEmployeeList: PropTypes.func,
+  menuList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string
+    })
+  ),
+  employeeList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      position: PropTypes.string,
+      wage: PropTypes.number,
+      isCurrentEmployee: PropTypes.number
+    })
+  )
+};
 
 const mapStateToProps = state => ({
   menuList: state.menus.menuList,

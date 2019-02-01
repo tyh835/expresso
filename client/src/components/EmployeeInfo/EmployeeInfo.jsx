@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import style from './EmployeeInfo.module.scss';
 import { updateEmployee } from '../../actions';
 
@@ -23,6 +24,17 @@ const EmployeeInfo = ({ employee, updateEmployee }) => {
       </p>
     </>
   );
+};
+
+EmployeeInfo.propTypes = {
+  employee: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    position: PropTypes.string,
+    wage: PropTypes.number,
+    isCurrentEmployee: PropTypes.number
+  }),
+  updateEmployee: PropTypes.func
 };
 
 const mapStateToProps = state => ({
