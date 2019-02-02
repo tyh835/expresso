@@ -33,8 +33,8 @@ EmployeeInfo.propTypes = {
     position: PropTypes.string,
     wage: PropTypes.number,
     isCurrentEmployee: PropTypes.number
-  }),
-  updateEmployee: PropTypes.func
+  }).isRequired,
+  updateEmployee: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

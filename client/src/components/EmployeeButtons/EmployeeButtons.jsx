@@ -75,19 +75,19 @@ EmployeeButtons.propTypes = {
     position: PropTypes.string,
     wage: PropTypes.number,
     isCurrentEmployee: PropTypes.number
-  }),
+  }).isRequired,
   cachedEmployee: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
     position: PropTypes.string,
     wage: PropTypes.number,
     isCurrentEmployee: PropTypes.number
-  }),
-  cancelEmployeeEdit: PropTypes.func,
-  deleteEmployee: PropTypes.func,
-  navigate: PropTypes.func,
-  restoreEmployee: PropTypes.func,
-  saveEmployee: PropTypes.func
+  }).isRequired,
+  cancelEmployeeEdit: PropTypes.func.isRequired,
+  deleteEmployee: PropTypes.func.isRequired,
+  navigate: PropTypes.func.isRequired,
+  restoreEmployee: PropTypes.func.isRequired,
+  saveEmployee: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

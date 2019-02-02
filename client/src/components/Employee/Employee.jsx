@@ -55,11 +55,11 @@ Employee.propTypes = {
     position: PropTypes.string,
     wage: PropTypes.number,
     isCurrentEmployee: PropTypes.number
-  }),
-  addTimesheet: PropTypes.func,
-  clearEmployee: PropTypes.func,
-  fetchEmployee: PropTypes.func,
-  fetchTimesheets: PropTypes.func
+  }).isRequired,
+  addTimesheet: PropTypes.func.isRequired,
+  clearEmployee: PropTypes.func.isRequired,
+  fetchEmployee: PropTypes.func.isRequired,
+  fetchTimesheets: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

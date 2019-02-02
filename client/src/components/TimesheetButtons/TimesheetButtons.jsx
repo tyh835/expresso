@@ -87,7 +87,7 @@ TimesheetButtons.propTypes = {
       employeeId: PropTypes.number,
       tempId: PropTypes.string
     })
-  ),
+  ).isRequired,
   cachedTimesheets: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -97,12 +97,12 @@ TimesheetButtons.propTypes = {
       employeeId: PropTypes.number,
       tempId: PropTypes.string
     })
-  ),
-  employeeId: PropTypes.string,
-  cancelTimesheetEdit: PropTypes.func,
-  deleteTimesheet: PropTypes.func,
-  saveTimesheets: PropTypes.func,
-  timesheetIndex: PropTypes.number
+  ).isRequired,
+  employeeId: PropTypes.string.isRequired,
+  cancelTimesheetEdit: PropTypes.func.isRequired,
+  deleteTimesheet: PropTypes.func.isRequired,
+  saveTimesheets: PropTypes.func.isRequired,
+  timesheetIndex: PropTypes.number.isRequired
 };
 
 const mapStateToProps = state => ({

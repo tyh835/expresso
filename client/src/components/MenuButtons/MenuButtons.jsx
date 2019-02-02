@@ -57,16 +57,16 @@ MenuButtons.propTypes = {
   cachedMenu: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string
-  }),
+  }).isRequired,
   currentMenu: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string
-  }),
-  isEmptyMenu: PropTypes.bool,
-  cancelMenuEdit: PropTypes.func,
-  saveMenu: PropTypes.func,
-  deleteMenu: PropTypes.func,
-  navigate: PropTypes.func
+  }).isRequired,
+  isEmptyMenu: PropTypes.bool.isRequired,
+  cancelMenuEdit: PropTypes.func.isRequired,
+  saveMenu: PropTypes.func.isRequired,
+  deleteMenu: PropTypes.func.isRequired,
+  navigate: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

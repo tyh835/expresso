@@ -42,9 +42,9 @@ TimesheetInfo.propTypes = {
     date: PropTypes.number,
     employeeId: PropTypes.number,
     tempId: PropTypes.string
-  }),
-  timesheetIndex: PropTypes.number,
-  updateTimesheet: PropTypes.func
+  }).isRequired,
+  timesheetIndex: PropTypes.number.isRequired,
+  updateTimesheet: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {

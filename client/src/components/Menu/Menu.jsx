@@ -52,12 +52,12 @@ class Menu extends Component {
 }
 
 Menu.propTypes = {
-  addMenuItem: PropTypes.func,
-  clearMenu: PropTypes.func,
-  fetchMenu: PropTypes.func,
-  fetchMenuItems: PropTypes.func,
-  updateMenuTitle: PropTypes.func,
-  menuTitle: PropTypes.string
+  addMenuItem: PropTypes.func.isRequired,
+  clearMenu: PropTypes.func.isRequired,
+  fetchMenu: PropTypes.func.isRequired,
+  fetchMenuItems: PropTypes.func.isRequired,
+  updateMenuTitle: PropTypes.func.isRequired,
+  menuTitle: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({

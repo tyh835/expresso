@@ -33,7 +33,7 @@ const Timesheets = ({ employeeId, timesheets }) => {
 };
 
 Timesheets.propTypes = {
-  employeeId: PropTypes.string,
+  employeeId: PropTypes.string.isRequired,
   timesheets: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -43,7 +43,7 @@ Timesheets.propTypes = {
       employeeId: PropTypes.number,
       tempId: PropTypes.string
     })
-  )
+  ).isRequired
 };
 
 const mapStateToProps = state => ({

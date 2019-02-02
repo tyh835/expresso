@@ -46,18 +46,18 @@ class Landing extends Component {
 }
 
 Landing.propTypes = {
-  clearEmployee: PropTypes.func,
-  clearMenu: PropTypes.func,
-  clearMenuItems: PropTypes.func,
-  clearTimesheets: PropTypes.func,
-  fetchMenuList: PropTypes.func,
-  fetchEmployeeList: PropTypes.func,
+  clearEmployee: PropTypes.func.isRequired,
+  clearMenu: PropTypes.func.isRequired,
+  clearMenuItems: PropTypes.func.isRequired,
+  clearTimesheets: PropTypes.func.isRequired,
+  fetchMenuList: PropTypes.func.isRequired,
+  fetchEmployeeList: PropTypes.func.isRequired,
   menuList: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       title: PropTypes.string
     })
-  ),
+  ).isRequired,
   employeeList: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -66,7 +66,7 @@ Landing.propTypes = {
       wage: PropTypes.number,
       isCurrentEmployee: PropTypes.number
     })
-  )
+  ).isRequired
 };
 
 const mapStateToProps = state => ({

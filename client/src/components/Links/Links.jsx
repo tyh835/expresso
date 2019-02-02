@@ -19,7 +19,7 @@ MenuLinks.propTypes = {
       id: PropTypes.number,
       title: PropTypes.string
     })
-  )
+  ).isRequired
 };
 
 const EmployeeLinks = ({ employees }) => {
@@ -45,7 +45,7 @@ EmployeeLinks.propTypes = {
       wage: PropTypes.number,
       isCurrentEmployee: PropTypes.number
     })
-  )
+  ).isRequired
 };
 
 export { MenuLinks, EmployeeLinks };

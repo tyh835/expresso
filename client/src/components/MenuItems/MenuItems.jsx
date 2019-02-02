@@ -68,8 +68,8 @@ MenuItems.propTypes = {
       menuId: PropTypes.number,
       tempId: PropTypes.string
     })
-  ),
-  updateMenuItem: PropTypes.func
+  ).isRequired,
+  updateMenuItem: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

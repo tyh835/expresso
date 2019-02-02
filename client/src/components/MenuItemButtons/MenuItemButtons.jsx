@@ -80,7 +80,7 @@ MenuItemButtons.propTypes = {
       menuId: PropTypes.number,
       tempId: PropTypes.string
     })
-  ),
+  ).isRequired,
   currentMenuItems: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -91,12 +91,12 @@ MenuItemButtons.propTypes = {
       menuId: PropTypes.number,
       tempId: PropTypes.string
     })
-  ),
-  menuId: PropTypes.string,
-  menuItemIndex: PropTypes.number,
-  saveMenuItem: PropTypes.func,
-  cancelMenuItemEdit: PropTypes.func,
-  deleteMenuItem: PropTypes.func
+  ).isRequired,
+  menuId: PropTypes.string.isRequired,
+  menuItemIndex: PropTypes.number.isRequired,
+  saveMenuItem: PropTypes.func.isRequired,
+  cancelMenuItemEdit: PropTypes.func.isRequired,
+  deleteMenuItem: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
