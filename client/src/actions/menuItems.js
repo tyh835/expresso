@@ -6,13 +6,14 @@ import {
   CANCEL_MENU_ITEM_EDIT,
   CLEAR_MENU_ITEMS,
   DELETE_MENU_ITEM,
+  NULL_ACTION,
   SAVE_MENU_ITEMS,
   SET_MENU_ITEMS,
   UPDATE_MENU_ITEM
 } from '../actionTypes';
 
 export const addMenuItem = id => {
-  if (id === 'new') return;
+  if (id === 'new') return { type: NULL_ACTION };
   const newMenuItem = {
     name: '',
     description: '',

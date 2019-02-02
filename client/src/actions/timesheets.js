@@ -6,13 +6,14 @@ import {
   CANCEL_TIMESHEET_EDIT,
   CLEAR_TIMESHEETS,
   DELETE_TIMESHEET,
+  NULL_ACTION,
   SAVE_TIMESHEETS,
   SET_TIMESHEETS,
   UPDATE_TIMESHEET
 } from '../actionTypes';
 
 export const addTimesheet = (id, wage) => {
-  if (id === 'new') return;
+  if (id === 'new') return { type: NULL_ACTION };
   const newTimesheet = {
     hours: 0,
     rate: wage,
